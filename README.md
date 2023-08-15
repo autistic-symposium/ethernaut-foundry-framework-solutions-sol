@@ -1,4 +1,4 @@
-## 🧑🏻‍🚀 my ethernaut writeups in foundry
+## 🧑🏻‍🚀 my ethernaut write-ups in foundry
 
 <br>
 
