@@ -2,17 +2,18 @@
 
 <br>
 
-##### 🔋 this project contains detailed write-ups for my solutions for **[openzeppelin's ethernaut wargames](https://ethernaut.openzeppelin.com/)**.
+##### 🔋 this project contains my write-ups on **[openzeppelin's ethernaut wargames](https://ethernaut.openzeppelin.com/)**.
 
-##### 🔋 to respect the challenge, i won't be sharing explicit solutions (only for the first problem, to serve as an example and boilerplate). instead, i will be sharing a discussion of the research i did or routes i took while solving them. this should provide you with tools to come with your own answers. you may check my 1337 progress at the **[ethernaut's leaderboard](https://ethernaut.openzeppelin.com/leaderboard)**.
+##### 🔋 to respect the challenge, i am not sharing explicit solutions (only for the first problem). instead, i provide: *i)* a discussion of the research i did or routes i took while solving them, and *ii)* their setup and boilerplates. this should give you enough tooling to come up with your own answers. you may check my 1337 progress at the **[ethernaut's leaderboard](https://ethernaut.openzeppelin.com/leaderboard)**.
 ##### 🔋 probably out of context, but **[here is my wechat profile from playing overthewire in 2014](https://www.wechall.net/profile/bt3gl)**.
 
 <br>
 <br>
 
 <p align="center">
-<img width="450" src="https://github.com/go-outside-labs/etherenaut-solutions-writeups/assets/1130416/9ab1bf89-a7d4-45df-bbbc-1fc01fbe1d8b">
+<img width="450" src="https://github.com/go-outside-labs/ethernaut-foundry-writeups-sol/assets/138340846/32fb029d-852e-493b-8f79-939fe39d5455">
 </p>
+
 
 <br>
 
