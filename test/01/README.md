@@ -1,15 +1,17 @@
-# 01. Fallback
+## 01. Fallback
 
 <br>
 
-#### tl; dr: 
+### tl; dr
+
+<br>
 
 * in this challenge, we exploit a flawed fallback function to gain control and drain a contract.
 
 <br>
   
 <p align="center">
-<img width="500" src="https://github.com/go-outside-labs/etherenaut-solutions-writeups/assets/1130416/59a5a09f-9d80-40e1-9122-acee48eaa2ef">
+<img width="500" src="https://github.com/go-outside-labs/ethernaut-foundry-writeups-sol/assets/138340846/8220cf2f-4a89-4816-bfc1-9bb44e402927">
 </p>
 
 
@@ -62,7 +64,7 @@ contract Fallback {
 
 ---
 
-## discussion
+### discussion
 
 <br>
 
@@ -502,10 +504,8 @@ Total Paid: 0.000279946598111055 ETH (84731 gas * avg 3.303945405 gwei)
 
 <br>
 
+----
+
+<br>
 
 #### pwned...
-
-  
-<p align="center">
-<img width="350" src="https://github.com/go-outside-labs/ethernaut-solutions-writeup/assets/1130416/0c0e9dc1-5803-4e1c-81f0-c86769018a89">
-</p>
