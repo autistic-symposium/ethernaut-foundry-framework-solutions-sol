@@ -2,7 +2,7 @@
 
 <br>
 
-#### tl; dr: 
+### tl; dr: 
 
 * in this challenge, we exploit a flawed fallback function to gain control and drain a contract.
 

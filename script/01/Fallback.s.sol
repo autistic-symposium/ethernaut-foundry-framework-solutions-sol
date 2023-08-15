@@ -6,9 +6,9 @@ import "src/01/Fallback.sol";
 
 contract Exploit is Script {
 
-      //////////////////////////////
-      // Change the current instance address
-      //////////////////////////////
+      //////////////////////////////////////////
+      // CHANGE: add the current instance address
+      /////////////////////////////////////////
     
       address level_instance = 0xD4E2471CA863251b61a1009223Ee23D2F23f057d;
       Fallback level = Fallback(payable(address(level_instance)));
