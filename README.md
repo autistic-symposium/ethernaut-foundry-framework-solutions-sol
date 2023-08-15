@@ -1,4 +1,4 @@
-## 🧑🏻‍🚀 ethernaut solutions && writeups in foundry
+## 🧑🏻‍🚀 ethernaut writeups in foundry
 
 <br>
 
