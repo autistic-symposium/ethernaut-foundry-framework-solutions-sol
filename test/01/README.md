@@ -511,3 +511,14 @@ Total Paid: 0.000279946598111055 ETH (84731 gas * avg 3.303945405 gwei)
 <br>
 
 #### pwned...
+
+
+<br>
+
+  
+<p align="center">
+<img width="400" src="https://github.com/go-outside-labs/ethernaut-foundry-writeups-sol/assets/138340846/ba3f82a3-00c0-43f9-a423-588d7f6e4c70">
+</p>
+
+
+
