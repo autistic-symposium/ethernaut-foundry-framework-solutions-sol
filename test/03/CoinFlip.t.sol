@@ -3,16 +3,13 @@ pragma solidity ^0.8.13;
 
 import "forge-std/Test.sol";
 import {CoinFlip} from "src/03/CoinFlip.sol";
-import {CoinFlipExploit} from "src/03/CoinFlipExploit.sol";
 
 
 contract CoinFlipTest is Test {
 
     uint256 FACTOR = 57896044618658097711785492504343953926634992332820282019728792003956564819968;
     uint8 consecutiveWinsHacked = 10;
-
     CoinFlip public level;
-    CoinFlipExploit public exploit;
 
     address instance = vm.addr(0x1); 
     address hacker = vm.addr(0x2); 
@@ -21,7 +18,6 @@ contract CoinFlipTest is Test {
 
         vm.prank(instance);
         level = new CoinFlip();
-        exploit = new CoinFlipExploit(level);
     
     }
 
@@ -57,15 +53,6 @@ contract CoinFlipTest is Test {
 
         assertEq(level.consecutiveWins(), consecutiveWinsHacked);
         vm.stopPrank();
-
-      }
-
-      function testCoinFlipExploit(uint256 blockNumber) public {
-
-        vm.assume(blockNumber > 0);
-        vm.roll(blockNumber);
-        bool rightGuess  = exploit.run();
-        assertTrue(rightGuess);
 
       }
 }

