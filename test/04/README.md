@@ -5,7 +5,7 @@
 
   
 <p align="center">
-<img width="200" src="https://github.com/go-outside-labs/ethernaut-foundry-detailed-solutions-sol/assets/138340846/2e9c5331-74fe-4e8e-8be2-347e4a1caf9d">
+<img width="300" src="https://github.com/go-outside-labs/ethernaut-foundry-detailed-solutions-sol/assets/138340846/2e9c5331-74fe-4e8e-8be2-347e4a1caf9d">
 </p>
 
 
