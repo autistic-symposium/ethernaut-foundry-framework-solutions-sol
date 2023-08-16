@@ -311,7 +311,7 @@ lastHash = blockValue;
 
 <br>
 
-* but that it didn't matter whether i was running with the that loop or manually (with, say, `while sleep 13; do forge script ./script/03/CoinFlip.s.sol --broadcast -vvvv --rpc-url sepolia; done`).
+* but that it didn't matter whether i was running with that loop or manually (with, say, `while sleep 13; do forge script ./script/03/CoinFlip.s.sol --broadcast -vvvv --rpc-url sepolia; done`).
   - this solution never really worked (even though i spent a few hours trying to find the bug). 
   - a bit frustrating because this solution was foundry native and symmetric with the previous problems.
   - i decided i had to try a new approach... using an `interface`.
