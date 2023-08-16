@@ -17,12 +17,13 @@
 <br>
 
 * in this challenge, we exploit the difference between solidity's global variables `tx.origin` and `msg.sender` to to *phish* with `tx.origin` and become `owner`.
-    - `tx.origin` refers to the EOA that initiated the transaction (which can be many calls ago, and never be a contract), while `msg.sender` is the immediate caller (and can be a contract).
+    - `tx.origin` refers to the EOA that initiated the transaction (which can be many calls ago in the stack, and never be a contract), while `msg.sender` is the immediate caller (and can be a contract).
+    - `tx.origin` is **[known for being generally vulnerable](https://blog.sigmaprime.io/solidity-security.html#tx-origin)**, and its use should be restricted to specific cases such as denying external contracts from calling the current contract (for instance, with a `require(tx.origin == msg.sender)`).
 
 <br>
 
 * fun fact, this type of vulnerability resembles web2's **cross-site request forgery (csrf)**. 
-    - exactly a decade ago, when i was getting started in security research and csrf was still heavily in the wild, **[i wrote a modification of apache's `mod_security` to monitoring for it](https://github.com/go-outside-labs/csrf)**. 
+    - exactly a decade ago, when i was getting started in security research and csrf was still heavily in the wild, **[i wrote a modification of apache's `mod_security` to monitor for it](https://github.com/go-outside-labs/csrf)**. 
     - it's wild how the world has changed in 10 years...
 
 <br>
@@ -213,12 +214,12 @@ contract Exploit is Script {
 
 <br>
 
-* instead of relying on our deploying script, a second options is deploying the contract directly with:
+* instead of relying on our deploying script, a second option is deploying the contract directly with:
 
 <br>
 
 ```shell
-> forge create src/04/TelephoneExploit.sol:TelephoneExploit --constructor-args <level address> --private-key=<private-key>
+> forge create src/04/TelephoneExploit.sol:TelephoneExploit --constructor-args <level address> --private-key=<private-key> --rpc-url=<sepolia url> 
 ```
 
 <br>
@@ -252,7 +253,7 @@ contract TelephoneExploit {
 <br>
 
 ```solidity
-> cast send <deployted address> "changeOwner()" --private-key=<private-key>
+> cast send <deployed address> "changeOwner()" --private-key=<private-key> --rpc-url=<sepolia url> 
 ```
 
 <br>
