@@ -21,9 +21,9 @@
 
 <br>
 
-##### 01. Fallback: [exploit test + write-up](test/01) and [submission script](script/01/)
-##### 02. Fallout: [exploit test + write-up](test/02) and [submission script](script/02/)
-##### 03. Coin Flip: [exploit test + write-up](test/03) and [submission script](script/03/)
+##### ✅ 01. Fallback: [exploit test + write-up](test/01) and [submission script](script/01/)
+##### ✅ 02. Fallout: [exploit test + write-up](test/02) and [submission script](script/02/)
+##### ✅ 03. Coin Flip: [exploit test + write-up](test/03) and [submission script](script/03/)
 ##### 04. Telephone: [exploit test + write-up](test/04) and [submission script](script/04/)
 ##### 05. Token: [exploit test + write-up](test/05) and [submission script](script/05/)
 ##### 06. Delegation: [exploit test + write-up](test/06) and [submission script](script/06/)
@@ -71,7 +71,7 @@
 
 ---
 
-### running
+### running each level
 
 <br>
 

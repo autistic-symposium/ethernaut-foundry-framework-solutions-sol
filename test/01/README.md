@@ -2,19 +2,18 @@
 
 <br>
 
+<p align="center">
+<img width="300" src="https://github.com/go-outside-labs/ethernaut-foundry-writeups-sol/assets/138340846/8220cf2f-4a89-4816-bfc1-9bb44e402927">
+</p>
 
+<br>
 ### tl; dr
 
 <br>
 
 
 * in this challenge, we exploit a flawed fallback function to gain control and drain a contract.
-
-<br>
   
-<p align="center">
-<img width="500" src="https://github.com/go-outside-labs/ethernaut-foundry-writeups-sol/assets/138340846/8220cf2f-4a89-4816-bfc1-9bb44e402927">
-</p>
 
 
 <br>
@@ -228,9 +227,6 @@ type                    2
 <br>
 
 ```solidity
-import "forge-std/Test.sol";
-import "src/01/Fallback.sol";
-
 contract FallbackTest is Test {
     Fallback public level;
     address instance = vm.addr(0x1); 
@@ -388,9 +384,6 @@ Ran 1 test suites: 1 tests passed, 0 failed, 0 skipped (1 total tests)
 <br>
 
 ```solidity
-import "forge-std/Script.sol";
-import "src/01/Fallback.sol";
-
 contract Exploit is Script {
 
       //////////////////////////////

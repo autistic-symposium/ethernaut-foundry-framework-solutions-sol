@@ -1,6 +1,16 @@
 ## 02. Fallout
 
 <br>
+  
+<p align="center">
+<img width="300" src="https://github.com/go-outside-labs/ethernaut-foundry-detailed-solutions-sol/assets/138340846/e226964c-4827-45ba-b976-bbaa8b4e081b">
+</p>
+
+
+
+
+
+<br>
 
 
 ### tl; dr
@@ -12,19 +22,9 @@
 * an example of this vulnerability exploited irl was when **[a company called Dynamic Piramid changed its name to Rubixi](https://blog.ethereum.org/2016/06/19/thinking-smart-contract-security)** but forgot to change its contract's constructor and ended up hacked.
 
 <br>
-  
-<p align="center">
-<img width="500" src="https://github.com/go-outside-labs/ethernaut-foundry-detailed-solutions-sol/assets/138340846/e226964c-4827-45ba-b976-bbaa8b4e081b">
-</p>
 
-
-
-<br>
 
 ```solidity
-// SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
-
 contract Fallout {
 
   mapping (address => uint) allocations;
@@ -72,6 +72,9 @@ contract Fallout {
 
 <br>
 
+* a constructor initializes the contract and the data within it.
+
+<br>
 
 * when a constructor has a different name from the contract, it becomes a regular method with a default `public` visibility (i.e., they are part of the contract's interface and can be callable by anyone).
 
@@ -124,7 +127,7 @@ await contract.Fal1out();
 
 <br>
 
-* we had to change the original contract a little to compile with foundry (e.g., adding a couple of `payable` casting and removing `SafeMath` as it's not needed for `>= 0.8.0`).
+* i had to change the original contract a little to compile with foundry (e.g., adding a couple of `payable` casting and removing `SafeMath` as it's not needed for `>= 0.8.0`).
 
 <br>
 
@@ -133,9 +136,6 @@ await contract.Fal1out();
 <br>
 
 ```solidity
-import "forge-std/Test.sol";
-import "src/02/Fallout.sol";
-
 contract FalloutTest is Test {
 
     Fallout public level;
@@ -194,9 +194,6 @@ Ran 1 test suites: 1 tests passed, 0 failed, 0 skipped (1 total tests)
 <br>
 
 ```solidity
-import "forge-std/Script.sol";
-import "src/02/Fallout.sol";
-
 contract Exploit is Script {
     
       address level_instance = 0xAADB92d23788EA81c46fe22C4d4771B23dcc96a2;

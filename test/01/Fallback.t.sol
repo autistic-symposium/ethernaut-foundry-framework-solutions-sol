@@ -1,8 +1,8 @@
-// SPDX-License-Identifier: UNLICENSED
+// SPDX-License-Identifier: CC-BY-4.0
 pragma solidity ^0.8.13;
 
 import "forge-std/Test.sol";
-import "src/01/Fallback.sol";
+import {Fallback} from "src/01/Fallback.sol";
 
 contract FallbackTest is Test {
     Fallback public level;
@@ -92,5 +92,5 @@ contract FallbackTest is Test {
         level.withdraw();
         vm.stopPrank();
 
-        }
+      }
 }

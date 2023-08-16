@@ -1,8 +1,8 @@
-// SPDX-License-Identifier: UNLICENSED
+// SPDX-License-Identifier: CC-BY-4.0
 pragma solidity ^0.8.13;
 
 import "forge-std/Test.sol";
-import "src/02/Fallout.sol";
+import {Fallout} from "src/02/Fallout.sol";
 
 contract FalloutTest is Test {
 
@@ -24,5 +24,5 @@ contract FalloutTest is Test {
         level.Fal1out();
         vm.stopPrank();
         
-      }
+    }
 }
