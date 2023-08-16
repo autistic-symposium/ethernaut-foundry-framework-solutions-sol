@@ -2,7 +2,7 @@
 
 <br>
 
-##### 🔋 this project contains my write-ups and solutions for **[openzeppelin's ethernaut wargames](https://ethernaut.openzeppelin.com/)**. 
+##### 🔋 this project contains solutions for **[openzeppelin's ethernaut wargames](https://ethernaut.openzeppelin.com/)**. leveraging **foundry**, each level has a test set (`.t.sol`), a script set (`.s.sol`), and write-up. some levels also have a exploit `src/.sol`.
 ##### 🔋 do you remember overthewire? **[here is my wechat profile from playing it in 2014](https://www.wechall.net/profile/bt3gl)**.
 
 <br>
