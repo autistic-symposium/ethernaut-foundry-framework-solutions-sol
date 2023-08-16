@@ -6,12 +6,8 @@ import "src/02/Fallout.sol";
 
 contract Exploit is Script {
 
-      //////////////////////////////////////////
-      // CHANGE: add the current instance address
-      /////////////////////////////////////////
-    
-      address level_instance = 0xAADB92d23788EA81c46fe22C4d4771B23dcc96a2;
-      Fallout level = Fallout(payable(address(level_instance)));
+      address levelInstance = 0xAADB92d23788EA81c46fe22C4d4771B23dcc96a2;
+      Fallout level = Fallout(payable(address(levelInstance)));
 
       function run() public {
 

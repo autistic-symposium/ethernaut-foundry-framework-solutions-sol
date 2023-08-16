@@ -92,5 +92,5 @@ contract FallbackTest is Test {
         level.withdraw();
         vm.stopPrank();
 
-        }
+      }
 }

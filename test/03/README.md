@@ -62,7 +62,7 @@ contract CoinFlip {
 <br>
 
 
-* generating random numbers in solidity is tricky as everything in the contracts are publicly visible. projects resource to external oracles or to Ethereum validator's **[RANDAO](https://github.com/randao/randao)** algorithm.
+* the EVM is a deterministic Turing machine. since there is no inherent randomness on the EVM and as everything in the contracts are publicly visible (`block.timestamp` or `block.number`), generating random numbers in solidity is tricky  projects resource to external oracles or to Ethereum validator's **[RANDAO](https://github.com/randao/randao)** algorithm.
 
 <br>
 

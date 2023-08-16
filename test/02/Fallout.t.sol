@@ -24,5 +24,5 @@ contract FalloutTest is Test {
         level.Fal1out();
         vm.stopPrank();
         
-      }
+    }
 }
