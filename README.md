@@ -25,7 +25,7 @@
 ##### ✅ 02. Fallout: [exploit + foundry test + write-up](test/02) and [submission foundry script](script/02/)
 ##### ✅ 03. Coin Flip: [exploit + foundry test + write-up](test/03) and [submission foundry script](script/03/)
 ##### ✅ 04. Telephone: [exploit + foundry test + write-up](test/04) and [submission foundry script](script/04/)
-##### 05. Token: [exploit + foundry test + write-up](test/05) and [submission foundry script](script/05/)
+##### ✅ 05. Token: [exploit + foundry test + write-up](test/05) and [submission foundry script](script/05/)
 ##### 06. Delegation: [exploit + foundry test + write-up](test/06) and [submission foundry script](script/06/)
 ##### 07. Force: [exploit + foundry test + write-up](test/07) and [submission foundry script](script/07/)
 ##### 08. Vault: [exploit + foundry test + write-up](test/08) and [submission foundry script](script/08/)
