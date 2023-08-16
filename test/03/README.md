@@ -250,7 +250,6 @@ import {CoinFlipExploit} from "src/03/CoinFlipExploit.sol";
 
 contract Exploit is Script {
 
-    uint256 private GUESSES = 10;
     uint256 private immutable FACTOR = 57896044618658097711785492504343953926634992332820282019728792003956564819968;
 
     address levelInstance = 0xfC3A1c7Aaf80dAf711256cEa4d959722DbF2B5B1;
@@ -280,7 +279,7 @@ contract Exploit is Script {
 
 <br>
 
-* initially i wanted to have `exploit.run();` in a loop like this:
+* initially, i wanted to have `exploit.run();` in a loop like this:
 
 <br>
 
@@ -295,8 +294,8 @@ do {
 
 <br>
 
-* however this never worked, and i suspected it's because of a last bit in this contract, the `lastHash` check. 
-  - i originally thought it would require each new guess submission to occur after 12 seconds (the time it that takes for a new block to be minted in proof-of-stake):
+* however this never worked, and i suspected it's because of a last bit in `CoinFlip`, the `lastHash` check. 
+  - i originally thought it would require each new guess submission to occur after 12 seconds (the time it takes for a new proof-of-stake block to be minted):
 
 
 <br>
@@ -312,8 +311,9 @@ lastHash = blockValue;
 
 <br>
 
-* but that didn't even matter because either by manually running ten times (`while sleep 13; do forge script ./script/03/CoinFlip.s.sol --broadcast -vvvv --rpc-url sepolia; done`), this solution never really worked (even though i spent a few hours trying to find the bug). 
-  - this was a bit frustrating because this solution was foundry native and symmetric with the previous problems.
+* but that it didn't matter whether i was running with the that loop or manually (with, say, `while sleep 13; do forge script ./script/03/CoinFlip.s.sol --broadcast -vvvv --rpc-url sepolia; done`).
+  - this solution never really worked (even though i spent a few hours trying to find the bug). 
+  - a bit frustrating because this solution was foundry native and symmetric with the previous problems.
   - i decided i had to try a new approach... using an `interface`.
 
 
