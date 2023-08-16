@@ -72,6 +72,9 @@ contract Fallout {
 
 <br>
 
+* a constructor initializes the contract and the data within it.
+
+<br>
 
 * when a constructor has a different name from the contract, it becomes a regular method with a default `public` visibility (i.e., they are part of the contract's interface and can be callable by anyone).
 
@@ -124,7 +127,7 @@ await contract.Fal1out();
 
 <br>
 
-* we had to change the original contract a little to compile with foundry (e.g., adding a couple of `payable` casting and removing `SafeMath` as it's not needed for `>= 0.8.0`).
+* i had to change the original contract a little to compile with foundry (e.g., adding a couple of `payable` casting and removing `SafeMath` as it's not needed for `>= 0.8.0`).
 
 <br>
 

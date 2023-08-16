@@ -8,7 +8,7 @@
 <br>
 
 
-* 
+* in this challenge we exploit the determinism of a pseudo-random function compose of a global accessible variable, `blockhash`, and no added entropy.
 
 <br>
   
@@ -20,7 +20,36 @@
 <br>
 
 ```solidity
+contract CoinFlip {
 
+  uint256 public consecutiveWins;
+  uint256 lastHash;
+  uint256 FACTOR = 57896044618658097711785492504343953926634992332820282019728792003956564819968;
+
+  constructor() {
+    consecutiveWins = 0;
+  }
+
+  function flip(bool _guess) public returns (bool) {
+    uint256 blockValue = uint256(blockhash(block.number - 1));
+
+    if (lastHash == blockValue) {
+      revert();
+    }
+
+    lastHash = blockValue;
+    uint256 coinFlip = blockValue / FACTOR;
+    bool side = coinFlip == 1 ? true : false;
+
+    if (side == _guess) {
+      consecutiveWins++;
+      return true;
+    } else {
+      consecutiveWins = 0;
+      return false;
+    }
+  }
+}
 ```
 
 
@@ -33,8 +62,46 @@
 <br>
 
 
+* generating random numbers in solidity is tricky as everything in the contracts are publicly visible. projects resource to external oracles or to Ethereum validator's **[RANDAO](https://github.com/randao/randao)** algorithm.
+
 <br>
 
+* the `CoinFlip` contract uses the current `blockhash` to determine if the coin is head or tail, through the variable `coinFlip`:
+
+<br>
+
+```solidity
+    uint256 coinFlip = blockValue / FACTOR;
+    bool side = coinFlip == 1 ? true : false;
+```
+
+<br>
+
+* which is derived from the variable `blockValue`, a `uint156` generated from the previous block number (block's number minus 1):
+
+<br>
+
+```solidity
+    uint256 blockValue = uint256(blockhash(block.number - 1));
+```
+
+<br>
+
+* this `FACTOR` variable is useless. first, it does not introduce any randomness entropy to `coinFlip` at all. Second, even if is private, we could just look at the contract at etherscan or decompile the bytecode (if the contract is not verified).
+
+<br>
+
+* the "randomness" of this function is derived from on-chain deterministic data (global accessible variables such as `blockhash`, with no entropy), so to hack it we need to get `blockhash` before we submit a guess. we iterate by simulating the result, skipping the blocks when the result is not favorable.
+
+<br>
+
+* **[foundry's `vm.roll(uint256)`](https://book.getfoundry.sh/cheatcodes/roll?highlight=vm.roll#examples)simulate the `block.number` given by the `uint256`.
+
+<br>
+
+
+
+<br>
 
 
 ----
@@ -58,7 +125,7 @@
 <br>
 
 ```shell
-> forge test --match-contract CoinflipTest -vvvv    
+> forge test --match-contract CoinFlipTest -vvvv    
 
 
 ```
@@ -67,7 +134,7 @@
 
 <br>
 
-* submit with `script/03/Coinflip.s.sol`:
+* submit with `script/03/CoinFlip.s.sol`:
 
 <br>
 
@@ -82,7 +149,7 @@
 <br>
 
 ```shell
-> forge script ./script/03/Coinflip.s.sol --broadcast -vvvv --rpc-url sepolia
+> forge script ./script/03/CoinFlip.s.sol --broadcast -vvvv --rpc-url sepolia
 
 
 ```
