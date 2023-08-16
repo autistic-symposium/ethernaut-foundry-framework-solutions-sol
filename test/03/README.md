@@ -4,7 +4,7 @@
 <br>
   
 <p align="center">
-<img width="300" src=""">
+<img width="300" src="https://github.com/go-outside-labs/ethernaut-foundry-detailed-solutions-sol/assets/138340846/63de48b2-4c5a-4499-b054-7fcd4a2a520d">
 </p>
 
 
