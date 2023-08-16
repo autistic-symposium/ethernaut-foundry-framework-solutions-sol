@@ -3,7 +3,7 @@
 <br>
 
 ##### 🔋 this project contains solutions for **[openzeppelin's ethernaut wargames](https://ethernaut.openzeppelin.com/)**. leveraging **foundry**, each level has a test set (`.t.sol`), a script set (`.s.sol`), and write-up. some levels also have a exploit `src/.sol`.
-##### 🔋 do you remember overthewire? **[here is my wechat profile from playing it in 2014](https://www.wechall.net/profile/bt3gl)**.
+##### 🔋 do you remember overthewire? **[here is my WeChall profile from playing it in 2014](https://www.wechall.net/profile/bt3gl)**.
 
 <br>
 <br>
@@ -24,7 +24,7 @@
 ##### ✅ 01. Fallback: [exploit test + write-up](test/01) and [submission script](script/01/)
 ##### ✅ 02. Fallout: [exploit test + write-up](test/02) and [submission script](script/02/)
 ##### ✅ 03. Coin Flip: [exploit test + write-up](test/03) and [submission script](script/03/)
-##### 04. Telephone: [exploit test + write-up](test/04) and [submission script](script/04/)
+##### ✅ 04. Telephone: [exploit test + write-up](test/04) and [submission script](script/04/)
 ##### 05. Token: [exploit test + write-up](test/05) and [submission script](script/05/)
 ##### 06. Delegation: [exploit test + write-up](test/06) and [submission script](script/06/)
 ##### 07. Force: [exploit test + write-up](test/07) and [submission script](script/07/)

