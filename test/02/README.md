@@ -104,7 +104,7 @@ contract Fallout {
 <br>
 
 ```shell
-cast send <level address> "Fal1out()" --private-key <private key>
+> cast send <level address> "Fal1out()" --private-key <private key>
 ```
 
 <br>

@@ -81,7 +81,7 @@ bool side = coinFlip == 1 ? true : false;
 
 <br>
 
-* which is derived from the variable `blockValue` as a `uint156` generated from the previous block number (block's number minus 1):
+* which is derived from the variable `blockValue` as a `uint256` generated from the previous block number (block's number minus 1):
 
 <br>
 
@@ -109,9 +109,9 @@ uint256 FACTOR = 578960446186580977117854925043439539266349923328202820197287920
 
 ```solidity
 if (side == _guess) {
-  consecutiveWins++;
-return true;
-  } else {
+    consecutiveWins++;
+    return true;
+} else {
     consecutiveWins = 0;
     return false;
 }
@@ -209,7 +209,7 @@ contract CoinFlipTest is Test {
 <br>
 
 
-* because this time i wanted to run a loop in the deployment script, i removed the exploit logic from it and added it to its own contract inside `src/03/CoinFlipExploit.sol`:
+* because this time i wanted to run a loop in the deployment script, i moved the exploit logic to its own contract inside `src/03/CoinFlipExploit.sol`:
 
 <br>
 
@@ -238,7 +238,7 @@ contract CoinFlipExploit {
 <br>
 
 
-* which could be submitted with `script/03/CoinFlip.s.sol`:
+* which could be called within `script/03/CoinFlip.s.sol`:
 
 <br>
 
@@ -292,8 +292,8 @@ do {
 
 <br>
 
-* however this never worked, and i suspected it's because of a last bit in `CoinFlip`, the `lastHash` check. 
-  - i originally thought it would require each new guess submission to occur after 12 seconds (the time it takes for a new proof-of-stake block to be minted):
+* however this never worked, and i suspected it's because of the `lastHash` check in `CoinFlip`.
+  - i originally thought this check would require each new guess submission to occur after 12 seconds (the time it takes for a new proof-of-stake block to be minted):
 
 
 <br>
@@ -309,9 +309,9 @@ lastHash = blockValue;
 
 <br>
 
-* but that it didn't matter whether i was running with that loop or manually (with, say, `while sleep 13; do forge script ./script/03/CoinFlip.s.sol --broadcast -vvvv --rpc-url sepolia; done`).
+* but it didn't matter whether i was running with the loop or manually (with, say, `while sleep 12; do forge script ./script/03/CoinFlip.s.sol --broadcast -vvvv --rpc-url sepolia; done`).
   - this solution never really worked (even though i spent a few hours trying to find the bug). 
-  - a bit frustrating because this solution was foundry native and symmetric with the previous problems.
+  - a bit frustrating because this solution was foundry-native and symmetric with the previous problems.
   - i decided i had to try a new approach... using an `interface`.
 
 

