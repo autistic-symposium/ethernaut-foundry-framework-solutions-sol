@@ -14,8 +14,9 @@
 <br>
   
 <p align="center">
-<img width="500" src=""">
+<img width="500" src="https://github.com/go-outside-labs/ethernaut-foundry-detailed-solutions-sol/assets/138340846/e226964c-4827-45ba-b976-bbaa8b4e081b">
 </p>
+
 
 
 <br>
