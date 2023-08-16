@@ -1,6 +1,16 @@
 ## 02. Fallout
 
 <br>
+  
+<p align="center">
+<img width="500" src="https://github.com/go-outside-labs/ethernaut-foundry-detailed-solutions-sol/assets/138340846/e226964c-4827-45ba-b976-bbaa8b4e081b">
+</p>
+
+
+
+
+
+<br>
 
 
 ### tl; dr
@@ -12,14 +22,7 @@
 * an example of this vulnerability exploited irl was when **[a company called Dynamic Piramid changed its name to Rubixi](https://blog.ethereum.org/2016/06/19/thinking-smart-contract-security)** but forgot to change its contract's constructor and ended up hacked.
 
 <br>
-  
-<p align="center">
-<img width="500" src="https://github.com/go-outside-labs/ethernaut-foundry-detailed-solutions-sol/assets/138340846/e226964c-4827-45ba-b976-bbaa8b4e081b">
-</p>
 
-
-
-<br>
 
 ```solidity
 // SPDX-License-Identifier: MIT

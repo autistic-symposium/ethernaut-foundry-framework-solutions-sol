@@ -1,35 +1,38 @@
-// SPDX-License-Identifier: UNLICENSED
+// SPDX-License-Identifier: CC-BY-4.0
 pragma solidity ^0.8.13;
 
 import "forge-std/Test.sol";
-import "src/03/CoinFlip.sol";
+import {CoinFlip} from "src/03/CoinFlip.sol";
+import {CoinFlipExploit} from "src/03/CoinFlipExploit.sol";
+
 
 contract CoinFlipTest is Test {
 
+    uint256 FACTOR = 57896044618658097711785492504343953926634992332820282019728792003956564819968;
+    uint8 consecutiveWinsHacked = 10;
+
     CoinFlip public level;
+    CoinFlipExploit public exploit;
 
     address instance = vm.addr(0x1); 
     address hacker = vm.addr(0x2); 
-    
-    uint256 FACTOR = 57896044618658097711785492504343953926634992332820282019728792003956564819968;
-    uint8 consecutiveWinsHacked = 10;
 
     function setUp() public {
 
         vm.prank(instance);
         level = new CoinFlip();
+        exploit = new CoinFlipExploit(level);
     
     }
 
     /////////////////////////////////////////////////////
     // Copy the pseudo-random function from the contract
     ////////////////////////////////////////////////////
-    function generateSide() internal view returns (bool) {
+    function generateSide() internal view returns (bool side) {
 
             uint256 blockValue = uint256(blockhash(block.number - 1));
             uint256 coinFlip = blockValue / FACTOR;
-            bool side = coinFlip == 1 ? true : false;
-            return side;
+            side = coinFlip == 1 ? true : false;
 
      }
 
@@ -54,6 +57,15 @@ contract CoinFlipTest is Test {
 
         assertEq(level.consecutiveWins(), consecutiveWinsHacked);
         vm.stopPrank();
+
+      }
+
+      function testCoinFlipExploit(uint256 blockNumber) public {
+
+        vm.assume(blockNumber > 0);
+        vm.roll(blockNumber);
+        bool rightGuess  = exploit.run();
+        assertTrue(rightGuess);
 
       }
 }

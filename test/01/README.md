@@ -2,19 +2,18 @@
 
 <br>
 
+<p align="center">
+<img width="300" src="https://github.com/go-outside-labs/ethernaut-foundry-writeups-sol/assets/138340846/8220cf2f-4a89-4816-bfc1-9bb44e402927">
+</p>
 
+<br>
 ### tl; dr
 
 <br>
 
 
 * in this challenge, we exploit a flawed fallback function to gain control and drain a contract.
-
-<br>
   
-<p align="center">
-<img width="500" src="https://github.com/go-outside-labs/ethernaut-foundry-writeups-sol/assets/138340846/8220cf2f-4a89-4816-bfc1-9bb44e402927">
-</p>
 
 
 <br>

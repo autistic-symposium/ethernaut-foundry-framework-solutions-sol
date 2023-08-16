@@ -9,5 +9,5 @@ remappings = [
 ]
 
 [rpc_endpoints]
-sepolia = '<add yours>'
+sepolia = 'https://eth-sepolia.g.alchemy.com/v2/QrTqnPbEQZOHIbJklW0uiNz8AgjA_6Ix'
 

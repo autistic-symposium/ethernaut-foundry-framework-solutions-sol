@@ -1,5 +1,13 @@
 ## 03. Coin Flip
 
+
+<br>
+  
+<p align="center">
+<img width="500" src=""">
+</p>
+
+
 <br>
 
 
@@ -9,12 +17,6 @@
 
 
 * in this challenge we exploit the determinism of a pseudo-random function compose of a global accessible variable, `blockhash`, and no added entropy.
-
-<br>
-  
-<p align="center">
-<img width="500" src=""">
-</p>
 
 
 <br>
