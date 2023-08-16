@@ -227,9 +227,6 @@ type                    2
 <br>
 
 ```solidity
-import "forge-std/Test.sol";
-import "src/01/Fallback.sol";
-
 contract FallbackTest is Test {
     Fallback public level;
     address instance = vm.addr(0x1); 
@@ -387,9 +384,6 @@ Ran 1 test suites: 1 tests passed, 0 failed, 0 skipped (1 total tests)
 <br>
 
 ```solidity
-import "forge-std/Script.sol";
-import "src/01/Fallback.sol";
-
 contract Exploit is Script {
 
       //////////////////////////////

@@ -3,7 +3,7 @@
 <br>
   
 <p align="center">
-<img width="500" src="https://github.com/go-outside-labs/ethernaut-foundry-detailed-solutions-sol/assets/138340846/e226964c-4827-45ba-b976-bbaa8b4e081b">
+<img width="300" src="https://github.com/go-outside-labs/ethernaut-foundry-detailed-solutions-sol/assets/138340846/e226964c-4827-45ba-b976-bbaa8b4e081b">
 </p>
 
 
@@ -25,9 +25,6 @@
 
 
 ```solidity
-// SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
-
 contract Fallout {
 
   mapping (address => uint) allocations;
@@ -139,9 +136,6 @@ await contract.Fal1out();
 <br>
 
 ```solidity
-import "forge-std/Test.sol";
-import "src/02/Fallout.sol";
-
 contract FalloutTest is Test {
 
     Fallout public level;
@@ -200,9 +194,6 @@ Ran 1 test suites: 1 tests passed, 0 failed, 0 skipped (1 total tests)
 <br>
 
 ```solidity
-import "forge-std/Script.sol";
-import "src/02/Fallout.sol";
-
 contract Exploit is Script {
     
       address level_instance = 0xAADB92d23788EA81c46fe22C4d4771B23dcc96a2;

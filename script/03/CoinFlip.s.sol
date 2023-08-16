@@ -17,13 +17,8 @@ contract Exploit is Script {
     function run() public {
 
         vm.startBroadcast(vm.envUint("PRIVATE_KEY"));
-
-        uint256 count = 0;
-        do {
-            exploit.run();
-            ++count;
-        } while (count < 10);
-
+        exploit.run();
         vm.stopBroadcast();
+
     }
 }
