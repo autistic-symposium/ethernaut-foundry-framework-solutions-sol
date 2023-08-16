@@ -2,7 +2,7 @@
 
 <br>
 
-##### 🔋 this project contains my write-ups and solutions for **[openzeppelin's ethernaut wargames](https://ethernaut.openzeppelin.com/)**. you may check `go-outside.eth`'s progress at the **[ethernaut's leaderboard](https://ethernaut.openzeppelin.com/leaderboard)**.
+##### 🔋 this project contains my write-ups and solutions for **[openzeppelin's ethernaut wargames](https://ethernaut.openzeppelin.com/)**. 
 ##### 🔋 do you remember overthewire? **[here is my wechat profile from playing it in 2014](https://www.wechall.net/profile/bt3gl)**.
 
 <br>

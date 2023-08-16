@@ -1,26 +1,41 @@
-## 
+## 04. Telephone
 
 <br>
 
 
+  
+<p align="center">
+<img width="200" src=""">
+</p>
+
+<br>
 ### tl; dr
 
 <br>
 
-
-* 
-
-<br>
-  
-<p align="center">
-<img width="500" src=""">
-</p>
-
+* in this challenge we exploit a vulnerability caused by confusing `tx.origin` and `msg.sender` to become `owner`.
+    - `tx.origin` refers to the EOA that initiated the transaction (which can be many calls ago), while `msg.sender` is the immediate caller.
 
 <br>
 
 ```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
 
+contract Telephone {
+
+  address public owner;
+
+  constructor() {
+    owner = msg.sender;
+  }
+
+  function changeOwner(address _owner) public {
+    if (tx.origin != msg.sender) {
+      owner = _owner;
+    }
+  }
+}
 ```
 
 
@@ -43,7 +58,7 @@
 
 <br>
 
-* check `test/.t.sol`:
+* check `test/04/Telephone.t.sol`:
 
 <br>
 
@@ -58,16 +73,14 @@
 <br>
 
 ```shell
-> forge test --match-contract Test -vvvv    
-
-
+> forge test --match-contract TelephoneTest -vvvv    
 ```
 
 
 
 <br>
 
-* submit with `script/.s.sol`:
+* submit with `script/04/Telephone.s.sol`:
 
 <br>
 
@@ -82,9 +95,7 @@
 <br>
 
 ```shell
-> forge script ./script/0.s.sol --broadcast -vvvv --rpc-url sepolia
-
-
+> forge script ./script/04/Telephone.s.sol --broadcast -vvvv --rpc-url sepolia
 ```
 
 <br>
