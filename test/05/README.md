@@ -3,10 +3,8 @@
 <br>
   
 <p align="center">
-<img width="500" src=""">
+<img width="300" src="https://github.com/go-outside-labs/ethernaut-foundry-detailed-solutions-sol/assets/138340846/b4985e6e-fbb2-4e7c-ac7b-2e249f857bb4">
 </p>
-
-
 
 
 <br>
@@ -140,7 +138,7 @@ contract Exploit is Script {
 <br>
 
 <p align="center">
-<img width="300" src="">
+<img width="600" src="https://github.com/go-outside-labs/ethernaut-foundry-detailed-solutions-sol/assets/138340846/c2d2db5c-feb8-469d-91b6-5b852cc5f011">
 </p>
 
 <br>
