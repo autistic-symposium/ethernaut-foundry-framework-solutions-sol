@@ -1,11 +1,9 @@
-## 🧑🏻‍🚀 my ethernaut write-ups in foundry
+## 🧑🏻‍🚀 my ethernaut write-ups and solution in foundry
 
 <br>
 
-##### 🔋 this project contains my write-ups on **[openzeppelin's ethernaut wargames](https://ethernaut.openzeppelin.com/)**.
-
-##### 🔋 to respect the challenge, i am not sharing explicit solutions (only for the first problem). instead, i provide: *i)* a discussion of the research i did or routes i took while solving them, and *ii)* their setup and boilerplates. this should give you enough tooling to come up with your own answers. you may check my 1337 progress at the **[ethernaut's leaderboard](https://ethernaut.openzeppelin.com/leaderboard)**.
-##### 🔋 probably out of context, but **[here is my wechat profile from playing overthewire in 2014](https://www.wechall.net/profile/bt3gl)**.
+##### 🔋 this project contains my write-ups and solutions for **[openzeppelin's ethernaut wargames](https://ethernaut.openzeppelin.com/)**. you may check `go-outside.eth`'s progress at the **[ethernaut's leaderboard](https://ethernaut.openzeppelin.com/leaderboard)**.
+##### 🔋 do you remember overthewire? **[here is my wechat profile from playing it in 2014](https://www.wechall.net/profile/bt3gl)**.
 
 <br>
 <br>
@@ -24,7 +22,7 @@
 <br>
 
 ##### 01. Fallback: [exploit test + write-up](test/01) and [submission script](script/01/)
-#####  02. Fallout: [exploit test + write-up](test/02) and [submission script](script/02/)
+##### 02. Fallout: [exploit test + write-up](test/02) and [submission script](script/02/)
 ##### 03. Coin Flip: [exploit test + write-up](test/03) and [submission script](script/03/)
 ##### 04. Telephone: [exploit test + write-up](test/04) and [submission script](script/04/)
 ##### 05. Token: [exploit test + write-up](test/05) and [submission script](script/05/)
@@ -83,7 +81,7 @@
 
 
 * submit scripts with, for example, 
-    - `forge script ./script/01/Fallback.s.sol  --broadcast -vvvv --rpc-url sepolia`
+    - `forge script ./script/01/Fallback.s.sol --broadcast -vvvv --rpc-url sepolia`
 
 <br>
 
