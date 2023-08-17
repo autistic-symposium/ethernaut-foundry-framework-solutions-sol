@@ -1,4 +1,4 @@
-## Delegration
+## Delegation
 
 <br>
 
@@ -72,7 +72,7 @@ contract Delegation {
 
 <br>
 
-* in this problem, we are provided with two contracts. `Delegate()` is the parent contract, which we want to become an owner. conveniently, the function `pwn()` is very explicit on being our target:
+* in this problem, we are provided with two contracts. `Delegate()` is the parent contract, which we want to become `owner`. conveniently, the function `pwn()` is very explicit on being our target:
 
 <br>
 
@@ -95,11 +95,11 @@ contract Delegate {
 
 * also note that the variable `owner` is in the first slot of both contracts. 
     - ordering of variable slots (and their mismatches) are what `DELEGATECALL` exploits in the wild usually explore.
-    - because we are dealing with opcodes this  is important, as every variable has its specific slot and should match in both origin and destination contract.
+    - this is important because we are dealing with opcodes, as every variable has its specific slot and should match in both origin and destination contract.
 
 <br>
 
-* the second contract, which we have access, is `Delegation()`, which has another convenience: a `delegatecall()` in the `fallback` function.
+* the second contract, which we have access, is `Delegation()`, comes with has another convenience: a `delegatecall()` in the `fallback` function.
 
 
 <br>
@@ -127,11 +127,12 @@ contract Delegation {
 <br>
 
 * from a previous challenge, we know that fallback functions are like a "catch all" in a contract, so it's pretty easy to access them. 
-    - in addition, in this particular case, `delegatecall()` takes `msg.data` as input (i.e., whatever data we pass when we trigger the fallback). it's pretty much an `exec`: we can pass function calls through it.
+    - in this particular case, `delegatecall()` takes `msg.data` as input (*i.e.*, whatever data we pass when we trigger the fallback). it's pretty much an `exec` as we can pass function calls through it.
 
 <br>
 
-* the last information we need is to learn how `deletecall()` passes arguments. the function signatures are encoded by computing Keccak-246 and keeping the first 4 bytes (these bytes are the function selector in the EVM).
+* the last information we need is to learn how `deletecall()` passes arguments. 
+  - the function signatures are encoded by computing Keccak-246 and keeping the first 4 bytes (these bytes are the function selector in the EVM).
 
 <br>
 
@@ -141,7 +142,7 @@ delegatecall(abi.encodeWithSignature("func_signature", "arguments"));
 
 <br>
 
-* in our attack we will use `call(abi.encodeWithSignature("pwn()")` to trigger `fallback() and become `owner`, which is also equivalent with `sendTransaction()`:
+* in our attack we will use `call(abi.encodeWithSignature("pwn()")` to trigger `fallback()` and become `owner`. this is also equivalent to the `eth` call `sendTransaction()`:
 
 <br>
 
@@ -264,7 +265,7 @@ contract Exploit is Script {
 </p>
 
 
-
+<br>
 <br>
 
 ----
@@ -272,9 +273,6 @@ contract Exploit is Script {
 <br>
 
 #### pwned...
-
-
-<br>
 
   
 <p align="center">
