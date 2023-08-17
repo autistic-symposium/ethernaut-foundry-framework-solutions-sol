@@ -36,73 +36,73 @@
 ##### ✅ 06. Delegation: 
 - **[solidity exploit + foundry test + write-up](test/06)**
 - **[submission foundry script](script/06/)**
-##### 07. Force: 
+##### 🔜 07. Force: 
 - **[solidity exploit + foundry test + write-up](test/07)**
 - **[submission foundry script](script/07/)**
-##### 08. Vault: 
+##### 🔜 08. Vault: 
 - **[solidity exploit + foundry test + write-up](test/08)**
 - **[submission foundry script](script/08/)**
-##### 09. King: 
+##### 🔜 09. King: 
 - **[solidity exploit + foundry test + write-up](test/09)**
 - **[submission foundry script](script/09/)**
-##### 10. Reentrancy: 
+##### 🔜 10. Reentrancy: 
 - **[solidity exploit + foundry test + write-up](test/10)**
 - **[submission foundry script](script/10/)**
-##### 11. Elevator: 
+##### 🔜 11. Elevator: 
 - **[solidity exploit + foundry test + write-up](test/11)**
 - **[submission foundry script](script/11/)**
-##### 12. Privacy: 
+##### 🔜 12. Privacy: 
 - **[solidity exploit + foundry test + write-up](test/12)**
 - **[submission foundry script](script/12/)**
-##### 13. Gatekeeper One: 
+##### 🔜 13. Gatekeeper One: 
 - **[solidity exploit + foundry test + write-up](test/13)**
 - **[submission foundry script](script/13/)**
-##### 14. Gatekeeper Two: 
+##### 🔜 14. Gatekeeper Two: 
 - **[solidity exploit + foundry test + write-up](test/14)**
 - **[submission foundry script](script/14/)**
-##### 15. Naught Coin: 
+##### 🔜 15. Naught Coin: 
 - **[solidity exploit + foundry test + write-up](test/15)**
 - **[submission foundry script](script/15/)**
-##### 16. Preservation: 
+##### 🔜 16. Preservation: 
 - **[solidity exploit + foundry test + write-up](test/16)**
 - **[submission foundry script](script/16/)**
-##### 17. Recovery: 
+##### 🔜 17. Recovery: 
 - **[solidity exploit + foundry test + write-up](test/17)**
 - **[submission foundry script](script/17/)**
-##### 18. Magic Number: 
+##### 🔜 18. Magic Number: 
 - **[solidity exploit + foundry test + write-up](test/18)**
 - **[submission foundry script](script/18/)**
-##### 19. Alien Code: 
+##### 🔜 19. Alien Code: 
 - **[solidity exploit + foundry test + write-up](test/19)**
 - **[submission foundry script](script/19/)**
-##### 20. Denial: 
+##### 🔜 20. Denial: 
 - **[solidity exploit + foundry test + write-up](test/20)**
 - **[submission foundry script](script/20/)**
-##### 21. Shop: 
+##### 🔜 21. Shop: 
 - **[solidity exploit + foundry test + write-up](test/21)**
 - **[submission foundry script](script/21/)**
-##### 22. Dex: 
+##### 🔜 22. Dex: 
 - **[solidity exploit + foundry test + write-up](test/22)**
 - **[submission foundry script](script/22/)**
-##### 23. Dex Two: 
+##### 🔜 23. Dex Two: 
 - **[solidity exploit + foundry test + write-up](test/23)**
 - **[submission foundry script](script/23/)**
-##### 24. Puzzle Wallet: 
+##### 🔜 24. Puzzle Wallet: 
 - **[solidity exploit + foundry test + write-up](test/24)**
 - **[submission foundry script](script/24/)**
-##### 25. Motorbike: 
+##### 🔜 25. Motorbike: 
 - **[solidity exploit + foundry test + write-up](test/25)**
 - **[submission foundry script](script/25/)**
-##### 26. Doubly Entry Point: 
+##### 🔜 26. Doubly Entry Point: 
 - **[solidity exploit + foundry test + write-up](test/26)**
 - **[submission foundry script](script/26/)**
-##### 27. Good Samaritan: 
+##### 🔜 27. Good Samaritan: 
 - **[solidity exploit + foundry test + write-up](test/27)**
 - **[submission foundry script](script/27/)**
-##### 28. Gatekeeper Three: 
+##### 🔜 28. Gatekeeper Three: 
 - **[solidity exploit + foundry test + write-up](test/28)**
 - **[submission foundry script](script/28/)**
-##### 29. Switch: 
+##### 🔜 29. Switch: 
 - **[solidity exploit + foundry test + write-up](test/29)**
 - **[submission foundry script](script/29/)**
 
