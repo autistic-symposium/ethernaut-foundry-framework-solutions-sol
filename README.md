@@ -2,7 +2,7 @@
 
 <br>
 
-##### 🔋 this project contains solutions for **[openzeppelin's ethernaut wargames](https://ethernaut.openzeppelin.com/)**. leveraging **foundry**, each level has a test set (`.t.sol`), a script set (`.s.sol`), and a write-up. some levels also have an exploit `src/.sol`.
+##### 🔋 this project contains solutions for **[openzeppelin's ethernaut wargames](https://ethernaut.openzeppelin.com/)**. leveraging **foundry**, each level has a test set (`.t.sol`), a script set (`.s.sol`), and a write-up. some levels also have an exploit at `src/.sol`.
 ##### 🔋 do you remember overthewire? **[here is my WeChall profile from playing it in 2014](https://www.wechall.net/profile/bt3gl)**.
 
 <br>
@@ -25,10 +25,12 @@
 - **[solidity exploit + foundry test + write-up](test/02)**
 - **[submission foundry script](script/02/)**
 ##### ✅ 03. Coin Flip: 
-- **[solidity exploit + foundry test + write-up](test/03)**
+- **[solidity exploit](src/05)**
+- **[foundry test + write-up](test/03)**
 - **[submission foundry script](script/03/)**
 ##### ✅ 04. Telephone: 
-- **[solidity exploit + foundry test + write-up](test/04)**
+- **[solidity exploit](src/04)**
+- **[foundry test + write-up](test/04)**
 - **[submission foundry script](script/04/)**
 ##### ✅ 05. Token: 
 - **[solidity exploit + foundry test + write-up](test/05)**
