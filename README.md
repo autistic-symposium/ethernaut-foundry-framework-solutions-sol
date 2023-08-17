@@ -2,7 +2,7 @@
 
 <br>
 
-##### 🔋 this project contains solutions for **[openzeppelin's ethernaut wargames](https://ethernaut.openzeppelin.com/)**. leveraging **foundry**, each level has a test set (`.t.sol`), a script set (`.s.sol`), and write-up. some levels also have a exploit `src/.sol`.
+##### 🔋 this project contains solutions for **[openzeppelin's ethernaut wargames](https://ethernaut.openzeppelin.com/)**. leveraging **foundry**, each level has a test set (`.t.sol`), a script set (`.s.sol`), and A write-up. some levels also have aN exploit `src/.sol`.
 ##### 🔋 do you remember overthewire? **[here is my WeChall profile from playing it in 2014](https://www.wechall.net/profile/bt3gl)**.
 
 <br>
@@ -26,7 +26,7 @@
 ##### ✅ 03. Coin Flip: [exploit + foundry test + write-up](test/03) and [submission foundry script](script/03/)
 ##### ✅ 04. Telephone: [exploit + foundry test + write-up](test/04) and [submission foundry script](script/04/)
 ##### ✅ 05. Token: [exploit + foundry test + write-up](test/05) and [submission foundry script](script/05/)
-##### 06. Delegation: [exploit + foundry test + write-up](test/06) and [submission foundry script](script/06/)
+##### ✅ 06. Delegation: [exploit + foundry test + write-up](test/06) and [submission foundry script](script/06/)
 ##### 07. Force: [exploit + foundry test + write-up](test/07) and [submission foundry script](script/07/)
 ##### 08. Vault: [exploit + foundry test + write-up](test/08) and [submission foundry script](script/08/)
 ##### 09. King: [exploit + foundry test + write-up](test/09) and [submission foundry script](script/09/)
@@ -65,7 +65,7 @@
 
 * create a `.env` (from `.env.example`) and add your private and private keys
 
-* add an sepolia rpc url to `foundry.toml`
+* add a sepolia rpc url to `foundry.toml`
 
 <br>
 
