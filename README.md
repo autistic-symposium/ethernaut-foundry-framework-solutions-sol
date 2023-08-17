@@ -35,7 +35,7 @@
 - **[submission foundry script](script/05/)**
 ##### ✅ 06. Delegation: 
 - **[solidity exploit + foundry test + write-up](test/06)**
-**[submission foundry script](script/06/)**
+- **[submission foundry script](script/06/)**
 ##### 07. Force: 
 - **[solidity exploit + foundry test + write-up](test/07)**
 - **[submission foundry script](script/07/)**
