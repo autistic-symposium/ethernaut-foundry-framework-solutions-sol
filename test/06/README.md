@@ -2,10 +2,8 @@
 
 <br>
 
-
- 
 <p align="center">
-<img width="300" src=""">
+<img width="300" src="https://github.com/go-outside-labs/ethernaut-foundry-detailed-solutions-sol/assets/1130416/ea0f9698-e913-41b5-b611-0e1f742aad05">
 </p>
 
 
@@ -21,7 +19,7 @@
 
 <br>
 
-* exploitation of `delegatecall()` has been in several hacks
+* exploitation of `delegatecall()` has been in several hacks in the wild, for example **[the parity multisig wallet hack, in 2017](https://blog.openzeppelin.com/on-the-parity-wallet-multisig-hack-405a8c12e8f7)**.
 
 <br>
  
@@ -163,7 +161,7 @@ sendTransaction({
 
 ----
 
-### solution
+### solution in solidity
 
 <br>
 
@@ -252,6 +250,20 @@ contract Exploit is Script {
 ```shell
 > forge script ./script/06/Delegation.s.sol --broadcast -vvvv --rpc-url sepolia
 ```
+
+<br>
+
+----
+
+### solution in the console
+
+<br>
+
+<p align="center">
+<img width="600" src="https://github.com/go-outside-labs/ethernaut-foundry-detailed-solutions-sol/assets/1130416/088e8a77-9506-4cfb-a486-74e2e9682e93">
+</p>
+
+
 
 <br>
 
