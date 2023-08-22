@@ -41,8 +41,9 @@
 ##### 🔜 07. Force: 
 - **[solidity exploit + foundry test + write-up](test/07)**
 - **[submission foundry script](script/07/)**
-##### 🔜 08. Vault: 
-- **[solidity exploit + foundry test + write-up](test/08)**
+##### ✅ 08. Vault: 
+- **[solidity exploit](src/08)**
+- **[foundry test + write-up](test/08)**
 - **[submission foundry script](script/08/)**
 ##### 🔜 09. King: 
 - **[solidity exploit + foundry test + write-up](test/09)**
