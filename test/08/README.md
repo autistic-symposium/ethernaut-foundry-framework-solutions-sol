@@ -1,4 +1,4 @@
-## 
+## Vault
 
 <br>
 
@@ -8,7 +8,7 @@
 <br>
 
 
-* 
+* in this challenge, we explore the fact that even if a solidity's state variables may be declared private (hidden from other contracts), their values are still recorded and open on the blockchain.
 
 <br>
   
@@ -20,7 +20,21 @@
 <br>
 
 ```solidity
+contract Vault {
+  bool public locked;
+  bytes32 private password;
 
+  constructor(bytes32 _password) {
+    locked = true;
+    password = _password;
+  }
+
+  function unlock(bytes32 _password) public {
+    if (password == _password) {
+      locked = false;
+    }
+  }
+}
 ```
 
 
