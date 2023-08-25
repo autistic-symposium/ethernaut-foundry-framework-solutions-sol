@@ -25,7 +25,7 @@
 - **[solidity exploit + foundry test + write-up](test/02)**
 - **[submission foundry script](script/02/)**
 ##### ✅ 03. Coin Flip: 
-- **[solidity exploit](src/05)**
+- **[solidity exploit](src/03)**
 - **[foundry test + write-up](test/03)**
 - **[submission foundry script](script/03/)**
 ##### ✅ 04. Telephone: 
