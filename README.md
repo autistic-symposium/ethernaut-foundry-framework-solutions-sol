@@ -4,7 +4,7 @@
 
 ##### 🔋 this project contains solutions for **[openzeppelin's ethernaut wargames](https://ethernaut.openzeppelin.com/)**. leveraging **foundry**, each level has a test set (`.t.sol`), a script set (`.s.sol`), and a write-up. some levels also have an exploit at `src/.sol`. 
 
-##### 🔋 note that my "submission foundry scripts" intentionally contain the addresses of my instances hardcoded instead of in the `.env` file. this serves me as an arxiv, and it's harmless as i use a test wallet for this work.
+##### 🔋 note that my *submission foundry scripts* intentionally contain the addresses of my instances hardcoded, instead of having them in the `.env` file. this serves me as an arxiv, and it's harmless as i use a test wallet for this work.
 ##### 🔋 by the way, do you remember overthewire? **[here is my WeChall profile from playing it in 2014](https://www.wechall.net/profile/bt3gl)**.
 
 <br>
@@ -83,7 +83,7 @@
 ##### 🔜 20. Denial: 
 - **[solidity exploit + foundry test + write-up](test/20)**
 - **[submission foundry script](script/20/)**
-##### 🔜 21. Shop: 
+##### ✅ 21. Shop: 
 - **[solidity exploit + foundry test + write-up](test/21)**
 - **[submission foundry script](script/21/)**
 ##### 🔜 22. Dex: 

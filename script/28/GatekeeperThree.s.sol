@@ -2,22 +2,20 @@
 pragma solidity ^0.8.0;
 
 import "forge-std/Script.sol";
-import {Vault} from "src/08/Vault.sol";
+import {GatekeeperThree} from "src/28/GatekeeperThree.sol";
 
-
+/*
 contract Exploit is Script {
 
         address instance = 0xcE198E8D4476Cb296cDb12e12757F1A505105Bf9;
-        Vault level = Vault(instance);        
+        GatekeeperThree level = GatekeeperThree(instance);        
         
         function run() external {
 
             vm.startBroadcast(vm.envUint("PRIVATE_KEY"));
-            
-            bytes32 password = vm.load(instance, bytes32(uint256(1)));
-            level.unlock(password);
-            console.log(level.locked());
+
             
             vm.stopBroadcast();
     }
 }
+*/

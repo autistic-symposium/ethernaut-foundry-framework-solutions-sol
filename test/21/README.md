@@ -1,4 +1,4 @@
-## 
+## Shop
 
 <br>
 
@@ -7,20 +7,37 @@
 
 <br>
 
-
 * 
 
 <br>
   
 <p align="center">
-<img width="500" src=""">
+<img width="300" src="">
 </p>
 
 
 <br>
 
 ```solidity
+pragma solidity ^0.8.0;
 
+interface Buyer {
+  function price() external view returns (uint);
+}
+
+contract Shop {
+  uint public price = 100;
+  bool public isSold;
+
+  function buy() public {
+    Buyer _buyer = Buyer(msg.sender);
+
+    if (_buyer.price() >= price && !isSold) {
+      isSold = true;
+      price = _buyer.price();
+    }
+  }
+}
 ```
 
 
@@ -32,10 +49,9 @@
 
 <br>
 
+* 
 
 <br>
-
-
 
 ----
 
@@ -43,7 +59,7 @@
 
 <br>
 
-* check `test/.t.sol`:
+* we craft the following exploit:
 
 <br>
 
@@ -51,23 +67,10 @@
 
 ```
 
-<br>
-
-* run:
 
 <br>
 
-```shell
-> forge test --match-contract Test -vvvv    
-
-
-```
-
-
-
-<br>
-
-* submit with `script/.s.sol`:
+* which can be submitted with `script/21/Shop.s.sol`:
 
 <br>
 
@@ -82,18 +85,15 @@
 <br>
 
 ```shell
-> forge script ./script/0.s.sol --broadcast -vvvv --rpc-url sepolia
-
-
+> forge script ./script/21/Shop.s.sol --broadcast -vvvv --rpc-url sepolia
 ```
 
 <br>
 
 ----
 
-<br>
 
-#### pwned...
+### pwned...
 
 
 <br>
