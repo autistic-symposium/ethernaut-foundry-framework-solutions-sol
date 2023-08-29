@@ -6,7 +6,7 @@ import {Fallout} from "src/02/Fallout.sol";
 
 contract FalloutTest is Test {
 
-    Fallout public level;
+    Fallout public level = new Fallout();
 
     address instance = vm.addr(0x1); 
     address hacker = vm.addr(0x2); 
@@ -14,14 +14,15 @@ contract FalloutTest is Test {
     function setUp() public {
 
         vm.prank(instance);
-        level = new Fallout();
-    
+
     }
 
     function testFallbackHack() public {
 
         vm.startPrank(hacker);
+
         level.Fal1out();
+        
         vm.stopPrank();
         
     }

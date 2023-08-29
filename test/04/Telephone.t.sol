@@ -8,25 +8,28 @@ import {TelephoneExploit} from "src/04/TelephoneExploit.sol";
 
 contract TelephoneTest is Test {
 
-    Telephone public level;
+    Telephone public level = new Telephone();
 
     address instance = vm.addr(0x1); 
     address hacker = vm.addr(0x2); 
 
     function setUp() public {
+
         vm.prank(instance);
-        level = new Telephone();
+
     }
 
     function testTelephoneHack() public {
 
         vm.startPrank(hacker);
+
         assertNotEq(level.owner(), hacker);
 
         TelephoneExploit exploit = new TelephoneExploit();
         exploit.run(level);
 
         assertEq(level.owner(), hacker);
+        
         vm.stopPrank();
         
     }

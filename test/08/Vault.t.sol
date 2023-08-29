@@ -24,6 +24,7 @@ contract VaultTest is Test {
         bytes32 password = vm.load(instance, bytes32(uint256(1)));
         level = new Vault(password);
         level.unlock(password);
+        
         assert(level.locked() == false);
         
         vm.stopPrank();
