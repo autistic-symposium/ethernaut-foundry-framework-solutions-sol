@@ -8,8 +8,13 @@
 <br>
 
 
-* this challenge explores the fact that if a state variable is declared `private`, it's only hidden from other contracts (*i.e.*, it's private within the contract's scope). however, its value is still recorded in the blockchain (and is open to anyone who understands how the memory is organized).
-* a great explanation about **solidity function visibility** can be found on **[solidity by example](https://solidity-by-example.org/visibility/)**.
+* this challenge explores the fact that if a state variable is declared `private`, it's only hidden from other contracts (*i.e.*, it's private within the contract's scope). 
+  - in other words, a `private` variable's value is still recorded in the blockchain and is open to anyone who understands how the memory is organized.
+
+<br>
+
+* remember that `public` and `private` are visibility modifiers, while `pure` and `view` are state modifiers. 
+  - a great explanation about **solidity function visibility** can be found on **[solidity by example](https://solidity-by-example.org/visibility/)**.
 
 <br>
   
@@ -47,7 +52,8 @@ contract Vault {
 
 <br>
 
-* the first thing we see in the contract is the two state variables set as `private`. in particular, `password` is declared as `byte32`, which makes this problem even simpler (hint: remember that **[the EVM operates on 32 bytes at a time](https://docs.soliditylang.org/en/v0.8.21/internals/layout_in_storage.html)**):
+* the first thing we see in the contract is the two state variables set as `private`. 
+  - in particular, `password` is declared as `byte32`, which makes this problem even simpler (hint: remember that **[the EVM operates on 32 bytes at a time](https://docs.soliditylang.org/en/v0.8.21/internals/layout_in_storage.html)**):
 
 <br>
 
@@ -71,7 +77,7 @@ bytes32 private password;
 
 <br>
 
-* finally, we look at the only function in the contract. it "unlocks" `locked` when given the correct password:
+* finally, we look at the only function in the contract: it "unlocks" `locked` when given the correct password:
 
 <br>
 
@@ -87,7 +93,9 @@ function unlock(bytes32 _password) public {
 
 * there are many ways to solve this exercise, but the theory is the same: each smart contract has its own storage reflecting the state of the contract, which is divided into 32-byte slots.
 
-* a first approach is to simply call the well-known API `web3.eth.getStorageAt(contractAddress, slotNumber)`. we know the contract address and that `password` is on slot number `1`:
+<br>
+
+* a first approach is to simply call the well-known API `web3.eth.getStorageAt(contractAddress, slotNumber)`, as we know the contract address and that `password` is on slot number `1`:
 
 <br>
 
@@ -107,7 +115,8 @@ function load(address account, bytes32 slot) external returns (bytes32);
 
 <br>
 
-* in particular, foundry's **[std storage library](https://book.getfoundry.sh/reference/forge-std/std-storage)** is a great util to manipulate storage. from the foundry book, here is an illustration of how `vm.load()` works:
+* in particular, foundry's **[std storage library](https://book.getfoundry.sh/reference/forge-std/std-storage)** is a great util to manipulate storage. 
+  - from the foundry book, here is an illustration of how `vm.load()` works:
 
 <br>
 

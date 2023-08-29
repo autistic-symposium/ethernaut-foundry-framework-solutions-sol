@@ -19,7 +19,7 @@ contract Exploit is Script {
 
             ElevatorExploit exploit = new ElevatorExploit();
             exploit.run(level);
-            assert(level.top());
+            assertTrue(level.top());
 
             vm.stopBroadcast();
     }

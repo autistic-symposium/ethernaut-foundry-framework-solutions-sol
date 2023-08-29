@@ -87,7 +87,8 @@
 - **[solidity exploit + foundry test + write-up](test/21)**
 - **[submission foundry script](script/21/)**
 ##### 🔜 22. Dex: 
-- **[solidity exploit + foundry test + write-up](test/22)**
+- **[solidity exploit](src/22/)**
+- **[foundry test + write-up](test/22)**
 - **[submission foundry script](script/22/)**
 ##### 🔜 23. Dex Two: 
 - **[solidity exploit + foundry test + write-up](test/23)**

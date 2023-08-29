@@ -7,7 +7,8 @@
 
 <br>
 
-* 
+* in this challenge we explore restrictions of `view` functions through an `interface`. 
+
 
 <br>
   
@@ -49,7 +50,43 @@ contract Shop {
 
 <br>
 
-* 
+* the first bit of this contract is the `interface Buyer` that defines as `external view` function, `price()`:
+
+<br>
+
+```solidity
+interface Buyer {
+  function price() external view returns (uint);
+}
+```
+
+<br>
+
+* then, in the `Shop` contract, we have two state variables:
+
+<br>
+
+```solidity
+uint public price = 100;
+bool public isSold;
+```
+
+<br>
+
+* and a `public` function `buy()`, where the fact that `price()` is being called twice is our vulnerability:
+
+<br>
+
+```solidity
+function buy() public {
+    Buyer _buyer = Buyer(msg.sender);
+
+    if (_buyer.price() >= price && !isSold) {
+      isSold = true;
+      price = _buyer.price();
+    }
+}
+```
 
 <br>
 
