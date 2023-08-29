@@ -9,6 +9,7 @@
 
 
 * this challenge explores the fact that if a state variable is declared `private`, it's only hidden from other contracts (*i.e.*, it's private within the contract's scope). however, its value is still recorded in the blockchain (and is open to anyone who understands how the memory is organized).
+* a great explanation about **solidity function visibility** can be found on **[solidity by example](https://solidity-by-example.org/visibility/)**.
 
 <br>
   
@@ -86,7 +87,7 @@ function unlock(bytes32 _password) public {
 
 * there are many ways to solve this exercise, but the theory is the same: each smart contract has its own storage reflecting the state of the contract, which is divided into 32-byte slots.
 
-* a first approach is simply call the well-known API `web3.eth.getStorageAt(contractAddress, slotNumber)`. we know the contract address and that `password` is on slot number `1`:
+* a first approach is to simply call the well-known API `web3.eth.getStorageAt(contractAddress, slotNumber)`. we know the contract address and that `password` is on slot number `1`:
 
 <br>
 
@@ -106,7 +107,7 @@ function load(address account, bytes32 slot) external returns (bytes32);
 
 <br>
 
-* from the foundry book, here is a straightforward illustration:
+* in particular, foundry's **[std storage library](https://book.getfoundry.sh/reference/forge-std/std-storage)** is a great util to manipulate storage. from the foundry book, here is an illustration of how `vm.load()` works:
 
 <br>
 
@@ -258,8 +259,10 @@ contract Exploit is Script {
 
 ---
 
-### further resources
+### external resources
 
 <br>
 
 * **[solidity docs on slots](https://docs.soliditylang.org/en/v0.8.21/internals/layout_in_storage.html)**
+* **[solidity by example: visibility](https://solidity-by-example.org/visibility/)**
+* **[foundry book cheatcode for vm](https://book.getfoundry.sh/cheatcodes/load?highlight=vm.load#examples)**
