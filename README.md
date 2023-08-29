@@ -2,8 +2,10 @@
 
 <br>
 
-##### 🔋 this project contains solutions for **[openzeppelin's ethernaut wargames](https://ethernaut.openzeppelin.com/)**. leveraging **foundry**, each level has a test set (`.t.sol`), a script set (`.s.sol`), and a write-up. some levels also have an exploit at `src/.sol`.
-##### 🔋 do you remember overthewire? **[here is my WeChall profile from playing it in 2014](https://www.wechall.net/profile/bt3gl)**.
+##### 🔋 this project contains solutions for **[openzeppelin's ethernaut wargames](https://ethernaut.openzeppelin.com/)**. leveraging **foundry**, each level has a test set (`.t.sol`), a script set (`.s.sol`), and a write-up. some levels also have an exploit at `src/.sol`. 
+
+##### 🔋 note that my "submission foundry scripts" intentionally contain the addresses of my instances hardcoded instead of in the `.env` file. this serves me as an arxiv, and it's harmless as i use a test wallet for this work.
+##### 🔋 by the way, do you remember overthewire? **[here is my WeChall profile from playing it in 2014](https://www.wechall.net/profile/bt3gl)**.
 
 <br>
 
@@ -33,7 +35,7 @@
 - **[foundry test + write-up](test/04)**
 - **[submission foundry script](script/04/)**
 ##### ✅ 05. Token: 
-- **[solidity exploit + foundry test + write-up](test/05)**
+- **[solidity exploit + write-up](test/05)**
 - **[submission foundry script](script/05/)**
 ##### ✅ 06. Delegation: 
 - **[solidity exploit + foundry test + write-up](test/06)**
@@ -42,8 +44,7 @@
 - **[solidity exploit + foundry test + write-up](test/07)**
 - **[submission foundry script](script/07/)**
 ##### ✅ 08. Vault: 
-- **[solidity exploit](src/08)**
-- **[foundry test + write-up](test/08)**
+- **[solidity exploit + foundry test + write-up](test/08)**
 - **[submission foundry script](script/08/)**
 ##### 🔜 09. King: 
 - **[solidity exploit + foundry test + write-up](test/09)**
@@ -52,7 +53,8 @@
 - **[solidity exploit + foundry test + write-up](test/10)**
 - **[submission foundry script](script/10/)**
 ##### ✅ 11. Elevator: 
-- **[solidity exploit + foundry test + write-up](test/11)**
+- **[solidity exploit](src/11/)**
+- **[write-up](test/11)**
 - **[submission foundry script](script/11/)**
 ##### 🔜 12. Privacy: 
 - **[solidity exploit + foundry test + write-up](test/12)**

