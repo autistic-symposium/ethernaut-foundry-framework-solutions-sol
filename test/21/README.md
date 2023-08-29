@@ -10,10 +10,12 @@
 * in this challenge we explore restrictions of `view` functions through an `interface`. 
 
 
+
+
 <br>
   
 <p align="center">
-<img width="300" src="">
+<img width="300" src="https://github.com/go-outside-labs/ethernaut-foundry-detailed-solutions-sol/assets/138340846/fe25b506-a655-47dc-8c9a-4557a7bc3d63">
 </p>
 
 
