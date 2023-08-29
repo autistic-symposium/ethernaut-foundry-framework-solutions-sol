@@ -98,8 +98,6 @@ function changeOwner(address _owner) public {
 <br>
 
 ```solidity
-import {Telephone} from "src/04/Telephone.sol";
-
 contract TelephoneExploit {
     
     function run(Telephone level) public {
@@ -122,11 +120,6 @@ contract TelephoneExploit {
 <br>
 
 ```solidity
-import "forge-std/Test.sol";
-import {Telephone} from "src/04/Telephone.sol";
-import {TelephoneExploit} from "src/04/TelephoneExploit.sol";
-
-
 contract TelephoneTest is Test {
 
     Telephone public level;
@@ -173,10 +166,6 @@ contract TelephoneTest is Test {
 <br>
 
 ```solidity
-import "forge-std/Script.sol";
-import {Telephone} from "src/04/Telephone.sol";
-import {TelephoneExploit} from "src/04/TelephoneExploit.sol";
-
 contract Exploit is Script {
 
         address levelInstance = 0x63f80459C2CBa9692DFA70eD43c66423a9596c02;

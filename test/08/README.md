@@ -8,7 +8,7 @@
 <br>
 
 
-* this challenge explores the fact that if a state variable is declared `private`, it's only hidden from other contracts (private within the contract's scope). however, its value is still recorded in the blockchain (and is open to anyone who understands how memory is organized).
+* this challenge explores the fact that if a state variable is declared `private`, it's only hidden from other contracts (*i.e.*, it's private within the contract's scope). however, its value is still recorded in the blockchain (and is open to anyone who understands how the memory is organized).
 
 <br>
   
@@ -131,7 +131,7 @@ emit log_uint(uint256(leet)); // 1337
 
 <br>
 
-* check `test/.t.sol`:
+* check `test/08/Vault.t.sol`:
 
 <br>
 
@@ -171,14 +171,14 @@ contract VaultTest is Test {
 <br>
 
 ```shell
-> forge test --match-contract Test -vvvv    
+> forge test --match-contract VaultTest -vvvv    
 ```
 
 
 
 <br>
 
-* then submit the solution with `script/.s.sol`:
+* then submit the solution with `script/08/Vault.s.sol`:
 
 <br>
 
