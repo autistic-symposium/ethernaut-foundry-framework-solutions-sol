@@ -7,10 +7,10 @@ import {TelephoneExploit} from "src/04/TelephoneExploit.sol";
 
 contract Exploit is Script {
 
-        address levelInstance = 0x63f80459C2CBa9692DFA70eD43c66423a9596c02;
+        address instance = 0x63f80459C2CBa9692DFA70eD43c66423a9596c02;
         address hacker = vm.envAddress("PUBLIC_KEY");
 
-        Telephone level = Telephone(levelInstance);        
+        Telephone level = Telephone(instance);        
         
         function run() external {
 

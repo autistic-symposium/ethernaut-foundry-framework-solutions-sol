@@ -6,12 +6,11 @@ import {Fallback} from "src/01/Fallback.sol";
 
 contract Exploit is Script {
 
-      //////////////////////////////////////////
+      ////////////////////////////////////////////
       // CHANGE: add the current instance address
-      /////////////////////////////////////////
-    
-      address levelInstance = 0xD4E2471CA863251b61a1009223Ee23D2F23f057d;
-      Fallback level = Fallback(payable(address(levelInstance)));
+      ///////////////////////////////////////////
+      address instance = 0xD4E2471CA863251b61a1009223Ee23D2F23f057d;
+      Fallback level = Fallback(payable(address(instance)));
 
       function run() external {
 

@@ -289,7 +289,7 @@ contract Exploit is Script {
 <br>
 
 ```shell
-> cast send <instance address> <calldata above> --gas <extra gas> --private-key <private-key> --rpc-url=<sepolia url> 
+> cast send <instance address> <calldata above> --gas <extra gas> --private-key=<private-key> --rpc-url=<sepolia url> 
 ```
 
 
@@ -311,9 +311,8 @@ contract Exploit is Script {
 
 ----
 
-<br>
 
-#### pwned...
+### pwned...
 
   
 <p align="center">

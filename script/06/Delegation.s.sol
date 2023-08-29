@@ -7,8 +7,8 @@ import {Delegation} from "src/06/Delegation.sol";
 
 contract Exploit is Script {
 
-        address levelInstance = 0x336a9B16f89367082e234E0eeAeE9a3Bf61caeEE;
-        Delegation level = Delegation(levelInstance);        
+        address instance = 0x336a9B16f89367082e234E0eeAeE9a3Bf61caeEE;
+        Delegation level = Delegation(instance);        
         
         function run() external {
 
