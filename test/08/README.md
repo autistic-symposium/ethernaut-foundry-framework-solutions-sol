@@ -13,7 +13,7 @@
 <br>
   
 <p align="center">
-<img width="300" src="">
+<img width="300" src="https://github.com/go-outside-labs/ethernaut-foundry-detailed-solutions-sol/assets/1130416/9863a3ce-ee78-4d75-861e-85691e44cbea">
 </p>
 
 
