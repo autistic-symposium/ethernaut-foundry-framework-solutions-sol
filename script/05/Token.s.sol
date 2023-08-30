@@ -13,7 +13,7 @@ contract Exploit is Script {
 
             vm.startBroadcast(vm.envUint("PRIVATE_KEY"));
 
-            level.transfer(0x0000000000000000000000000000000000000000, 21);
+            level.transfer(address(0), 21);
             
             vm.stopBroadcast();
     }
