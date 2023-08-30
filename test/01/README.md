@@ -138,7 +138,7 @@ function withdraw() public onlyOwner {
 
 ---
 
-### 3 line-solution with `cast`
+### 3-lines-solution with `cast`
 
 <br>
 
