@@ -15,7 +15,7 @@
 <br>
 
 
-* in this challenge, we leverage an attack surface generated from implementing the low-level function `delegatecall` (from opcode `DELEGATECALL`) to become `owner`.
+* in this challenge, we become `owner` by leveraging an attack surface generated from implementing the low-level function `delegatecall` (from opcode `DELEGATECALL`).
 
 <br>
 
@@ -144,7 +144,7 @@ contract Delegation {
 <br>
 
 * the last information we need is to learn how `deletecall()` passes arguments. 
-  - the function signatures are encoded by computing Keccak-246 and keeping the first 4 bytes (the function selector in the EVM).
+  - the function signatures are encoded by computing **[Keccak-246](https://solidity-by-example.org/hashing/)** and keeping the first 4 bytes (the function selector in the EVM).
 
 <br>
 
