@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: CC-BY-4.0
+// bt3gl's solution to ethernaut
+
 pragma solidity ^0.6.0;
 
 import "forge-std/Script.sol";

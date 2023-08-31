@@ -113,7 +113,7 @@ function goTo(uint _floor) public {
 
 <br>
 
-* an exploit could be crafter with `contract.call(abi.encodeWithSignature("goTo(uint)", 0))`. 
+* an exploit could be crafted with `contract.call(abi.encodeWithSignature("goTo(uint)", 0))`. 
   - however, since we are leveraging foundry, we craft the following exploit:
 
 <br>
@@ -165,7 +165,6 @@ contract Exploit is Script {
             vm.stopBroadcast();
     }
 }
-
 ```
 
 <br>
@@ -186,7 +185,7 @@ contract Exploit is Script {
 
 <br>
 
-* another way to submit our exploit is through `cast`. first, we could deploy it with:
+* another way to submit our exploit is through `cast`. first, we could deploy our attack contract with:
 
 <br>
 

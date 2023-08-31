@@ -4,7 +4,8 @@
 
 ##### 🔋 this project contains solutions for **[openzeppelin's ethernaut wargames](https://ethernaut.openzeppelin.com/)**. leveraging **foundry**, each level has a test set (`.t.sol`), a script set (`.s.sol`), and a write-up. some levels also have an exploit at `src/.sol`. 
 
-##### 🔋 note that my *submission foundry scripts* intentionally contain the addresses of my instances hardcoded, instead of having them in the `.env` file. this serves me as an arxiv, and it's harmless as i use a test wallet for this work.
+##### 🔋 note that my *submission foundry scripts* intentionally contain the addresses of my instances hardcoded, instead of having them in the `.env` file. this is harmless as i use a disposable test wallet for this work (and it also serves me as an arxiv).
+
 ##### 🔋 by the way, do you remember overthewire? **[here is my WeChall profile from playing it in 2014](https://www.wechall.net/profile/bt3gl)**.
 
 <br>
@@ -124,9 +125,11 @@
 
 * install **[foundry](https://github.com/foundry-rs/foundry)**
 
-* create a `.env` (from `.env.example`) and add your private and private keys
+* create a test wallet (*e.g.*, with metamask or rainbow wallets)
 
-* add a sepolia rpc url to `foundry.toml`
+* create a `.env` (copying from `.env.example`) and your add public and private keys
+
+* add a sepolia rpc url to `foundry.toml` (*e.g.*, from **[alchemy](https://www.alchemy.com/)** or **[infura](https://www.infura.io/)**)
 
 <br>
 
