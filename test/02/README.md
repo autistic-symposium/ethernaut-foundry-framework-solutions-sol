@@ -19,6 +19,7 @@
 
 
 * in this challenge, the contract's constructor function is misspelled, causing the contract to call an empty constructor. we explore this vulnerability to become `owner`.
+  
 * an example of this vulnerability exploited irl was when **[a company called Dynamic Piramid changed its name to Rubixi](https://blog.ethereum.org/2016/06/19/thinking-smart-contract-security)** but forgot to change its contract's constructor and ended up hacked.
 
 <br>
@@ -76,13 +77,7 @@ contract Fallout {
 
 <br>
 
-* when a constructor has a different name from the contract, it becomes a regular method with a default `public` visibility (i.e., they are part of the contract's interface and can be callable by anyone).
-
-<br>
-
-* fun fact: before solidity `0.4.22`, defining a function with the same name as the contract was the only way to define its constructor. after that version, the `constructor` keyword was introduced.
-
-
+* when a constructor has a different name from the contract, it becomes a regular method with a default `public` visibility (*i.e.*, they are part of the contract's interface and can be callable by anyone). this is the vulnerability we explore:
 
 <br>
 
@@ -92,6 +87,14 @@ contract Fallout {
     allocations[owner] = msg.value;
   }
 ```
+
+  
+<br>
+
+* fun fact: before solidity `0.4.22`, defining a function with the same name as the contract was the only way to define its constructor. after that version, the `constructor` keyword was introduced.
+
+
+
 
 <br>
 
@@ -127,7 +130,7 @@ await contract.Fal1out();
 
 <br>
 
-* i had to change the original contract a little to compile with foundry (e.g., adding a couple of `payable` casting and removing `SafeMath` as it's not needed for `>= 0.8.0`).
+* i had to change the original contract a little to compile with foundry (*e.g.*, adding a couple of `payable` casting and removing `SafeMath` as it's not needed for `>= 0.8.0`).
 
 <br>
 

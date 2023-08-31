@@ -69,7 +69,7 @@ function transfer(address _to, uint _value) public returns (bool) {
 
 <br>
 
- * whenever we add 1 to a variable's maximum value, the value wraps around and decreases.
+ * whenever we add `1` to a variable's maximum value, the value wraps around and decreases.
     - for example, an (unsigned) `uint8`, has the maximum value of `2^8 - 1 = 255`. if we add `1` to it, it becomes `0`. same as `2^256 - 1 + 1`.
     - symmetrically, if we subtract a value larger than what the variable holds, the result wraps around from the other side, increasing the variable's value. this is our exploit.
 
@@ -133,7 +133,7 @@ contract Exploit is Script {
 
 ---
 
-### three-lines solution directly in the console
+### 3-lines solution directly in the console
 
 <br>
 
