@@ -1,4 +1,4 @@
-## 
+## Denial
 
 <br>
 
@@ -13,7 +13,7 @@
 <br>
   
 <p align="center">
-<img width="500" src=""">
+<img width="300" src="">
 </p>
 
 
@@ -43,7 +43,7 @@
 
 <br>
 
-* check `test/.t.sol`:
+* check `test/20/Denial.t.sol`:
 
 <br>
 
@@ -58,7 +58,7 @@
 <br>
 
 ```shell
-> forge test --match-contract Test -vvvv    
+> forge test --match-contract DenialTest -vvvv    
 
 
 ```
@@ -67,7 +67,7 @@
 
 <br>
 
-* submit with `script/.s.sol`:
+* submit with `script/20/Denial.s.sol`:
 
 <br>
 
@@ -82,7 +82,7 @@
 <br>
 
 ```shell
-> forge script ./script/0.s.sol --broadcast -vvvv --rpc-url sepolia
+> forge script ./script/20/Denial.s.sol --broadcast -vvvv --rpc-url sepolia
 
 
 ```

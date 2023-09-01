@@ -1,4 +1,4 @@
-## 
+## Magick Number
 
 <br>
 
@@ -13,7 +13,7 @@
 <br>
   
 <p align="center">
-<img width="500" src=""">
+<img width="300" src="">
 </p>
 
 
@@ -43,7 +43,7 @@
 
 <br>
 
-* check `test/.t.sol`:
+* check `test/18/MagickNumber.t.sol`:
 
 <br>
 
@@ -58,7 +58,7 @@
 <br>
 
 ```shell
-> forge test --match-contract Test -vvvv    
+> forge test --match-contract MagickNumberTest -vvvv    
 
 
 ```
@@ -67,7 +67,7 @@
 
 <br>
 
-* submit with `script/.s.sol`:
+* submit with `script/18/MagickNumber.s.sol`:
 
 <br>
 
@@ -82,7 +82,7 @@
 <br>
 
 ```shell
-> forge script ./script/0.s.sol --broadcast -vvvv --rpc-url sepolia
+> forge script ./script/18/MagickNumber.s.sol --broadcast -vvvv --rpc-url sepolia
 
 
 ```
