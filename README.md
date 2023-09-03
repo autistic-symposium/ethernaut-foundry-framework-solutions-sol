@@ -54,7 +54,7 @@
 - **[submission foundry script](script/10/)**
 ##### ✅ 11. Elevator: 
 - **[solidity exploit](src/11/)**
-- **[write-up](test/11)**
+- **[foundry test + write-up](test/11)**
 - **[submission foundry script](script/11/)**
 ##### 🔜 12. Privacy: 
 - **[solidity exploit + foundry test + write-up](test/12)**
@@ -84,7 +84,8 @@
 - **[solidity exploit + foundry test + write-up](test/20)**
 - **[submission foundry script](script/20/)**
 ##### ✅ 21. Shop: 
-- **[solidity exploit + foundry test + write-up](test/21)**
+- **[solidity exploit](src/21)**
+- **[foundry test + write-up](test/21)**
 - **[submission foundry script](script/21/)**
 ##### 🔜 22. Dex: 
 - **[solidity exploit](src/22/)**
