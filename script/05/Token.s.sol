@@ -8,7 +8,7 @@ import {Token} from "src/05/Token.sol";
 
 contract Exploit is Script {
 
-        address instance = 0x1e8407c9A9f3D689E8f48C63eaF04fe0bd549629;
+        address instance = vm.envAddress("INSTANCE_LEVEL5");
         Token level = Token(instance);        
         
         function run() external {

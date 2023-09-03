@@ -9,7 +9,7 @@ import {Vault} from "src/08/Vault.sol";
 
 contract Exploit is Script {
 
-        address instance = 0xcE198E8D4476Cb296cDb12e12757F1A505105Bf9;
+        address instance = vm.envAddress("INSTANCE_LEVEL8");
         Vault level = Vault(instance);        
         
         function run() external {

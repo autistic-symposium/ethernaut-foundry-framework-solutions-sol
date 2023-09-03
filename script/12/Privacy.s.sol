@@ -8,7 +8,7 @@ import {Privacy} from "src/12/Privacy.sol";
 
 contract Exploit is Script {
 
-        address instance = 0xcE198E8D4476Cb296cDb12e12757F1A505105Bf9;
+        address instance = vm.envAddress("INSTANCE_LEVEL12");
         Privacy level = Privacy(instance);        
         
         function run() external {

@@ -8,7 +8,7 @@ import {Shop} from "src/21/Shop.sol";
 
 contract Exploit is Script {
 
-        address instance;// = ;
+        address instance = vm.envAddress("INSTANCE_LEVEL21");
         Shop level = Shop(instance);        
         
         function run() external {

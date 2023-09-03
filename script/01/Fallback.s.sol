@@ -11,8 +11,8 @@ contract Exploit is Script {
       ////////////////////////////////////////////
       // CHANGE: add the current instance address
       ///////////////////////////////////////////
-      address instance = 0xD4E2471CA863251b61a1009223Ee23D2F23f057d;
-      Fallback level = Fallback(payable(address(instance)));
+      address instance = vm.envAddress("INSTANCE_LEVEL1");
+      Fallback level = Fallback(payable(instance));
 
       function run() external {
 
