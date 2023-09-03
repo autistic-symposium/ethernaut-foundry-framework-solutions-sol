@@ -1,4 +1,4 @@
-## Vault
+## 👾 08. Vault
 
 <br>
 
@@ -14,7 +14,30 @@
 <br>
 
 * remember that `public` and `private` are visibility modifiers, while `pure` and `view` are state modifiers. 
-  - a great explanation about **solidity function visibility** can be found on **[solidity by example](https://solidity-by-example.org/visibility/)**.
+    - a great explanation about **solidity function visibility** can be found on **[solidity by example](https://solidity-by-example.org/visibility/)**.
+
+
+<br>
+
+* before we start, it's worth talking about the four ways the EVM stores data, depending on their context:
+<br>
+  1. firstly, there is the **key-value stack**, where you can `POP`, `PUSH` , `DUP1`, or `POP` data. 
+      - basically, the EVM is a stack machine, as it does not operate on registers but on a virtual stack with a size limit `1024`. 
+     - stack items (both keys and values) have a size of `32-bytes` (or `256-bit`), so the EVM is a `256-bit` word machine (facilitating, for instance, `keccak256` hash scheme and elliptic-curve computations).
+<br>
+    
+  2. secondly, there is the **byte-array memory (RAM)**, used to store data during execution (such as passing arguments to internal functions). 
+      - opcodes are `MSTORE`, `MLOAD`, or `MSTORE8`.
+<br>
+
+  3. third, there is the **calldata** (which can be accessed through `msg.data`), a read-only byte-addressable space for the data parameter of a transaction or call. 
+      - unlike the stack, this data is accessed by specifying the exact byte offset and the number of bytes to read. 
+      - opcdes are `CALLDATACOPY`, which copies a number of bytes of the transaction to memory, `CALLDATASIZE`, and `CALLDATALOAD`.
+  <br>
+
+  4. lastly, there is **disk storage**, a persistent read-write word-addressable space, where each contract stores persistent information (and where state variables live), and is represented by a mapping of `2^{256}` slots of `32 bytes` each. 
+      - the opcode `SSTORE` is used to store data and `SLOAD` to load.
+
 
 <br>
   
@@ -95,7 +118,7 @@ function unlock(bytes32 _password) public {
 
 <br>
 
-* a first approach is to simply call the well-known API `web3.eth.getStorageAt(contractAddress, slotNumber)`, as we know the contract address and that `password` is on slot number `1`:
+* a first approach is to simply call the **[well-known API](https://web3js.readthedocs.io/en/v1.2.9/web3-eth.html#getstorageat)** `web3.eth.getStorageAt(contractAddress, slotNumber)`, as we know the contract address and that `password` is on slot number `1`:
 
 <br>
 
@@ -150,8 +173,8 @@ contract VaultTest is Test {
 
     Vault public level;
 
-    address instance = vm.addr(0x1); 
-    address hacker = vm.addr(0x2); 
+    address instance = vm.addr(0x10053); 
+    address hacker = vm.addr(0x1337); 
 
     function setUp() public {
 
@@ -195,7 +218,7 @@ contract VaultTest is Test {
 ```solidity
 contract Exploit is Script {
 
-        address instance = 0x6d1BEEa9eD0E145B98308DA049E371fA0C8bc923;
+        address instance = vm.envAddress("INSTANCE_LEVEL8");
         Vault level = Vault(instance);        
         
         function run() external {
@@ -204,7 +227,6 @@ contract Exploit is Script {
             
             bytes32 password = vm.load(instance, bytes32(uint256(1)));
             level.unlock(password);
-            console.log(level.locked());
             
             vm.stopBroadcast();
     }

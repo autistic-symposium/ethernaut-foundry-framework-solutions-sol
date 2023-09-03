@@ -10,8 +10,8 @@ contract FalloutTest is Test {
 
     Fallout public level = new Fallout();
 
-    address instance = vm.addr(0x1); 
-    address hacker = vm.addr(0x2); 
+    address instance = vm.addr(0x10053); 
+    address hacker = vm.addr(0x1337); 
 
     function setUp() public {
 

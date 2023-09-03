@@ -4,12 +4,12 @@
 pragma solidity ^0.8.0;
 
 import "forge-std/Test.sol";
-import {Shop} from "src/21/Shop.sol";
-import {ShopExploit} from "src/21/ShopExploit.sol";
+import {Elevator} from "src/11/Elevator.sol";
+import {ElevatorExploit} from "src/11/ElevatorExploit.sol";
 
-contract ShopTest is Test {
+contract ElevatorTest is Test {
 
-    Shop public level = new Shop();
+    Elevator public level = new Elevator();
 
     address instance = payable(vm.addr(0x10053)); 
     address hacker = vm.addr(0x1337); 
@@ -20,16 +20,13 @@ contract ShopTest is Test {
         
     }
 
-    function testShopHack() public {
+    function testElevatorHack() public {
 
         vm.startPrank(hacker);
 
-        console.log(level.isSold());
-
-        ShopExploit exploit = new ShopExploit();
+        ElevatorExploit exploit = new ElevatorExploit();
         exploit.run(level);
-
-        assert(level.isSold());
+        assert(level.top());
 
         vm.stopPrank();
         

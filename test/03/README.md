@@ -1,4 +1,4 @@
-## 03. Coin Flip
+## 👾 03. Coin Flip
 
 
 <br>
@@ -148,8 +148,8 @@ contract CoinFlipTest is Test {
     uint8 consecutiveWinsHacked = 10;
     CoinFlip public level;
 
-    address instance = vm.addr(0x1); 
-    address hacker = vm.addr(0x2); 
+    address instance = vm.addr(0x10053); 
+    address hacker = vm.addr(0x1337); 
 
     function setUp() public {
 
@@ -245,7 +245,7 @@ contract Exploit is Script {
 
     uint256 private immutable FACTOR = 57896044618658097711785492504343953926634992332820282019728792003956564819968;
 
-    address levelInstance = 0xfC3A1c7Aaf80dAf711256cEa4d959722DbF2B5B1;
+    address instance = vm.envAddress("INSTANCE_LEVEL3");
     CoinFlipExploit exploit = new CoinFlipExploit(levelInstance);
  
     function run() public {

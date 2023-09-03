@@ -13,8 +13,8 @@ contract CoinFlipTest is Test {
     uint8 consecutiveWinsHacked = 10;
     CoinFlip public level;
 
-    address instance = vm.addr(0x1); 
-    address hacker = vm.addr(0x2); 
+    address instance = vm.addr(0x10053); 
+    address hacker = vm.addr(0x1337); 
 
     function setUp() public {
 

