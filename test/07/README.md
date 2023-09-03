@@ -32,8 +32,10 @@
 <br>
   
 <p align="center">
-<img width="300" src="">
+<img width="300" src="https://github.com/go-outside-labs/ethernaut-foundry-detailed-solutions-sol/assets/138340846/06c0c5bb-8c1f-49a4-a2a1-561d5f1fa74b">
 </p>
+
+
 
 
 <br>
