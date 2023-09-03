@@ -47,7 +47,7 @@
 ##### ✅ 08. Vault: 
 - **[solidity exploit + foundry test + write-up](test/08)**
 - **[submission foundry script](script/08/)**
-##### 🔜 09. King: 
+##### ✅ 09. King: 
 - **[solidity exploit + foundry test + write-up](test/09)**
 - **[submission foundry script](script/09/)**
 ##### 🔜 10. Reentrancy: 

