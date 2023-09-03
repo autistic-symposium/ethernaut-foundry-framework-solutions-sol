@@ -40,8 +40,9 @@
 ##### ✅ 06. Delegation: 
 - **[solidity exploit + foundry test + write-up](test/06)**
 - **[submission foundry script](script/06/)**
-##### 🔜 07. Force: 
-- **[solidity exploit + foundry test + write-up](test/07)**
+##### ✅ 07. Force: 
+- **[solidity exploit](src/07)**
+- **[foundry test + write-up](test/07)**
 - **[submission foundry script](script/07/)**
 ##### ✅ 08. Vault: 
 - **[solidity exploit + foundry test + write-up](test/08)**
@@ -125,9 +126,9 @@
 
 * install **[foundry](https://github.com/foundry-rs/foundry)**
 
-* create a test wallet (*e.g.*, with metamask or rainbow wallets)
+* create a test wallet (*e.g.*, with metamask)
 
-* create a `.env` (copying from `.env.example`) and your add public and private keys
+* create a `.env` (copying from `.env.example`) and add keys and the addresses of each instance.
 
 * add a sepolia rpc url to `foundry.toml` (*e.g.*, from **[alchemy](https://www.alchemy.com/)** or **[infura](https://www.infura.io/)**)
 

