@@ -1,4 +1,4 @@
-## 02. Fallout
+## 👾 02. Fallout
 
 <br>
   
@@ -143,8 +143,8 @@ contract FalloutTest is Test {
 
     Fallout public level;
 
-    address instance = vm.addr(0x1); 
-    address hacker = vm.addr(0x2); 
+    address instance = vm.addr(0x10053); 
+    address hacker = vm.addr(0x1337); 
 
     function setUp() public {
 
@@ -199,7 +199,7 @@ Ran 1 test suites: 1 tests passed, 0 failed, 0 skipped (1 total tests)
 ```solidity
 contract Exploit is Script {
     
-      address level_instance = 0xAADB92d23788EA81c46fe22C4d4771B23dcc96a2;
+      address instance = vm.envAddress("INSTANCE_LEVEL2");
       Fallout level = Fallout(payable(address(level_instance)));
 
       function run() public {

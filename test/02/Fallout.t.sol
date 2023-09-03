@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: CC-BY-4.0
+// bt3gl's solution to ethernaut
+
 pragma solidity ^0.8.13;
 
 import "forge-std/Test.sol";
@@ -8,8 +10,8 @@ contract FalloutTest is Test {
 
     Fallout public level = new Fallout();
 
-    address instance = vm.addr(0x1); 
-    address hacker = vm.addr(0x2); 
+    address instance = vm.addr(0x10053); 
+    address hacker = vm.addr(0x1337); 
 
     function setUp() public {
 

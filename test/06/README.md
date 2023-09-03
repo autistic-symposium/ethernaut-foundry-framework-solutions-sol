@@ -1,4 +1,4 @@
-## Delegation
+## 👾 06. Delegation
 
 <br>
 
@@ -189,8 +189,8 @@ contract DelegationTest is Test {
     Delegate public delegate = new Delegate(makeAddr("owner"));
     Delegation public level = new Delegation(address(delegate));
 
-    address instance = vm.addr(0x1); 
-    address hacker = vm.addr(0x2); 
+    address instance = vm.addr(0x10053); 
+    address hacker = vm.addr(0x1337); 
 
     function setUp() public {
         vm.prank(instance);
@@ -234,7 +234,7 @@ contract DelegationTest is Test {
 ```solidity
 contract Exploit is Script {
 
-        address levelInstance = 0x336a9B16f89367082e234E0eeAeE9a3Bf61caeEE;
+        address instance = vm.envAddress("INSTANCE_LEVEL6");
         Delegation level = Delegation(levelInstance);        
         
         function run() external {

@@ -4,7 +4,7 @@
 
 ##### 🔋 this project contains solutions for **[openzeppelin's ethernaut wargames](https://ethernaut.openzeppelin.com/)**. leveraging **foundry**, each level has a test set (`.t.sol`), a script set (`.s.sol`), and a write-up. some levels also have an exploit at `src/.sol`. 
 
-##### 🔋 note that my "submission foundry scripts" intentionally contain the addresses of my instances hardcoded instead of in the `.env` file. this serves me as an arxiv, and it's harmless as i use a test wallet for this work.
+
 ##### 🔋 by the way, do you remember overthewire? **[here is my WeChall profile from playing it in 2014](https://www.wechall.net/profile/bt3gl)**.
 
 <br>
@@ -83,11 +83,12 @@
 ##### 🔜 20. Denial: 
 - **[solidity exploit + foundry test + write-up](test/20)**
 - **[submission foundry script](script/20/)**
-##### 🔜 21. Shop: 
+##### ✅ 21. Shop: 
 - **[solidity exploit + foundry test + write-up](test/21)**
 - **[submission foundry script](script/21/)**
 ##### 🔜 22. Dex: 
-- **[solidity exploit + foundry test + write-up](test/22)**
+- **[solidity exploit](src/22/)**
+- **[foundry test + write-up](test/22)**
 - **[submission foundry script](script/22/)**
 ##### 🔜 23. Dex Two: 
 - **[solidity exploit + foundry test + write-up](test/23)**
@@ -123,9 +124,11 @@
 
 * install **[foundry](https://github.com/foundry-rs/foundry)**
 
-* create a `.env` (from `.env.example`) and add your private and private keys
+* create a test wallet (*e.g.*, with metamask or rainbow wallets)
 
-* add a sepolia rpc url to `foundry.toml`
+* create a `.env` (copying from `.env.example`) and your add public and private keys
+
+* add a sepolia rpc url to `foundry.toml` (*e.g.*, from **[alchemy](https://www.alchemy.com/)** or **[infura](https://www.infura.io/)**)
 
 <br>
 
@@ -150,4 +153,7 @@
     - `forge script ./script/01/Fallback.s.sol --broadcast -vvvv --rpc-url sepolia`
 
 <br>
+
+<br>
+
 

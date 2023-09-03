@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: CC-BY-4.0
+// bt3gl's solution to ethernaut
+
 pragma solidity ^0.8.0;
 
 import "forge-std/Test.sol";
@@ -10,8 +12,8 @@ contract DelegationTest is Test {
     Delegate public delegate = new Delegate(makeAddr("owner"));
     Delegation public level = new Delegation(address(delegate));
 
-    address instance = vm.addr(0x1); 
-    address hacker = vm.addr(0x2); 
+    address instance = vm.addr(0x10053); 
+    address hacker = vm.addr(0x1337); 
 
     function setUp() public {
 
