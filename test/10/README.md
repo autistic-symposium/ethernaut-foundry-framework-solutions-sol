@@ -106,8 +106,13 @@ contract Reentrance {
     }
   }
 ```
-
 <br>
+
+<p align="center">
+<img src="https://github.com/go-outside-labs/ethernaut-foundry-detailed-solutions-sol/assets/138340846/bed1dd0f-707c-408a-88d8-ee04693667b9" width="50%" align="center" style="padding:1px;border:1px solid black;"/>
+
+
+<br><br>
 
 * finally, we see a blank `receive()` function, which receives any `ether` sent to the contract without specifically calling `donate()`.
     - `receive()` is a new keyword in solidity 0.6.x, and it is used as a `fallback()` function for empty calldata (or any value) that is only able to receive ether. 
