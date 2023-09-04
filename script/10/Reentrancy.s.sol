@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: CC-BY-4.0
 // bt3gl's solution to ethernaut
 
-pragma solidity ^0.6.12;
+pragma solidity ^0.8.0;
 
 import "forge-std/Script.sol";
 //import {ReentrancyExploit} from "src/10/ReentrancyExploit.sol";
