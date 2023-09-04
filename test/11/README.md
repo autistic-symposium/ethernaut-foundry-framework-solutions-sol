@@ -210,19 +210,17 @@ contract Exploit is Script {
 
         Elevator level = Elevator(instance);  
         ElevatorExploit public exploit;
-        address instance = vm.envAddress("INSTANCE_LEVEL11");
-        uint256 hacker = vm.envUint("PRIVATE_KEY");   
-        address deployer = vm.rememberKey(hacker);   
+        address instance = vm.envAddress("INSTANCE_LEVEL11");;   
+        address hacker = vm.rememberKey(vm.envUint("PRIVATE_KEY"));   
         
         function run() external {
 
-            vm.startBroadcast(deployer);
+            vm.startBroadcast(hacker);
             exploit = new ElevatorExploit();
             exploit.run(level);
             vm.stopBroadcast();
     }
 }
-
 ```
 
 <br>

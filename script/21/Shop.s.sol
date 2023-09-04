@@ -10,13 +10,12 @@ import {ShopExploit} from "src/21/ShopExploit.sol";
 contract Exploit is Script {
 
         Shop level = Shop(instance); 
-        address instance = vm.envAddress("INSTANCE_LEVEL21");
-        uint256 hacker = vm.envUint("PRIVATE_KEY");   
-        address deployer = vm.rememberKey(hacker);   
+        address instance = vm.envAddress("INSTANCE_LEVEL21");  
+        address hacker = vm.rememberKey(vm.envUint("PRIVATE_KEY"));   
         
         function run() external {
 
-            vm.startBroadcast(deployer);
+            vm.startBroadcast(hacker);
             ShopExploit exploit = new ShopExploit();
             exploit.run(level);
             vm.stopBroadcast();
