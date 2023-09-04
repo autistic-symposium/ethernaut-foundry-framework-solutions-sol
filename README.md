@@ -67,11 +67,12 @@
 - **[solidity exploit](src/09)**
 - **[submission foundry script](script/09/)**
 
-##### 🔜 10. Reentrancy: 
+##### ✅ 10. Reentrancy: 
 - **[write-up + foundry test](test/10)**
 - **[solidity exploit](src/10)**
 - **[submission foundry script](script/10/)**
-- 
+
+  
 ##### ✅ 11. Elevator: 
 - **[write-up + foundry test](test/11)**
 - **[solidity exploit](src/11/)**
