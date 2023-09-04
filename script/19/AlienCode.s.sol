@@ -6,14 +6,16 @@ pragma solidity ^0.6.0;
 import "forge-std/Script.sol";
 import {AlienCode} from "src/19/AlienCode.sol";
 
+
 contract Exploit is Script {
 
-        address instance = 0xcE198E8D4476Cb296cDb12e12757F1A505105Bf9;
-        AlienCode level = AlienCode(instance);        
-        
+        address instance = vm.envAddress("INSTANCE_LEVEL19");
+        address hacker = vm.rememberKey(vm.envUint("PRIVATE_KEY"));   
+        AlienCode level = AlienCode(instance);  
+              
         function run() external {
 
-            vm.startBroadcast(vm.envUint("PRIVATE_KEY"));
+            vm.startBroadcast(hacker);
 
             
             vm.stopBroadcast();

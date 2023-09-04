@@ -4,16 +4,18 @@
 pragma solidity ^0.8.0;
 
 import "forge-std/Script.sol";
-import {DoublyEntryPoint} from "src/26/DoublyEntryPoint.sol";
+import {DoublyEntryPoint} from "src/26/DoubleEntryPoint.sol";
+
 
 contract Exploit is Script {
 
-        address instance = 0xcE198E8D4476Cb296cDb12e12757F1A505105Bf9;
-        DoublyEntryPoint level = DoublyEntryPoint(instance);        
-        
+        address instance = vm.envAddress("INSTANCE_LEVEL26");
+        address hacker = vm.rememberKey(vm.envUint("PRIVATE_KEY"));   
+        DoublyEntryPoint level = DoublyEntryPoint(instance);  
+              
         function run() external {
 
-            vm.startBroadcast(vm.envUint("PRIVATE_KEY"));
+            vm.startBroadcast(hacker);
 
             
             vm.stopBroadcast();

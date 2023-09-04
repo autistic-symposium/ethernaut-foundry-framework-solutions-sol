@@ -14,10 +14,8 @@ contract ForceTest is Test {
     address hacker = vm.addr(0x1337); 
 
     function setUp() public {
-    
         vm.prank(instance);
         vm.deal(hacker, 1 ether);
-
     }
 
     function testForceHack() public {
@@ -25,9 +23,7 @@ contract ForceTest is Test {
         vm.startPrank(hacker);
 
         assert(instance.balance == 0);
-        
         ForceExploit exploit = new ForceExploit{value: 0.0005 ether}(instance);
-
         assert(instance.balance != 0);
 
         vm.stopPrank();

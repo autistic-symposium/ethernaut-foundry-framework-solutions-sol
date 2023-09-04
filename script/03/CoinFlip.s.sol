@@ -11,12 +11,11 @@ contract Exploit is Script {
 
     CoinFlipExploit exploit = new CoinFlipExploit(instance);
     uint256 private immutable FACTOR = 57896044618658097711785492504343953926634992332820282019728792003956564819968;
-    address instance = vm.envAddress("INSTANCE_LEVEL3");
-    uint256 hacker = vm.envUint("PRIVATE_KEY");   
-    address deployer = vm.rememberKey(hacker);
+    address instance = vm.envAddress("INSTANCE_LEVEL3"); 
+    address hacker = vm.rememberKey(vm.envUint("PRIVATE_KEY"));
  
     function run() public {
-        vm.startBroadcast(deployer);
+        vm.startBroadcast(hacker);
         exploit.run();
         vm.stopBroadcast();
     }

