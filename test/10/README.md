@@ -28,29 +28,30 @@
 
 ```solidity
 contract Reentrance {
-  
-  using SafeMath for uint256;
-  mapping(address => uint) public balances;
+    mapping(address => uint256) public balances;
 
-  function donate(address _to) public payable {
-    balances[_to] = balances[_to].add(msg.value);
-  }
-
-  function balanceOf(address _who) public view returns (uint balance) {
-    return balances[_who];
-  }
-
-  function withdraw(uint _amount) public {
-    if(balances[msg.sender] >= _amount) {
-      (bool result,) = msg.sender.call{value:_amount}("");
-      if(result) {
-        _amount;
-      }
-      balances[msg.sender] -= _amount;
+    function donate(address _to) public payable {
+        balances[_to] = balances[_to] += msg.value;
     }
-  }
 
-  receive() external payable {}
+    function balanceOf(address _who) public view returns (uint256 balance) {
+        return balances[_who];
+    }
+
+    function withdraw(uint256 _amount) public {
+        if (balances[msg.sender] >= _amount) {
+            (bool success, ) = msg.sender.call{value: _amount}("");
+            if (success) {
+                _amount;
+            }
+            // unchecked to prevent underflow errors
+            unchecked {
+                balances[msg.sender] -= _amount; 
+            }
+        }
+    }
+
+    receive() external payable {}
 }
 ```
 
@@ -63,55 +64,57 @@ contract Reentrance {
 
 <br>
 
-* the `Reentrance` contract starts with a state variable for `balances` (note that `SafeMath` is not needed anymore after solidity `0.8`):
+* the `Reentrance` contract starts with a state variable for `balances`:
 
 <br>
 
 ```solidity
 contract Reentrance {
-  using SafeMath for uint256;
-  mapping(address => uint) public balances;
+  mapping(address => uint256) public balances;
 ```
 
 <br>
 
-* then we have a getter and a setter function for `donate()` (whoever donates some value becomes part of `balances`) and `balanceOf()` (which uses `SafeMath`'s `add()`). 
+* then we have a getter and a setter function for `donate()` (whoever donates some `ether` becomes part of `balances`) and `balanceOf()`: 
 
 <br>
 
 ```solidity
-  function donate(address _to) public payable {
-    balances[_to] = balances[_to].add(msg.value);
-  }
+function donate(address _to) public payable {
+     balances[_to] = balances[_to] += msg.value;
+}
 
-  function balanceOf(address _who) public view returns (uint balance) {
+function balanceOf(address _who) public view returns (uint256 balance) {
     return balances[_who];
-  }
+}
 ```
 
 <br>
 
 * then, we have the `withdraw(amount)` function, which is the source of our reentrancy attack. 
     - for instance, note how it already breaks the **[`checks -> effects -> interactions` pattern](https://docs.soliditylang.org/en/v0.8.21/security-considerations.html#use-the-checks-effects-interactions-pattern)**.
-    - in other words, if `msg.sender` is a (attacker) contract and since `balances` deduction is made after the call, the contract can call `fallback()` to cause a recursion that sends the value multiple times before reducing the sender's balance.
+    - in other words, if `msg.sender` is a (attacker) contract and since `balances` deduction is made after the call, the contract can call a `fallback()` to cause a recursion that sends the value multiple times before reducing the sender's balance.
 
 <br>
 
 ```solidity
-  function withdraw(uint _amount) public {
-    if(balances[msg.sender] >= _amount) {
-      (bool result,) = msg.sender.call{value:_amount}("");
-      if(result) {
-        _amount;
-      }
-      balances[msg.sender] -= _amount;
+    function withdraw(uint256 _amount) public {
+        if (balances[msg.sender] >= _amount) {
+            (bool success, ) = msg.sender.call{value: _amount}("");
+            if (success) {
+                _amount;
+            }
+            // unchecked to prevent underflow errors
+            unchecked {
+                balances[msg.sender] -= _amount; 
+            }
+        }
     }
-  }
 ```
 <br>
 
 <p align="center">
-<img src="https://github.com/go-outside-labs/ethernaut-foundry-detailed-solutions-sol/assets/138340846/bed1dd0f-707c-408a-88d8-ee04693667b9" width="50%" align="center" style="padding:1px;border:1px solid black;"/>
+<img src="https://github.com/go-outside-labs/ethernaut-foundry-detailed-solutions-sol/assets/138340846/bed1dd0f-707c-408a-88d8-ee04693667b9" width="50%" align="center"/></p>
 
 
 <br><br>
