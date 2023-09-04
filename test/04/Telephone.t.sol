@@ -16,23 +16,16 @@ contract TelephoneTest is Test {
     address hacker = vm.addr(0x1337); 
 
     function setUp() public {
-
         vm.prank(instance);
-
     }
 
     function testTelephoneHack() public {
 
         vm.startPrank(hacker);
-
         assertNotEq(level.owner(), hacker);
-
         TelephoneExploit exploit = new TelephoneExploit();
         exploit.run(level);
-
         assertEq(level.owner(), hacker);
-        
         vm.stopPrank();
-        
     }
 }

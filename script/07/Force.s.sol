@@ -9,14 +9,14 @@ import {ForceExploit} from "src/07/ForceExploit.sol";
 
 contract Exploit is Script {
 
-        address payable instance = payable(vm.envAddress("INSTANCE_LEVEL7"));       
+        address payable instance = payable(vm.envAddress("INSTANCE_LEVEL7"));   
+        uint256 hacker = vm.envUint("PRIVATE_KEY");    
+        address deployer = vm.rememberKey(hacker);    
         
         function run() external {
 
-            vm.startBroadcast(vm.envUint("PRIVATE_KEY"));
-
+            vm.startBroadcast(deployer);
             ForceExploit exploit = new ForceExploit{value: 0.0005 ether}(instance);
-            
             vm.stopBroadcast();
     }
 }

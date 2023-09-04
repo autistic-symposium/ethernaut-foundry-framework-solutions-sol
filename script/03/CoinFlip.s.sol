@@ -9,18 +9,15 @@ import {CoinFlipExploit} from "src/03/CoinFlipExploit.sol";
 
 contract Exploit is Script {
 
-    uint256 private immutable FACTOR = 57896044618658097711785492504343953926634992332820282019728792003956564819968;
-
-    address instance = vm.envAddress("INSTANCE_LEVEL3");
     CoinFlipExploit exploit = new CoinFlipExploit(instance);
+    uint256 private immutable FACTOR = 57896044618658097711785492504343953926634992332820282019728792003956564819968;
+    address instance = vm.envAddress("INSTANCE_LEVEL3");
+    uint256 hacker = vm.envUint("PRIVATE_KEY");   
+    address deployer = vm.rememberKey(hacker);
  
     function run() public {
-
-        vm.startBroadcast(vm.envUint("PRIVATE_KEY"));
-
+        vm.startBroadcast(deployer);
         exploit.run();
-        
         vm.stopBroadcast();
-
     }
 }

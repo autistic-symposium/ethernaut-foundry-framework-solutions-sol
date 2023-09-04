@@ -9,16 +9,17 @@ import {TelephoneExploit} from "src/04/TelephoneExploit.sol";
 
 contract Exploit is Script {
 
+        Telephone level = Telephone(instance); 
+        TelephoneExploit public exploit;
         address instance = vm.envAddress("INSTANCE_LEVEL4");
-        Telephone level = Telephone(instance);        
+        uint256 hacker = vm.envUint("PRIVATE_KEY");   
+        address deployer = vm.rememberKey(hacker);
         
         function run() external {
 
-            vm.startBroadcast(vm.envUint("PRIVATE_KEY"));
-            
-            TelephoneExploit exploit = new TelephoneExploit();
+            vm.startBroadcast(deployer);
+            exploit = new TelephoneExploit();
             exploit.run(level);
-
             vm.stopBroadcast();
     }
 }
