@@ -1,40 +1,31 @@
 // SPDX-License-Identifier: CC-BY-4.0
 // bt3gl's solution to ethernaut
 
-pragma solidity ^0.8.13;
+pragma solidity ^0.6.12;
+pragma experimental ABIEncoderV2;
 
 import "forge-std/Test.sol";
-import {King} from "src/09/King.sol";
-import {KingExploit} from "src/09/KingExploit.sol";
+import {Reentrance} from "src/10/Reentrancy.sol";
 
 contract ReentrancyTest is Test {
 
-    King public king;
-    KingExploit public exploit;
-    uint256 public prize;
+    Reentrance public level;
+
     address payable instance = payable(vm.addr(0x10053)); 
     address hacker = vm.addr(0x1337); 
 
     function setUp() public {
         vm.prank(instance);  
-        vm.deal(instance, 0.1 ether); 
-        king = new King{value: 0.1 ether}();
-        prize = king.prize();
+        vm.deal(hacker, 1 ether);
     }
 
-    function testKingtHack() public {
+    function testReentrancyHack() public {
 
         vm.startPrank(hacker);
 
-        assertEq(king.owner(), instance);
-        assertEq(king._king(), instance);
-        assertEq(king.prize(), prize);
-
-        vm.deal(hacker, prize + 1); 
-        exploit = new KingExploit{value: prize + 1}(address(king));
-
-        assertEq(king._king(), address(exploit));
-        assertEq(king.prize(), prize + 1);
+        level = new Reentrance();
+        level.donate{value: 0.0001 ether}(address(this));
+        level.withdraw(0.0001 ether);
 
         vm.stopPrank();
         

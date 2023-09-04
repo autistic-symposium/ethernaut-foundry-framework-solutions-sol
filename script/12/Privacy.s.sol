@@ -9,13 +9,15 @@ import {Privacy} from "src/12/Privacy.sol";
 contract Exploit is Script {
 
         address instance = vm.envAddress("INSTANCE_LEVEL12");
-        Privacy level = Privacy(instance);        
-        
+        address hacker = vm.rememberKey(vm.envUint("PRIVATE_KEY"));   
+        Privacy level = Privacy(instance); 
+              
         function run() external {
 
-            vm.startBroadcast(vm.envUint("PRIVATE_KEY"));
+            vm.startBroadcast(hacker);
 
             
             vm.stopBroadcast();
     }
 }
+

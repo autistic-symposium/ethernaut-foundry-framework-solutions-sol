@@ -14,9 +14,7 @@ contract VaultTest is Test {
     address hacker = vm.addr(0x1337); 
 
     function setUp() public {
-
         vm.prank(instance);    
-    
     }
 
     function testVaultHack() public {
@@ -26,7 +24,6 @@ contract VaultTest is Test {
         bytes32 password = vm.load(instance, bytes32(uint256(1)));
         level = new Vault(password);
         level.unlock(password);
-        
         assert(level.locked() == false);
         
         vm.stopPrank();

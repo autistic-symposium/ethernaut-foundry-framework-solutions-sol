@@ -12,7 +12,7 @@ contract Exploit is Script {
 
         Elevator level = Elevator(instance);  
         ElevatorExploit public exploit;
-        address instance = vm.envAddress("INSTANCE_LEVEL11");;   
+        address instance = vm.envAddress("INSTANCE_LEVEL11");  
         address hacker = vm.rememberKey(vm.envUint("PRIVATE_KEY"));   
         
         function run() external {

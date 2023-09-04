@@ -15,9 +15,7 @@ contract ShopTest is Test {
     address hacker = vm.addr(0x1337); 
 
     function setUp() public {
-
         vm.prank(instance);
-        
     }
 
     function testShopHack() public {
@@ -25,10 +23,8 @@ contract ShopTest is Test {
         vm.startPrank(hacker);
 
         console.log(level.isSold());
-
         ShopExploit exploit = new ShopExploit();
         exploit.run(level);
-
         assert(level.isSold());
 
         vm.stopPrank();
