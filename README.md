@@ -23,95 +23,148 @@
 ##### ✅ 01. Fallback: 
 - **[solidity exploit + foundry test + write-up](test/01)**
 - **[submission foundry script](script/01/)**
+
+
 ##### ✅ 02. Fallout: 
 - **[solidity exploit + foundry test + write-up](test/02)**
 - **[submission foundry script](script/02/)**
+
+
 ##### ✅ 03. Coin Flip: 
 - **[solidity exploit](src/03)**
 - **[foundry test + write-up](test/03)**
 - **[submission foundry script](script/03/)**
+
+
 ##### ✅ 04. Telephone: 
 - **[solidity exploit](src/04)**
 - **[foundry test + write-up](test/04)**
 - **[submission foundry script](script/04/)**
+
+
 ##### ✅ 05. Token: 
 - **[solidity exploit + write-up](test/05)**
 - **[submission foundry script](script/05/)**
+
+
 ##### ✅ 06. Delegation: 
 - **[solidity exploit + foundry test + write-up](test/06)**
 - **[submission foundry script](script/06/)**
+
+
 ##### ✅ 07. Force: 
 - **[solidity exploit](src/07)**
 - **[foundry test + write-up](test/07)**
 - **[submission foundry script](script/07/)**
+
+
 ##### ✅ 08. Vault: 
 - **[solidity exploit + foundry test + write-up](test/08)**
 - **[submission foundry script](script/08/)**
+
 ##### ✅ 09. King: 
 - **[solidity exploit](src/09)**
 - **[foundry test + write-up](test/09)**
 - **[submission foundry script](script/09/)**
-##### ✅ 10. Reentrancy: 
+
+##### 🔜 10. Reentrancy: 
 - **[solidity exploit](src/10)**
 - **[foundry test + write-up](test/10)**
 - **[submission foundry script](script/10/)**
+- 
 ##### ✅ 11. Elevator: 
 - **[solidity exploit](src/11/)**
 - **[foundry test + write-up](test/11)**
 - **[submission foundry script](script/11/)**
+
+
 ##### 🔜 12. Privacy: 
 - **[solidity exploit + foundry test + write-up](test/12)**
 - **[submission foundry script](script/12/)**
+
+
 ##### 🔜 13. Gatekeeper One: 
 - **[solidity exploit + foundry test + write-up](test/13)**
 - **[submission foundry script](script/13/)**
+
+
 ##### 🔜 14. Gatekeeper Two: 
 - **[solidity exploit + foundry test + write-up](test/14)**
 - **[submission foundry script](script/14/)**
+
+
 ##### 🔜 15. Naught Coin: 
 - **[solidity exploit + foundry test + write-up](test/15)**
 - **[submission foundry script](script/15/)**
+
+
 ##### 🔜 16. Preservation: 
 - **[solidity exploit + foundry test + write-up](test/16)**
 - **[submission foundry script](script/16/)**
+
+
 ##### 🔜 17. Recovery: 
 - **[solidity exploit + foundry test + write-up](test/17)**
 - **[submission foundry script](script/17/)**
+
+
 ##### 🔜 18. Magic Number: 
 - **[solidity exploit + foundry test + write-up](test/18)**
 - **[submission foundry script](script/18/)**
+
+
 ##### 🔜 19. Alien Code: 
 - **[solidity exploit + foundry test + write-up](test/19)**
 - **[submission foundry script](script/19/)**
+
+
 ##### 🔜 20. Denial: 
 - **[solidity exploit + foundry test + write-up](test/20)**
 - **[submission foundry script](script/20/)**
+
+
 ##### ✅ 21. Shop: 
 - **[solidity exploit](src/21)**
 - **[foundry test + write-up](test/21)**
 - **[submission foundry script](script/21/)**
+
+
 ##### 🔜 22. Dex: 
 - **[solidity exploit](src/22/)**
 - **[foundry test + write-up](test/22)**
 - **[submission foundry script](script/22/)**
+
+
 ##### 🔜 23. Dex Two: 
 - **[solidity exploit + foundry test + write-up](test/23)**
 - **[submission foundry script](script/23/)**
+
+
 ##### 🔜 24. Puzzle Wallet: 
 - **[solidity exploit + foundry test + write-up](test/24)**
 - **[submission foundry script](script/24/)**
+
+
 ##### 🔜 25. Motorbike: 
 - **[solidity exploit + foundry test + write-up](test/25)**
 - **[submission foundry script](script/25/)**
+
+
 ##### 🔜 26. Doubly Entry Point: 
 - **[solidity exploit + foundry test + write-up](test/26)**
 - **[submission foundry script](script/26/)**
+
+
 ##### 🔜 27. Good Samaritan: 
 - **[solidity exploit + foundry test + write-up](test/27)**
 - **[submission foundry script](script/27/)**
+
+
 ##### 🔜 28. Gatekeeper Three: 
 - **[solidity exploit + foundry test + write-up](test/28)**
 - **[submission foundry script](script/28/)**
+
+
 ##### 🔜 29. Switch: 
 - **[solidity exploit + foundry test + write-up](test/29)**
 - **[submission foundry script](script/29/)**
@@ -159,5 +212,3 @@
 <br>
 
 <br>
-
-
