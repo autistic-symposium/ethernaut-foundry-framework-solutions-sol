@@ -1,4 +1,4 @@
-## 👾 10. Re-entrancy
+## 👾 10. Reentrancy
 
 <br>
 
