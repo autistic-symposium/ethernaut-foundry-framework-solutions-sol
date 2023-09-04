@@ -4,7 +4,7 @@
 pragma solidity ^0.8.0;
 
 import "forge-std/Script.sol";
-import {Dex} from "src/22/Dex.sol";
+import {Dex} from "src/22/DexOne.sol";
 
 
 contract Exploit is Script {

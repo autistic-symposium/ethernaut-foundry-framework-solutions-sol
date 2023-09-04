@@ -2,7 +2,7 @@
 pragma solidity ^0.8.0;
 
 import "forge-std/Script.sol";
-import {MagicNum} from "src/18/MagickNumber.sol";
+import {MagicNum} from "src/18/MagicNumber.sol";
 
 
 contract Exploit is Script {

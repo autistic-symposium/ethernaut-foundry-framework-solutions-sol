@@ -4,7 +4,7 @@
 pragma solidity ^0.8.0;
 
 import "forge-std/Script.sol";
-import {DoublyEntryPoint} from "src/26/DoublyEntryPoint.sol";
+import {DoublyEntryPoint} from "src/26/DoubleEntryPoint.sol";
 
 
 contract Exploit is Script {

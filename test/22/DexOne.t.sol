@@ -4,11 +4,11 @@
 pragma solidity ^0.8.12;
 
 import "forge-std/Test.sol";
-import {DexOne} from "src/22/DexOne.sol";
+import {Dex} from "src/22/DexOne.sol";
 
 contract DexOneTest is Test {
 
-    DexOne public level;
+    Dex public level;
 
     address payable instance = payable(vm.addr(0x10053)); 
     address hacker = vm.addr(0x1337); 
