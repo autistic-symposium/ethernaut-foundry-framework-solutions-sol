@@ -8,7 +8,7 @@
 <br>
 
 
-* the `King` contract represents a simple ponzi where whoever sends the largest amount of `ether` (larger than the current `prize` value) becomes the new king. in this event, the previous king gets paid the new prize.
+* the `King` contract represents **[a simple ponzi](https://www.kingoftheether.com/postmortem.html)** where whoever sends the largest amount of `ether` (larger than the current `prize` value) becomes the new king. in this event, the previous king gets paid the new prize.
 
 <br>
 

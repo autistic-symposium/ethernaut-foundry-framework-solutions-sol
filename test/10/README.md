@@ -7,9 +7,14 @@
 
 <br>
 
+* contracts may call other contracts by function calls or transferring ether. they can also call back contracts that called them (*i.e.*, reentering) or any other contract in the call stack.
+    - a **reentrancy attack** can happen when a contract is reentered in an invalid state. this can happen if the contract calls other untrusted contracts or transfers funds to untrusted accounts.
+    - state in the blockchain is considered valid when the contract-specific invariants hold true. contract invariants are properties of the program state that are expected always to be true. for instance, the value of owner state variable, the total token supply, etc., should always remain the same.
 
+- in its simplest version, an attacking contract exploits vulnerable code in another contract to seize the flow of operation or funds.
+    - for example, an attacker could repeatedly call a `withdraw()` or `receive()` function (or similar balance updating function) before a vulnerable contract’s balance is updated.
 
-
+* **[for a detailed review on reentrancy attacks, check my mirror post](https://mirror.xyz/go-outside.eth/7Q5DK8cZNZ5CP6ThJjEithPvjgckA24D2wb-j0Ps5-I)**.
 
 <br>
   
@@ -58,17 +63,78 @@ contract Reentrance {
 
 <br>
 
+* the `Reentrance` contract starts with a state variable for `balances` (note that `SafeMath` is not needed anymore after solidity `0.8`):
+
 <br>
 
+```solidity
+contract Reentrance {
+  using SafeMath for uint256;
+  mapping(address => uint) public balances;
+```
+
+<br>
+
+* then we have a getter and a setter function for `donate()` (whoever donates some value becomes part of `balances`) and `balanceOf()` (which uses `SafeMath`'s `add()`). 
+
+<br>
+
+```solidity
+  function donate(address _to) public payable {
+    balances[_to] = balances[_to].add(msg.value);
+  }
+
+  function balanceOf(address _who) public view returns (uint balance) {
+    return balances[_who];
+  }
+```
+
+<br>
+
+* then, we have the `withdraw(amount)` function, which is the source of our reentrancy attack. for instance, note how it already breaks the **[`checks -> effects -> interactions` pattern](https://docs.soliditylang.org/en/v0.8.21/security-considerations.html#use-the-checks-effects-interactions-pattern)**:
+
+<br>
+
+```solidity
+  function withdraw(uint _amount) public {
+    if(balances[msg.sender] >= _amount) {
+      (bool result,) = msg.sender.call{value:_amount}("");
+      if(result) {
+        _amount;
+      }
+      balances[msg.sender] -= _amount;
+    }
+  }
+```
+
+<br>
+
+* finally, we see a blank `receive()` function, which receives any `ether` sent to the contract without specifically calling `donate()`.
+    - `receive()` is a new keyword in solidity 0.6.x, and it is used as a `fallback()` function for empty calldata (or any value) that is only able to receive ether. 
+    - remember that solidity’s `fallback()` function is executed if none of the other functions match the function identifier or no data was provided with the function call (and it can be optionally `payable`). 
+
+<br>
+
+```solidity
+receive() external payable {}
+```
+
+<br>
+
+* 
+
+
+<br>
 
 
 ----
 
 ### solution
 
+
 <br>
 
-* check `test/10/Reentrancy.t.sol`:
+* we write an exploit at `src/10/ReentrancyExploit.sol`:
 
 <br>
 
@@ -78,7 +144,17 @@ contract Reentrance {
 
 <br>
 
-* run the test with:
+* which can be tested with `test/10/Reentrancy.t.sol`:
+
+<br>
+
+```solidity
+
+```
+
+<br>
+
+* by running:
 
 <br>
 
@@ -90,7 +166,7 @@ contract Reentrance {
 
 <br>
 
-* then submit the solution with `script/10/Reentrancy.s.sol`:
+* the solution can be submitted with `script/10/Reentrancy.s.sol`:
 
 <br>
 
@@ -113,7 +189,7 @@ contract Reentrance {
 
 ---
 
-### solution using `cast`
+### alternative  solution using `cast`
 
 <br>
 
