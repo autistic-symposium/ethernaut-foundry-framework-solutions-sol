@@ -76,7 +76,7 @@ contract King {
 
 <br>
 
-* `king` is initially the person who deployed the contract and sets `prize` (the current value to be bet by someone to become `king`). the only requirement is that `ether` sent to the contract must be larger than `prize`. 
+* `king` is initially the person who deployed the contract and sets `prize` (the current value to be bet by someone to become `king`). the only requirement is that the `ether` sent to the contract must be larger than `prize`. 
 
 
 <br>
@@ -99,7 +99,7 @@ contract King {
 <br>
 
 
-* looking at `receive()` we see that after we send enough `prize`, a `payable` function is triggered to pay `prize` to the previous `king`. 
+* looking at `receive()`, we see that after we send enough `prize`, a `payable` function is triggered to pay `prize` to the previous `king`. 
     - it uses `transfer(address)`, which sends the amount of `wei` to `address`, throwing an error on failure.
     - sending `ether` to EOAs is usually performed via `transfer()` method, but remember that there are a few ways of performing external calls in solidity. 
     - the `send()` function also consumes `2300` gas, but returns a `bool`.
@@ -107,8 +107,9 @@ contract King {
 
 <br>
 
-* in addition, note that this contract has no error handling, so an obvious security issue is **unchecked calls returns value**.
-    - in other words, each time a contract sends `ether` to another, it depends on the other contract’s code to handle the transaction and determine the transaction’s success. for instance, the contract might not have a `payable` `fallback()`, or have a malicious `fallback()` or `payable` function.
+* in addition, note that this contract has no error handling, so an obvious security issue is **unchecked call return values**.
+    - in other words, each time a contract sends `ether` to another, it depends on the other contract’s code to handle the transaction and determine its success. 
+    - for instance, the contract might not have a `payable` `fallback()`, or have a malicious `fallback()` or `payable` function.
     - if the new `king` is a contract address instead of a EOA, it could redirect `transfer()` and revert its transaction, skipping the execution of the next lines:
 
 ```
