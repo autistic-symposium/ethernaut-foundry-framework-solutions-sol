@@ -1,17 +1,17 @@
 // SPDX-License-Identifier: CC-BY-4.0
 // bt3gl's solution to ethernaut
 
-pragma solidity ^0.6.0;
+pragma solidity ^0.8.0;
 
 import "forge-std/Script.sol";
-import {AlienCode} from "src/19/AlienCode.sol";
+import {AlienCodex} from "src/19/AlienCodex.sol";
 
 
 contract Exploit is Script {
 
         address instance = vm.envAddress("INSTANCE_LEVEL19");
         address hacker = vm.rememberKey(vm.envUint("PRIVATE_KEY"));   
-        AlienCode level = AlienCode(instance);  
+        AlienCodex level = AlienCodex(instance);  
               
         function run() external {
 

@@ -4,12 +4,12 @@
 pragma solidity ^0.8.0;
 
 import "forge-std/Test.sol";
-import {Force} from "src/07/Force.sol";
 import {ForceExploit} from "src/07/ForceExploit.sol";
 
 
 contract ForceTest is Test {
 
+    ForceExploit exploit;
     address payable instance = payable(vm.addr(0x10053)); 
     address hacker = vm.addr(0x1337); 
 
@@ -21,11 +21,11 @@ contract ForceTest is Test {
     function testForceHack() public {
 
         vm.startPrank(hacker);
-
         assert(instance.balance == 0);
-        ForceExploit exploit = new ForceExploit{value: 0.0005 ether}(instance);
-        assert(instance.balance != 0);
+        
+        exploit = new ForceExploit{value: 0.0005 ether}(instance);
 
+        assert(instance.balance != 0);
         vm.stopPrank();
         
     }

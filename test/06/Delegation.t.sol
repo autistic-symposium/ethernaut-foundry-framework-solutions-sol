@@ -16,15 +16,12 @@ contract DelegationTest is Test {
     address hacker = vm.addr(0x1337); 
 
     function setUp() public {
-
         vm.prank(instance);
-        
     }
 
     function testDelegationHack() public {
 
         vm.startPrank(hacker);
-
         assertNotEq(level.owner(), hacker);
 
         (bool success, ) = address(level).call(
