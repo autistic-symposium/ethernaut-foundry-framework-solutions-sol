@@ -91,7 +91,9 @@ contract Reentrance {
 
 <br>
 
-* then, we have the `withdraw(amount)` function, which is the source of our reentrancy attack. for instance, note how it already breaks the **[`checks -> effects -> interactions` pattern](https://docs.soliditylang.org/en/v0.8.21/security-considerations.html#use-the-checks-effects-interactions-pattern)**:
+* then, we have the `withdraw(amount)` function, which is the source of our reentrancy attack. 
+    - for instance, note how it already breaks the **[`checks -> effects -> interactions` pattern](https://docs.soliditylang.org/en/v0.8.21/security-considerations.html#use-the-checks-effects-interactions-pattern)**.
+    - in other words, if `msg.sender` is a (attacker) contract and since `balances` deduction is made after the call, the contract can call `fallback()` to cause a recursion that sends the value multiple times before reducing the sender's balance.
 
 <br>
 
@@ -119,9 +121,6 @@ contract Reentrance {
 receive() external payable {}
 ```
 
-<br>
-
-* 
 
 
 <br>
@@ -134,7 +133,7 @@ receive() external payable {}
 
 <br>
 
-* we write an exploit at `src/10/ReentrancyExploit.sol`:
+* we write the following exploit, located at  `src/10/ReentrancyExploit.sol`:
 
 <br>
 

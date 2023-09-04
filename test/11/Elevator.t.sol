@@ -15,9 +15,7 @@ contract ElevatorTest is Test {
     address hacker = vm.addr(0x1337); 
 
     function setUp() public {
-
         vm.prank(instance);
-        
     }
 
     function testElevatorHack() public {

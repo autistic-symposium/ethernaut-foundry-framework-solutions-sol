@@ -23,8 +23,10 @@ contract TelephoneTest is Test {
 
         vm.startPrank(hacker);
         assertNotEq(level.owner(), hacker);
+
         TelephoneExploit exploit = new TelephoneExploit();
         exploit.run(level);
+
         assertEq(level.owner(), hacker);
         vm.stopPrank();
     }
