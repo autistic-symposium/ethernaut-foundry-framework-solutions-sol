@@ -246,12 +246,12 @@ contract Exploit is Script {
     CoinFlipExploit exploit = new CoinFlipExploit(instance);
     uint256 private immutable FACTOR = 57896044618658097711785492504343953926634992332820282019728792003956564819968;
     address instance = vm.envAddress("INSTANCE_LEVEL3");
-    address hacker = vm.envAddress("PRIVATE_KEY");  
+    uint256 hacker = vm.envUint("PRIVATE_KEY");   
+    address deployer = vm.rememberKey(hacker); 
     
- 
     function run() public {
 
-        vm.startBroadcast(hacker);
+        vm.startBroadcast(deployer);
         exploit.run();
         vm.stopBroadcast();
 
@@ -309,8 +309,6 @@ lastHash = blockValue;
   - a bit frustrating because this solution was foundry-native and symmetric with the previous problems.
   - i decided i had to try a new approach... using an `interface`.
 
-
-<br>
 
 
 <br>

@@ -11,11 +11,12 @@ contract Exploit is Script {
 
         Shop level = Shop(instance); 
         address instance = vm.envAddress("INSTANCE_LEVEL21");
-        address hacker = vm.envAddress("PRIVATE_KEY"); 
+        uint256 hacker = vm.envUint("PRIVATE_KEY");   
+        address deployer = vm.rememberKey(hacker);   
         
         function run() external {
 
-            vm.startBroadcast(hacker);
+            vm.startBroadcast(deployer);
             ShopExploit exploit = new ShopExploit();
             exploit.run(level);
             vm.stopBroadcast();

