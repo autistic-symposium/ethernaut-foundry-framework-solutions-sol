@@ -203,7 +203,12 @@ contract CoinFlipTest is Test {
 <br>
 
 ```shell
-> forge test --match-contract CoinFlipTest -vvvv    
+> forge test --match-contract CoinFlipTest -vvvv
+
+Running 1 test for test/03/CoinFlip.t.sol:CoinFlipTest
+[PASS] testCoinFlipHack() (gas: 247316)
+Test result: ok. 1 passed; 0 failed; 0 skipped; finished in 670.88µs
+Ran 1 test suites: 1 tests passed, 0 failed, 0 skipped (1 total tests)
 ```
 
 
