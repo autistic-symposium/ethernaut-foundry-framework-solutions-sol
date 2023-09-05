@@ -11,13 +11,7 @@ contract DelegationTest is Test {
 
     Delegate public delegate = new Delegate(makeAddr("owner"));
     Delegation public level = new Delegation(address(delegate));
-
-    address instance = vm.addr(0x10053); 
     address hacker = vm.addr(0x1337); 
-
-    function setUp() public {
-        vm.prank(instance);
-    }
 
     function testDelegationHack() public {
 

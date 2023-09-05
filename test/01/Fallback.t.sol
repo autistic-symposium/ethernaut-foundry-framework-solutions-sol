@@ -9,15 +9,12 @@ import {Fallback} from "src/01/Fallback.sol";
 contract FallbackTest is Test {
 
     Fallback public level = new Fallback();
-
     address instance = vm.addr(0x10053); 
     address hacker = vm.addr(0x1337); 
 
     function setUp() public {
-
       vm.deal(hacker, 0.0001 ether);
       vm.prank(instance);
-
     }
 
     function testFallbackHack() public {
