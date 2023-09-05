@@ -11,13 +11,7 @@ import {TelephoneExploit} from "src/04/TelephoneExploit.sol";
 contract TelephoneTest is Test {
 
     Telephone public level = new Telephone();
-
-    address instance = vm.addr(0x10053); 
     address hacker = vm.addr(0x1337); 
-
-    function setUp() public {
-        vm.prank(instance);
-    }
 
     function testTelephoneHack() public {
 

@@ -10,13 +10,7 @@ import {ElevatorExploit} from "src/11/ElevatorExploit.sol";
 contract ElevatorTest is Test {
 
     Elevator public level = new Elevator();
-
-    address instance = payable(vm.addr(0x10053)); 
     address hacker = vm.addr(0x1337); 
-
-    function setUp() public {
-        vm.prank(instance);
-    }
 
     function testElevatorHack() public {
 

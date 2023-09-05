@@ -13,7 +13,7 @@ contract Exploit is Script {
         address hacker = vm.rememberKey(vm.envUint("PRIVATE_KEY"));    
         Reentrance level = Reentrance(instance); 
         ReentrancyExploit exploit;
-        uint256 initialDeposit = 0.001 ether;
+        uint256 immutable initialDeposit = 0.001 ether;
           
         function run() external {
 

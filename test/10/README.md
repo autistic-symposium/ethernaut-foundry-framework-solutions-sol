@@ -141,7 +141,14 @@ receive() external payable {}
 
 <br>
 
-* we write the following exploit, located at `src/10/ReentrancyExploit.sol`, where the attack occurs at `run()` and `receive()`. the function `withdrawtoHacker()` can be called afterwords to withdraw the balance from the `ReentrancyExploit` contract:
+* our exploit needs to do the following:
+    1. makes an initial donation of `ether` through `call()`.
+    2. calls the first `withdraw(initialDeposit)` for this amount of `ether` (which triggers our exploit's `receive()` for the first time and starts the recursion).
+    3. call the second `withdraw(address(level).balance)` to drain the contract.
+
+<br>
+
+* the exploit is located at `src/10/ReentrancyExploit.sol`. note that the attack occurs at `run()` and `receive()`. the function `withdrawtoHacker()` can be called afterwords to withdraw the balance from the `ReentrancyExploit` contract:
 
 <br>
 
@@ -266,7 +273,7 @@ contract Exploit is Script {
         address hacker = vm.rememberKey(vm.envUint("PRIVATE_KEY"));    
         Reentrance level = Reentrance(instance); 
         ReentrancyExploit exploit;
-        uint256 initialDeposit = 0.001 ether;
+        uint256 immutable initialDeposit = 0.001 ether;
           
         function run() external {
 

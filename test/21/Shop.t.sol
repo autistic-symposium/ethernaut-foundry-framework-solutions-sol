@@ -10,7 +10,6 @@ import {ShopExploit} from "src/21/ShopExploit.sol";
 contract ShopTest is Test {
 
     Shop public level = new Shop();
-
     address instance = payable(vm.addr(0x10053)); 
     address hacker = vm.addr(0x1337); 
 
