@@ -178,7 +178,7 @@ contract Exploit is Script {
 <br>
 
 ```shell
-> forge create src/07/ForceExploit.sol:Contract --constructor-args=<level address> --private-key=<private-key> --rpc-url=<sepolia url> 
+> forge create src/07/ForceExploit.sol:ForceExploit --constructor-args=<level address> --private-key=<private-key> --rpc-url=<sepolia url> 
 ```
 
 <br>
