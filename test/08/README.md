@@ -20,22 +20,15 @@
 <br>
 
 * before we start, it's worth talking about the four ways the EVM stores data, depending on their context:
-<br>
   1. firstly, there is the **key-value stack**, where you can `POP`, `PUSH` , `DUP1`, or `POP` data. 
       - basically, the EVM is a stack machine, as it does not operate on registers but on a virtual stack with a size limit `1024`. 
      - stack items (both keys and values) have a size of `32-bytes` (or `256-bit`), so the EVM is a `256-bit` word machine (facilitating, for instance, `keccak256` hash scheme and elliptic-curve computations).
-<br>
-    
   2. secondly, there is the **byte-array memory (RAM)**, used to store data during execution (such as passing arguments to internal functions). 
       - opcodes are `MSTORE`, `MLOAD`, or `MSTORE8`.
-<br>
-
   3. third, there is the **calldata** (which can be accessed through `msg.data`), a read-only byte-addressable space for the data parameter of a transaction or call. 
       - unlike the stack, this data is accessed by specifying the exact byte offset and the number of bytes to read. 
       - opcdes are `CALLDATACOPY`, which copies a number of bytes of the transaction to memory, `CALLDATASIZE`, and `CALLDATALOAD`.
-  <br>
-
-  4. lastly, there is **disk storage**, a persistent read-write word-addressable space, where each contract stores persistent information (and where state variables live), and is represented by a mapping of `2^{256}` slots of `32 bytes` each. 
+   4. lastly, there is **disk storage**, a persistent read-write word-addressable space, where each contract stores persistent information (and where state variables live), and is represented by a mapping of `2^{256}` slots of `32 bytes` each. 
       - the opcode `SSTORE` is used to store data and `SLOAD` to load.
 
 
@@ -144,9 +137,9 @@ function load(address account, bytes32 slot) external returns (bytes32);
 <br>
 
 ```
-/// contract LeetContract {
-///     uint256 private leet = 1337; // slot 0
-/// }
+contract LeetContract {
+     uint256 private leet = 1337; // slot 0
+}
 
 bytes32 leet = vm.load(address(leetContract), bytes32(uint256(0)));
 emit log_uint(uint256(leet)); // 1337
