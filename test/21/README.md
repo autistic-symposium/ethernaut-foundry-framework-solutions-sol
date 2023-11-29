@@ -97,7 +97,7 @@ function buy() public {
 
 <br>
 
-* in other words, `Shop` expects `Buyer` to return the price it is willing to pay to buy the item, believing that the price would not change the second time it called, as it is a `view` function.
+* in other words, `Shop` expects `Buyer` to return the price it is willing to pay to buy the item, believing that the price would not change the second time it is called, as it is a `view` function.
 <br>
 
 * we will use this as our exploit, querying the value of `isSold()` and returning a different result based on our needs:
