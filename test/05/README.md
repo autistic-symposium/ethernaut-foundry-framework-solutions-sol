@@ -95,7 +95,7 @@ function transfer(address _to, uint _value) public returns (bool) {
 
 <br>
 
-* since this challenge is so easy, we skip tests and go direct to the submission script, `script/05/Token.s.sol`:
+* since this challenge is so easy, we skip tests and go directly to the submission script, `script/05/Token.s.sol`:
 
 <br>
 
