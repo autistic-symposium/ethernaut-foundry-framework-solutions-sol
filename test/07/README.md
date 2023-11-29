@@ -9,7 +9,7 @@
 
 
 * this challenge exploits smart contract invariants, and how total balance is not a good invariant.
-  - contract invariants are properties of the program state that are expected always to be true. for instance, the value of `owner` state variable, the total token supply, etc., should always remain the same.
+  - contract invariants are properties of the program state that are expected to always be true. for instance, the value of `owner` state variable, the total token supply, etc., should always remain the same.
   - a state in the blockchain is considered valid when the contract-specific invariants hold true.
 
 <br>
