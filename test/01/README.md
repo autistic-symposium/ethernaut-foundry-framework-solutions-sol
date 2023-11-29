@@ -70,9 +70,7 @@ contract Fallback {
 
 <br>
 
-* the only way to drain the contract is via `withdraw()`, which can only be called if `msg.sender` is the `owner` (because of the `onlyOwner` modifier). 
-  * this function will transfer all the funds in the contract to the `owner`'s' address.
-  * (note that this function is also vulnerable to reentrancy).
+* the only way to drain the contract is via `withdraw()`, which can only be called if `msg.sender` is the `owner` (because of the `onlyOwner` modifier).this function will transfer all the funds in the contract to the `owner`'s' address (note that this function is also vulnerable to reentrancy):
 
 <br>
 
