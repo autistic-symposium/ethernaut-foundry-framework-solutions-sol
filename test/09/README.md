@@ -83,7 +83,7 @@ contract King {
 
 <br>
 
-* following we have the `receive()` function and a getter for `king`. to become a `king` one needs to either be `owner` or to send a value for `prize` larger than its current. since we didn't deploy the contract, the first option is not available:
+* following we have the `receive()` function and a getter for `king`. to become a `king` one needs to either be `owner` or send a value for `prize` larger than its current. since we didn't deploy the contract, the first option is not available:
 
 ```solidity
   receive() external payable {
