@@ -203,7 +203,7 @@ contract KingTest is Test {
 
 <br>
 
-* the, we craft the submission script at `script/09/King.s.sol`:
+* then, we craft the submission script at `script/09/King.s.sol`:
 
 <br>
 
