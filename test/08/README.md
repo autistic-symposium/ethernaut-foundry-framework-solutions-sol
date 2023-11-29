@@ -111,7 +111,7 @@ function unlock(bytes32 _password) public {
 
 <br>
 
-* a first approach is to simply call the **[well-known API](https://web3js.readthedocs.io/en/v1.2.9/web3-eth.html#getstorageat)** `web3.eth.getStorageAt(contractAddress, slotNumber)`, as we know the contract address and that `password` is on slot number `1`:
+* a first approach is simply to call the **[well-known API](https://web3js.readthedocs.io/en/v1.2.9/web3-eth.html#getstorageat)** `web3.eth.getStorageAt(contractAddress, slotNumber)`, as we know the contract address and that `password` is on slot number `1`:
 
 <br>
 
