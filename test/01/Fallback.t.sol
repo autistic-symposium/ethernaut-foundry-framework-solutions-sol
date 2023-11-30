@@ -26,7 +26,7 @@ contract FallbackTest is Test {
         ////////////////////////////////////////
 
         ///////////////////////////////////////////
-        // Should show the adress of the instance
+        // Should show the address of the instance
         //////////////////////////////////////////
         emit log_address(instance);
         emit log_address(level.owner());
