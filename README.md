@@ -4,6 +4,8 @@
 
 ##### 🔋 this project contains solutions for **[openzeppelin's ethernaut wargames](https://ethernaut.openzeppelin.com/)**. leveraging **foundry**, each level has a test set (`test/*.t.sol`), a script set (`script/*.s.sol`), and a write-up. some levels also have an exploit at `src/*.sol`. 
 
+##### 🔋 to read the full notes about this work, check out my mirror publication: **[on hacking systematically with foundry](https://mirror.xyz/go-outside.eth)**. you are welcome to submit solutions and pull requests.
+
 
 ##### 🔋 by the way, do you remember overthewire? **[here is my WeChall profile from playing it in 2014](https://www.wechall.net/profile/bt3gl)**.
 
