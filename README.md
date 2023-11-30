@@ -22,60 +22,60 @@
 
 <br>
 
-##### ✅ 01. Fallback: 
+##### ✅ 01. Fallback - exploiting `fallback()`:
 - **[write-up + foundry test](test/01)**
 - **[submission foundry script](script/01/)**
 
 
-##### ✅ 02. Fallout: 
+##### ✅ 02. Fallout - exploiting `constructor()`:
 - **[write-up + foundry test](test/02)**
 - **[submission foundry script](script/02/)**
 
 
-##### ✅ 03. Coin Flip: 
+##### ✅ 03. Coin Flip - exploiting pseudo-randomness:
 - **[write-up + foundry test](test/03)**
 - **[solidity exploit](src/03)**
 - **[submission foundry script](script/03/)**
 
 
-##### ✅ 04. Telephone: 
+##### ✅ 04. Telephone - exploiting `tx.origin`:
 - **[write-up + foundry test](test/04)**
 - **[solidity exploit](src/04)**
 - **[submission foundry script](script/04/)**
 
 
-##### ✅ 05. Token: 
+##### ✅ 05. Token - exploiting integer overflows:
 - **[write-up + foundry test](test/05)**
 - **[submission foundry script](script/05/)**
 
 
-##### ✅ 06. Delegation: 
+##### ✅ 06. Delegation - exploiting `delegatecall`:
 - **[write-up + foundry test](test/06)**
 - **[submission foundry script](script/06/)**
 
 
-##### ✅ 07. Force: 
+##### ✅ 07. Force - exploiting payable contracts:
 - **[write-up + foundry test](test/07)**
 - **[solidity exploit](src/07)**
 - **[submission foundry script](script/07/)**
 
 
-##### ✅ 08. Vault: 
+##### ✅ 08. Vault - exploiting private functions:
 - **[write-up + foundry test](test/08)**
 - **[submission foundry script](script/08/)**
 
-##### ✅ 09. King: 
+##### ✅ 09. King - exploiting `transfer(msg.value)`:
 - **[write-up + foundry test](test/09)**
 - **[solidity exploit](src/09)**
 - **[submission foundry script](script/09/)**
 
-##### ✅ 10. Reentrancy: 
+##### ✅ 10. Reentrancy - exploiting reentrancy:
 - **[write-up + foundry test](test/10)**
 - **[solidity exploit](src/10)**
 - **[submission foundry script](script/10/)**
 
   
-##### ✅ 11. Elevator: 
+##### ✅ 11. Elevator - exploiting interfaces:
 - **[write-up + foundry test](test/11)**
 - **[solidity exploit](src/11/)**
 - **[submission foundry script](script/11/)**
@@ -126,7 +126,7 @@
 - **[submission foundry script](script/20/)**
 
 
-##### ✅ 21. Shop: 
+##### ✅ 21. Shop - exploiting interfaces II:
 - **[write-up + foundry test](test/21)**
 - **[solidity exploit](src/21)**
 - **[submission foundry script](script/21/)**
