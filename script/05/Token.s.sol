@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: CC-BY-4.0
-// bt3gl's solution to ethernaut
+// Mia Stein solution to ethernaut
 
 pragma solidity ^0.6.0;
 

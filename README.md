@@ -1,4 +1,4 @@
-## 🧑🏻‍🚀 my ethernaut write-ups + solutions, systematically on foundry
+## 🧑🏻‍🚀 my foundry framework to solve ethernaut: write-ups + solutions 
 
 <br>
 
@@ -8,6 +8,8 @@
 
 
 ##### 🔋 by the way, do you remember overthewire? **[here is my WeChall profile from playing it in 2014](https://www.wechall.net/profile/bt3gl)**.
+
+
 
 <br>
 
@@ -215,3 +217,11 @@
 <br>
 
 <br>
+
+----
+
+<br>
+
+
+###### (like solving these types of problems? perhaps you are [autistic cypherpunk](https://github.com/autistic-symposium/ethernaut-systematic-solutions-foundry-sol), then?)
+
